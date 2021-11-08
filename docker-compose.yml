@@ -1,0 +1,59 @@
+version: "3"
+
+x-database: &postgres-credentials
+  POSTGRES_USER: shutdown
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: shutdown
+  POSTGRES_HOST: postgres
+
+# INSTALL NEW NPM MODULE:
+# docker exec -it shutdown_frontend bash
+# npm i module
+
+services:
+  frontend:
+    container_name: shutdown_frontend
+    build: ./frontend
+    command: npm run serve
+    environment:
+      API_URL: http://backend:4000/api
+      CHOKIDAR_USEPOLLING: 'true'
+    ports:
+      - 8080:8080
+    volumes:
+      - ./frontend:/data
+      - /data/node_modules
+    
+
+  backend:
+    container_name: shutdown_backend
+    build: ./backend
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      SECRET: '1r3jTQUSuKOQEUuT2eiusYpKLLde4kdA'
+      <<: *postgres-credentials
+    ports:
+      - 4000:4000
+    volumes:
+      - ./backend:/data
+      - /data/node_modules
+    depends_on: 
+      - postgres
+  
+  # OPEN SQL Shell:
+  # docker-compose exec postgres psql -U tab_teamportal -d tab_teamportal
+
+  postgres:
+    container_name: shutdown_postgres
+    image: postgres:13
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      <<: *postgres-credentials
+    ports:
+      - 5432:5432
+    volumes:
+      - tab_teamportal_postgres_volume:/var/lib/postgresql/data
+
+volumes:
+  tab_teamportal_postgres_volume:
