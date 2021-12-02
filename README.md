@@ -3,6 +3,12 @@
 
 ## Installation
 
+Build the frontend container
+
+```bash
+docker-compose build frontend
+```
+
 Start the docker container from project folder
 
 ```bash
