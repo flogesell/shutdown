@@ -1,13 +1,18 @@
 <template>
   <div id="style">
-      <h1>This is the living style guide</h1>
+      <h1>Living Styleguide</h1>
+    <checkbox/>
   </div>
 </template>
 
 <script>
+import checkbox from '@/components/buttons/checkbox.vue'
+
 export default {
   name: 'App',
   components: {
+    checkbox
+    
   }
 }
 </script>
