@@ -1,11 +1,10 @@
 FROM node:14.3.0
 
-WORKDIR /app
+WORKDIR /data
 
 # Dependencies
 COPY package*.json ./
 RUN npm install
 
-# Source Code
 COPY . .
 ENTRYPOINT npm run serve
