@@ -14,6 +14,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/styles/_variables.scss';
     input.apple-switch {
         position: relative;
         appearance: none; outline: none;
@@ -31,8 +32,8 @@ export default {
         border-radius: 50%; box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
     }
     input.apple-switch:checked {
-        border-color: #4ED164;
-        box-shadow: inset 20px 0 0 0 #4ED164;
+        border-color: $ui-primary;
+        box-shadow: inset 20px 0 0 0 $ui-primary;
     }
     input.apple-switch:checked:after {
         left: 20px;
