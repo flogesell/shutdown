@@ -11,6 +11,13 @@
     <div class="flex-container" id="container-center"></div>
     <div class="flex-container" id="container-right">
       <div id="icon-container">
+        <img :src="publicPath + 'img/icons/Vereinigungsmenge 8.svg'" alt="" />
+        <img :src="publicPath + 'img/icons/Icon_awesome-globe-americas.svg'" alt="" />
+        <img :src="publicPath + 'img/icons/Icon_ionic-ios-flag.svg'" alt="" />
+        <img :src="publicPath + 'img/icons/Icon_ionic-ios-man.svg'" alt="" />
+      </div>
+      <div id="probability-container">
+        <ProbabilityBox number="45°" arcStart="-45" arcEnd="45" class="probBox" />
       </div>
     </div>
   </div>
@@ -18,12 +25,18 @@
 
 <script>
 import checkbox from '@/components/buttons/checkbox.vue'
+import ProbabilityBox from '@/components/probabilityBox.vue'
 
 export default {
   name: 'Home',
   components: {
     checkbox,
-    IconFlag
+    ProbabilityBox
+  },
+  data() {
+    return {
+      publicPath: process.env.BASE_URL
+    }
   }
 }
 </script>
@@ -38,11 +51,12 @@ export default {
 }
 #container-left {
   width: 20%;
-  padding: 100px 50px;
+  padding: 100px;
   text-align: left;
 }
 #container-right {
   width: 20%;
+  padding: 100px;
 }
 #container-center {
   width: 60%;
@@ -72,6 +86,10 @@ export default {
 #icon-container {
   width: 100%;
   display: flex;
+  img {
+    margin: 0 5px;
+  }
 }
+
 
 </style>
