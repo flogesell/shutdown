@@ -1,10 +1,12 @@
 <template>
-    <div class="probability-box" id="einHalbGrad-box">
-        <div class="circle">
-        <p>{{ number }}</p>
-        </div>
-        <div :style="{ transform: 'rotate('+ arcStart + 'deg)' }" class="arc arc_start"></div>
-        <div :style="{ transform: 'rotate('+ arcEnd + 'deg)' }" class="arc arc_end"></div>
+    <div @mouseenter="displayPerc" @mouseleave="displayDeg">
+        <svg viewBox="0 0 35 35" id="circle" width="140px" height="140px">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="2" />
+        </svg>
+        <svg viewBox="0 0 35 35" id="arc" width="140px" height="140px">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#aaa" stroke-width="2" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
+        </svg>
+        <p class="probability" id="number">{{ deg }}</p>
     </div>
 </template>
 
@@ -12,48 +14,36 @@
 export default {
     name: 'probabilityBox',
     props: {
-        number: String,
-        arcStart: String,
-        arcEnd: String,
+        percentage: String,
+        deg: String
     },
+    methods: {
+        displayPerc() {
+           let nbr = document.getElementById('number');
+           let prc = this.$props.percentage;
+           nbr.innerHTML = prc + "%";
+        },
+        displayDeg() {
+           let nbr = document.getElementById('number');
+           let deg = this.$props.deg;
+           nbr.innerHTML = deg;
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
-#probability-container {
-  position: absolute;
-  bottom: 0;
-}
-.probability-box {
-  width: 100px;
-  height: 100px;
-  margin: 20px;
-  p {
-    margin-top: 37px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-}
-.circle {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;  
-  border: 3px solid lightgrey;
-}
-.arc {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  border: 3px solid;
-}
-
-.arc_start {
-  border-color: transparent grey gray gray;
-}
-
-.arc_end {
-  border-color: gray gray gray transparent;
-}
+    #arc {
+        margin-left: -140px;
+    }
+    .probability {
+        margin-top: -90px;
+        font-size: 25px;
+    }
+    #degree {
+        opacity: 1;
+    }
+    #percentage {
+        opacity: 0;
+    }
 </style>

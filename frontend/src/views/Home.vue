@@ -17,7 +17,8 @@
         <img :src="publicPath + 'img/icons/Icon_ionic-ios-man.svg'" alt="" />
       </div>
       <div id="probability-container">
-        <ProbabilityBox number="45°" arcStart="-45" arcEnd="45" class="probBox" />
+        <!--<ProbabilityBox number="45°" arcStart="30" arcEnd="145" class="probBox" />-->
+        <ProbabilityBox percentage="80" deg="1.5°" class="probBox" />
       </div>
     </div>
   </div>
