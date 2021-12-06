@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 
 import Home from "../views/Home.vue";
 import Style from "../views/Style.vue";
-import Diagramm from "../views/Diagramm.vue";
 
 Vue.use(VueRouter);
 
@@ -20,11 +19,6 @@ const router = new VueRouter({
       path: "/styleguide",
       name: "Style",
       component: Style,
-    },
-    {
-      path: "/diagramm",
-      name: "Diagramm",
-      component: Diagramm,
     },
     {
       path: "*",
