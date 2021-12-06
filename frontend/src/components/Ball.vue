@@ -26,7 +26,6 @@ export default {
     },
     methods: {
         diameter() {
-            console.log(this.size);
             let diameter = 2 * Math.sqrt(this.size / Math.PI);
             return diameter + "px";
         },

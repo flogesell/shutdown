@@ -46,8 +46,8 @@ class CO2Ball
     get_json()
     {
         return {
-            xv:   this.body.position.x - Math.sqrt(this.current_size / Math.PI),
-            yv:   this.body.position.y - Math.sqrt(this.current_size / Math.PI),
+            xv:   this.body.position.x - Math.sqrt(this.scale * this.current_size / Math.PI),
+            yv:   this.body.position.y - Math.sqrt(this.scale * this.current_size / Math.PI),
             size: this.current_size * this.scale,
             name: this.name
         }
