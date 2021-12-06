@@ -18,19 +18,27 @@
           <h2>Farbwelt</h2>
           <div class="flex">
             <div class="field" id="primary" :style="{background: '#444444'}"><p>#444444</p></div>
-            <div class="field" id="secondary" :style="{background: '#707070'}"><p>#707070</p></div>
-            <div class="field" id="secondary" :style="{background: '#ffbb00'}"><p>#ffbb00</p></div>    
+            <div class="field" id="secondary" :style="{background: '#A3A3A3'}"><p>#A3A3A3</p></div>
+            <div class="field" id="secondary" :style="{background: '#ffbb00'}"><p>#FFBB00</p></div>    
           </div>
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem non quis natus laudantium aliquam atque laborum obcaecati deleniti, amet eveniet doloribus similique aperiam voluptatibus nam delectus aspernatur. Porro, consequuntur atque.</p>   
         </li>
+        <li id="icon">
+          <h2>Icon</h2>
+        </li> 
         <li id="switch">
           <h2>Switch</h2>
           <div class="flex"><checkbox/></div>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse soluta quia alias laborum laudantium obcaecati repellat itaque a recusandae aut expedita nam neque, nostrum ducimus doloremque vero sapiente dolores perspiciatis.</p>
         </li>
-        <li id="switch">
-          <h2>Switch</h2>
-        </li>  
+        <li id="diagram">
+          <h2>Diagram</h2>
+        </li> 
+        <li id="button">
+          <h2>Button</h2>
+          <div class="flex"></div>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
+        </li> 
       </ul>
   </div>
 </template>
@@ -65,9 +73,9 @@ export default {
     list-style: none;
 
     li{
-      border-bottom: 1px black solid;
+      border-top: 1px black solid;
       margin: 1.2em 0;
-      padding-bottom: 1.2em;
+      padding-top: 1.2em;
 
       img{
         max-width: 360px;
@@ -102,7 +110,8 @@ export default {
       p{
         transition: opacity 1s;
         opacity: 0;
-        mix-blend-mode: difference; 
+        color: white;
+        font-weight: 500;
       }
 
       &:hover{

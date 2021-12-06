@@ -1,10 +1,7 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/styleguide">Styleguide</router-link>
-    </div>
     <router-view/>
+    <footer>shutdown – HS Augsburg</footer>
   </div>
 </template>
 
