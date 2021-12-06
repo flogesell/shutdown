@@ -25,18 +25,18 @@
         </li>
         <li id="switch">
           <h2>Switch</h2>
-          <checkbox/>
+          <div class="flex"><checkbox/></div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse soluta quia alias laborum laudantium obcaecati repellat itaque a recusandae aut expedita nam neque, nostrum ducimus doloremque vero sapiente dolores perspiciatis.</p>
         </li>
         <li id="switch">
           <h2>Switch</h2>
-          <checkbox/>
         </li>  
       </ul>
   </div>
 </template>
 
 <script>
-import checkbox from '@/components/buttons/checkbox.vue'
+import checkbox from '@/components/buttons/Switch.vue'
 
 export default {
   name: 'App',

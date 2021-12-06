@@ -1,14 +1,14 @@
 <template>
-  <div class="hello">
-      <input class="apple-switch" type="checkbox">
+  <div>
+    <input class="apple-switch" type="checkbox" checked>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Switch',
   props: {
-    msg: String
+    checked: Boolean
   }
 }
 </script>
@@ -18,26 +18,30 @@ export default {
     input.apple-switch {
         position: relative;
         appearance: none; outline: none;
-        width: 50px; height: 30px;
-        background-color: #ffffff; border: 1px solid #D9DADC;
+        width: 54px; height: 30px;
         border-radius: 50px; box-shadow: inset -20px 0 0 0 #ffffff;
-        transition-duration: 200ms;
+        transition-duration: 500ms;
+        border: 4px $secondary solid;
     }
     input.apple-switch:after {
+        transition: background .5s;
         content: "";
         position: absolute;
-        top: 1px; left: 1px;
-        width: 26px; height: 26px;
+        top: -4px; left: -4px;
+        width: 22px; height: 22px;
         background-color: transparent;
-        border-radius: 50%; box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+        border: 4px $primary solid;
+        border-radius: 50%; 
     }
     input.apple-switch:checked {
         border-color: $primary;
-        box-shadow: inset 20px 0 0 0 $primary;
+
+      &:after {
+        background: $color;
+      }
     }
     input.apple-switch:checked:after {
         left: 20px;
-        box-shadow: -2px 4px 3px rgba(0,0,0,0.05);
     }
 
 </style>
