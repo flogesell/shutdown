@@ -3,20 +3,35 @@
       <h1>Living Styleguide</h1>
       <ul>
         <li id="logo">
-          <h2>Logo: Varianten</h2>
+          <h2>Logo</h2>
           <div class="flex">
-            <h3>Positiv</h3>
             <div class="positive">
               <img src="@/assets/logo/logo_positive.svg" alt="logo positive">
             </div>
-            <h3>Negativ</h3>
             <div class="negative">
               <img src="@/assets/logo/logo_negative.svg" alt="logo negative">
             </div>  
-          </div>  
-        </li> 
+          </div>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem non quis natus laudantium aliquam atque laborum obcaecati deleniti, amet eveniet doloribus similique aperiam voluptatibus nam delectus aspernatur. Porro, consequuntur atque.</p>
+        </li>
+        <li id="color">
+          <h2>Farbwelt</h2>
+          <div class="flex">
+            <div class="field" id="primary" :style="{background: '#444444'}"><p>#444444</p></div>
+            <div class="field" id="secondary" :style="{background: '#707070'}"><p>#707070</p></div>
+            <div class="field" id="secondary" :style="{background: '#ffbb00'}"><p>#ffbb00</p></div>    
+          </div>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem non quis natus laudantium aliquam atque laborum obcaecati deleniti, amet eveniet doloribus similique aperiam voluptatibus nam delectus aspernatur. Porro, consequuntur atque.</p>   
+        </li>
+        <li id="switch">
+          <h2>Switch</h2>
+          <checkbox/>
+        </li>
+        <li id="switch">
+          <h2>Switch</h2>
+          <checkbox/>
+        </li>  
       </ul>
-    <checkbox/>
   </div>
 </template>
 
@@ -60,11 +75,45 @@ export default {
     }
   }
 
-  #logo{
+  .flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: center;
+    gap: 1.2em;
+    margin: 2.4em 0;
+
     div{
-      margin: 1.2em;
+      display: inline-flex;
       padding: 1.2em;
+      flex: 1;
     }
+  }
+
+  #color{
+    .field{
+      flex: 0 0 100px;
+      height: 100px;
+      background: red;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p{
+        transition: opacity 1s;
+        opacity: 0;
+        mix-blend-mode: difference; 
+      }
+
+      &:hover{
+        p{
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  #logo{
     .negative{
       background: $primary;
     } 
