@@ -29,7 +29,7 @@
           <div class="flex">
             <h1>Chapter – Roboto Bold, 2.4em</h1>
             <h2>Headline – Roboto Bold, 1.6em</h2>
-            <h2>Subline – Roboto Bold, 1.2em</h2>
+            <h3>Subline – Roboto Bold, 1.2em</h3>
             <p>Text – Roboto Regular, 1em</p>
           </div>
           <p>Als Schriftfamilie kommt stets der Font 'Robot' in den Schriftschnitten 'medium und bold' zum Einsatz.</p>   
