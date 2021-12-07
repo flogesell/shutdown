@@ -57,6 +57,7 @@ export default {
     input:checked + .slider{
       border-color: #444444;
       &:before {
+        background: #ffbb00;
         left: 0px;
         border: 4px solid #444444;
       }
