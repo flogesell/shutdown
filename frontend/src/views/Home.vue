@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import checkbox from '@/components/buttons/checkbox.vue'
+import checkbox from '@/components/buttons/Checkbox.vue'
 import ProbabilityBox from '@/components/probabilityBox.vue'
 
 export default {
@@ -62,9 +62,7 @@ export default {
 #container-center {
   width: 60%;
 }
-
 /* Left Container */
-
 #sectors-container {
   width: 100%;
   display: flex;
@@ -78,12 +76,8 @@ export default {
     margin-left: 20px;
   }
 }
-
 /* Center Container */
-
-
 /* Right Container */
-
 #icon-container {
   width: 100%;
   display: flex;
