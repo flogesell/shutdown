@@ -54,10 +54,11 @@ export default {
       transition: .4s;
     }
 
+
     input:checked + .slider{
-      border-color: #444444;
+      //border-color: #444444;
       &:before {
-        background: #ffbb00;
+        //background: #ffbb00;
         left: 0px;
         border: 4px solid #444444;
       }
