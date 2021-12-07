@@ -1,5 +1,5 @@
 <template>
-    <div @mouseenter="displayPerc" @mouseleave="displayDeg">
+    <div @mouseenter="displayPerc" @mouseleave="displayDeg" class="probability-container">
         <svg viewBox="0 0 35 35" id="circle" width="140px" height="140px">
             <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="2" />
         </svg>
@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+    .probability-container {
+        margin-top: 75px;
+    }
     #arc {
         margin-left: -140px;
     }

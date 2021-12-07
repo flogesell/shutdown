@@ -17,8 +17,9 @@
         <img :src="publicPath + 'img/icons/Icon_ionic-ios-man.svg'" alt="" />
       </div>
       <div id="probability-container">
-        <!--<ProbabilityBox number="45°" arcStart="30" arcEnd="145" class="probBox" />-->
-        <ProbabilityBox percentage="80" deg="1.5°" class="probBox" />
+        <ProbabilityBox percentage="13" deg="1.5°" class="probBox" />
+        <ProbabilityBox percentage="27" deg="2.0°" class="probBox" />
+        <ProbabilityBox percentage="60" deg="2.5°" class="probBox" />
       </div>
     </div>
   </div>
@@ -46,23 +47,24 @@ export default {
 .home {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 .flex-container {
   height: 100vh;
 }
 #container-left {
-  width: 20%;
   padding: 100px;
   text-align: left;
 }
 #container-right {
-  width: 20%;
   padding: 100px;
 }
 #container-center {
   width: 60%;
 }
+
 /* Left Container */
+
 #sectors-container {
   width: 100%;
   display: flex;
@@ -76,14 +78,21 @@ export default {
     margin-left: 20px;
   }
 }
+
 /* Center Container */
+
+
 /* Right Container */
+
 #icon-container {
   width: 100%;
   display: flex;
   img {
     margin: 0 5px;
   }
+}
+#probability-container {
+  
 }
 
 
