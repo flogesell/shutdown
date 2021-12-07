@@ -147,6 +147,10 @@ export default {
     .negative{
       background: $primary;
     } 
+
+    img{
+      max-width: 100%;
+    }
   }
 
   #typo{
