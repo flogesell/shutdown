@@ -1,32 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/styleguide">Styleguide</router-link>
-    </div>
     <router-view/>
+    <footer>shutdown – HS Augsburg</footer>
   </div>
 </template>
 
 <style lang="scss">
-@import '@/assets/styles/_variables.scss';
+@import '@/assets/styles/_config.scss';
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: $primary;
+  margin: 1.2em;
+  gap: 1.2em;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
 }
 
 #nav {
-  padding: 30px;
+  text-align: center;
   a {
     font-weight: bold;
     color: #2c3e50;
+    margin: 0 .6em;
     
     &.router-link-exact-active {
-      color: #42b983;
+      color: $color;
     }
   }
 }
