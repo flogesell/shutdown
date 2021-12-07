@@ -30,9 +30,10 @@
             <h1>Chapter – Roboto Bold, 2.4em</h1>
             <h2>Headline – Roboto Bold, 1.6em</h2>
             <h3>Subline – Roboto Bold, 1.2em</h3>
-            <p>Text – Roboto Regular, 1em</p>
+            <p>Text positiv – Roboto Regular, 1em</p>
+            <p class="negative">Text negativ – Roboto Medium, 1em</p>
           </div>
-          <p>Als Schriftfamilie kommt stets der Font 'Robot' in den Schriftschnitten 'medium und bold' zum Einsatz.</p>   
+          <p>Als Schriftfamilie kommt stets der Font 'Roboto' in den Schriftschnitten 'Regular' und 'Bold' zum Einsatz. Auf dunklen Untergründen wird statt 'Regular' der Schnitt 'Medium verwendet'.</p>   
         </li>
         <li id="icon">
           <h2>Icon</h2>
@@ -153,6 +154,12 @@ export default {
       flex-flow: column nowrap;
       background: white;
       padding: 1em;
+
+      .negative{
+        background: $primary;
+        color: $secondary;
+        padding: 1em;
+      }
     }
   }
 
