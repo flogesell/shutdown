@@ -7,9 +7,8 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Switch',
   props: {
-    msg: String
   }
 }
 </script>
@@ -55,9 +54,13 @@ export default {
       transition: .4s;
     }
 
-    input:checked + .slider:before {
-      left: 0px;
-      border: 4px solid rgb(27, 27, 27);
+    input:checked + .slider{
+      border-color: #444444;
+      &:before {
+        left: 0px;
+        border: 4px solid #444444;
+      }
+      
     }
 
     input:focus + .slider {
