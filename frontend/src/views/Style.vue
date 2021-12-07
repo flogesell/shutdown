@@ -35,6 +35,10 @@
         </li>
         <li id="diagram">
           <h2>Diagram</h2>
+          <div class="flex">
+            <probability-box :percentage='Math.round(Math.random()*100)' :deg="'1,5°C'"/>
+          </div>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
         </li> 
         <li id="button">
           <h2>Button</h2>
@@ -48,12 +52,14 @@
 <script>
 import CheckboxMoritz from '@/components/buttons/Switch.vue';
 import Checkbox from '@/components/buttons/Checkbox.vue'
+import probabilityBox from '@/components/probabilityBox.vue'
 
 export default {
   name: 'App',
   components: {
     Checkbox,
-    CheckboxMoritz
+    CheckboxMoritz,
+    probabilityBox
   }
 }
 </script>
