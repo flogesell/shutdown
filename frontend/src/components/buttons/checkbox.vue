@@ -1,7 +1,8 @@
 <template>
-  <div class="hello">
-      <input class="apple-switch" type="checkbox">
-  </div>
+  <label class="switch">
+    <input type="checkbox" checked>
+    <span class="slider round"></span>
+</label>
 </template>
 
 <script>
@@ -15,29 +16,66 @@ export default {
 
 <style scoped lang="scss">
 @import '@/assets/styles/_variables.scss';
-    input.apple-switch {
-        position: relative;
-        appearance: none; outline: none;
-        width: 50px; height: 30px;
-        background-color: #ffffff; border: 1px solid #D9DADC;
-        border-radius: 50px; box-shadow: inset -20px 0 0 0 #ffffff;
-        transition-duration: 200ms;
-    }
-    input.apple-switch:after {
-        content: "";
-        position: absolute;
-        top: 1px; left: 1px;
-        width: 26px; height: 26px;
-        background-color: transparent;
-        border-radius: 50%; box-shadow: 2px 4px 6px rgba(0,0,0,0.2);
-    }
-    input.apple-switch:checked {
-        border-color: $ui-primary;
-        box-shadow: inset 20px 0 0 0 $ui-primary;
-    }
-    input.apple-switch:checked:after {
-        left: 20px;
-        box-shadow: -2px 4px 3px rgba(0,0,0,0.05);
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+      margin: 10px 0;
     }
 
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      -webkit-transition: .4s;
+      transition: .4s;
+      border: 4px solid #8a8a8a;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: -4px;
+      bottom: -4px;
+      border: 4px solid rgb(78, 78, 78);
+      background-color: transparent;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider:before {
+      left: 0px;
+      border: 4px solid rgb(27, 27, 27);
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
 </style>
