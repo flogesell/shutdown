@@ -35,6 +35,7 @@
         </li>
         <li id="diagram">
           <h2>Diagram</h2>
+          <ProbabilityBox percentage="62" deg="2°" class="probBox" />
         </li> 
         <li id="button">
           <h2>Button</h2>
@@ -48,12 +49,14 @@
 <script>
 import CheckboxMoritz from '@/components/buttons/Switch.vue';
 import Checkbox from '@/components/buttons/Checkbox.vue'
+import ProbabilityBox from '@/components/probabilityBox.vue'
 
 export default {
   name: 'App',
   components: {
     Checkbox,
-    CheckboxMoritz
+    CheckboxMoritz,
+    ProbabilityBox
   }
 }
 </script>
