@@ -1,9 +1,43 @@
 <template>
   <div id="app">
+    <!-- show loader component when data is loading -->
+    <div class="loader" v-if="loader">
+      loading ...
+    </div>
+    <div v-else>
+      <!-- show rendered components if data is loaded -->
+      <div v-if="data">
+
+      </div>
+      <!-- show error msg if data cannot be loaded to the app -->
+      <div v-else>
+        404 – Error!
+      </div>
+    </div>
     <router-view/>
     <footer>shutdown – HS Augsburg</footer>
   </div>
 </template>
+
+<script>
+import { mapActions, mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields';
+
+export default {
+  name: 'App',
+  created(){
+    this.fetchData()
+  },
+  computed: {
+    ...mapState(['loader', 'error']),
+    ...mapFields(['data', 'lang'])
+  },
+  methods: {
+    ...mapActions(['fetchData']),
+  }
+}
+</script>
+
 
 <style lang="scss">
 @import '@/assets/styles/_config.scss';
