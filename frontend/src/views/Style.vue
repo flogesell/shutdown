@@ -48,7 +48,8 @@
         <li id="diagram">
           <h2>Diagram</h2>
           <div class="flex">
-            <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'1,5°C'"/>
+            <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'1,5'"/>
+            <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'2,5'"/>
           </div>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
         </li> 
