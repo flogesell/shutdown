@@ -40,12 +40,14 @@ export default {
         text-align: center;
     }
     #arc {
-        margin-left: -140px;
+        position: absolute;
     }
     .probability {
         font-size: 25px;
         position: absolute;
-        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 145px;
     }
     #degree {
         opacity: 1;

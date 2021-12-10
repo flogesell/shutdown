@@ -31,7 +31,7 @@ export default {
       position: absolute;
       top: -6px; left: -6px;
       width: 18px; height: 18px;
-      background-color: transparent;
+      background-color: white;
       border: 6px $primary solid;
       border-radius: 50%; 
       transition: 0.1s;
