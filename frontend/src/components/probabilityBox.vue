@@ -1,10 +1,10 @@
 <template>
     <div @mouseenter="displayPerc" @mouseleave="displayDeg" class="probability-container">
         <svg viewBox="0 0 35 35" id="circle" width="140px" height="140px">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="1.5" />
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
         </svg>
         <svg viewBox="0 0 35 35" id="arc" width="140px" height="140px">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#aaa" stroke-width="1.5" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
         </svg>
         <p class="probability" :id="'number' + deg">{{ deg }}°C</p>
     </div>
@@ -33,14 +33,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/styles/_config.scss';
+
     .probability-container {
         display: block;
         flex: none;
         align-items: center;
         text-align: center;
     }
+    #circle>path {
+        stroke: $secondary;
+    }
     #arc {
         position: absolute;
+        
+    }
+    #arc>path {
+            stroke: $primary;
     }
     .probability {
         font-size: 25px;
