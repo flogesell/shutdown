@@ -7,8 +7,8 @@
 
 <script>
 import Ball from './Ball.vue'
-import CO2Ball from '@/co2ball'
-import Attractor from '@/attractor'
+import CO2Ball from '@/assets/physics/co2ball'
+import Attractor from '@/assets/physics/attractor'
 import Matter from "matter-js"
 //import cait_to_json from '@/data_loader'
 
