@@ -44,7 +44,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .ball{
         position: absolute;
         display: flex;
@@ -53,6 +53,11 @@ export default {
         background-color: black;
         border-radius: 50%;
         color: white;
+        p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
     
 </style>
