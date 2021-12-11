@@ -1,9 +1,7 @@
 
 <template>
   <div>
-
       <Diagramm />
-      <p>diagramm</p>
   </div>
   
 </template>
