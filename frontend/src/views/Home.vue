@@ -1,4 +1,6 @@
+
 <template>
+<<<<<<< HEAD
   <div class="home">
     <div class="flex-container" id="container-left">
       <h2>GLOBAL</h2>
@@ -22,27 +24,28 @@
         <ProbabilityBox percentage="60" deg="2.5" class="probBox" />
       </div>
     </div>
+=======
+  <div>
+      <Diagramm />
+>>>>>>> diagramm
   </div>
+  
 </template>
 
 <script>
+<<<<<<< HEAD
 import checkbox from '@/components/buttons/Switch.vue'
 import ProbabilityBox from '@/components/probabilityBox.vue'
+=======
+>>>>>>> diagramm
 
+import Diagramm from "../components/Diagramm.vue"
 export default {
-  name: 'Home',
-  components: {
-    checkbox,
-    ProbabilityBox
-  },
-  data() {
-    return {
-      publicPath: process.env.BASE_URL
+    components: {
+        Diagramm
     }
-  }
-}
-</script>
 
+<<<<<<< HEAD
 <style lang="scss">
 .home {
   display: flex;
@@ -100,6 +103,11 @@ export default {
   gap: 1.2em;
   margin: 2.4em 0;
 }
+=======
+}
+</script>
+>>>>>>> diagramm
 
+<style>
 
 </style>
