@@ -2,6 +2,7 @@
 <template>
   <div class="home">
     <div class="flex-container" id="container-left">
+      <img class="logo" src="@/assets/logo/logo_positive.svg" alt="logo positive">
       <h2>GLOBAL</h2>
       <div id="sectors-container">
         <div class="sector-switch"><checkbox/><p>Verkehr</p></div>
@@ -62,6 +63,9 @@ export default {
 #container-left {
   padding: 100px;
   text-align: left;
+  .logo {
+    margin-bottom: 100px;
+  }
 }
 #container-right {
   padding: 100px;
