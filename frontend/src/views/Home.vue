@@ -1,6 +1,5 @@
 
 <template>
-<<<<<<< HEAD
   <div class="home">
     <div class="flex-container" id="container-left">
       <h2>GLOBAL</h2>
@@ -10,7 +9,9 @@
         <div class="sector-switch"><checkbox/><p>Agrar</p></div>
       </div>
     </div>
-    <div class="flex-container" id="container-center"></div>
+    <div class="flex-container" id="container-center">
+      <Diagramm/>
+    </div>
     <div class="flex-container" id="container-right">
       <div id="icon-container">
         <img :src="publicPath + 'img/icons/Vereinigungsmenge 8.svg'" alt="" />
@@ -24,29 +25,32 @@
         <ProbabilityBox percentage="60" deg="2.5" class="probBox" />
       </div>
     </div>
-=======
-  <div>
-      <Diagramm />
->>>>>>> diagramm
   </div>
   
 </template>
 
 <script>
-<<<<<<< HEAD
 import checkbox from '@/components/buttons/Switch.vue'
 import ProbabilityBox from '@/components/probabilityBox.vue'
-=======
->>>>>>> diagramm
+import Diagramm from '@/components/diagramm/Diagramm.vue'
 
-import Diagramm from "../components/Diagramm.vue"
 export default {
-    components: {
-        Diagramm
+  name: 'Home',
+  components: {
+    checkbox,
+    ProbabilityBox,
+    Diagramm
+  },
+  data() {
+    return {
+      publicPath: process.env.BASE_URL
     }
+  }
+}
+</script>
 
-<<<<<<< HEAD
-<style lang="scss">
+
+<style lang="scss" scoped>
 .home {
   display: flex;
   justify-content: space-between;
@@ -65,9 +69,7 @@ export default {
 #container-center {
   width: 60%;
 }
-
 /* Left Container */
-
 #sectors-container {
   width: 100%;
   display: flex;
@@ -81,12 +83,8 @@ export default {
     margin-left: 20px;
   }
 }
-
 /* Center Container */
-
-
 /* Right Container */
-
 #icon-container {
   width: 100%;
   display: flex;
@@ -103,11 +101,4 @@ export default {
   gap: 1.2em;
   margin: 2.4em 0;
 }
-=======
-}
-</script>
->>>>>>> diagramm
-
-<style>
-
 </style>
