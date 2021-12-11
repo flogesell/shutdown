@@ -24,7 +24,9 @@ export default {
       border-radius: 50px; box-shadow: inset -20px 0 0 0 #ffffff;
       transition-duration: 500ms;
       border: 6px $secondary solid ;
+      margin: 5px 0;
   }
+
   input.apple-switch:after {
       transition: background .5s;
       content: "";
@@ -36,6 +38,7 @@ export default {
       border-radius: 50%; 
       transition: 0.1s;
   }
+
   input.apple-switch:checked {
       border-color: $secondary;
 
@@ -43,6 +46,7 @@ export default {
       background: $color;
     }
   }
+
   input.apple-switch:checked:after {
       left: 20px;
       transition: 0.1s;
