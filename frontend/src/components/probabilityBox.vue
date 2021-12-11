@@ -1,11 +1,10 @@
 <template>
     <div @mouseenter="displayPerc" @mouseleave="displayDeg" class="probability-container">
-        <svg viewBox="0 0 35 35" id="circle" width="140px" height="140px">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
+        <svg viewBox="0 0 35 35"  width="140px" height="140px">
+            <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
+            <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
         </svg>
-        <svg viewBox="0 0 35 35" id="arc" width="140px" height="140px">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
-        </svg>
+            
         <p class="probability" :id="'number' + deg">{{ deg }}°C</p>
     </div>
 </template>
@@ -21,7 +20,7 @@ export default {
         displayPerc() {
            let nbr = document.getElementById('number' + this.deg);
            let prc = this.$props.percentage;
-           nbr.innerHTML = prc + "%";
+           nbr.innerHTML = prc + "%<br>likely";
         },
         displayDeg() {
            let nbr = document.getElementById('number' + this.deg);
@@ -36,26 +35,26 @@ export default {
 @import '@/assets/styles/_config.scss';
 
     .probability-container {
-        display: block;
-        flex: none;
+        display: flex;
         align-items: center;
+        justify-content: center;
         text-align: center;
+        position: relative;
+        font-family: 'Roboto', sans-serif;
     }
-    #circle>path {
+    #circle {
         stroke: $secondary;
     }
     #arc {
-        position: absolute;
-        
-    }
-    #arc>path {
             stroke: $primary;
+            position: absolute;
     }
     .probability {
-        font-size: 25px;
+        font-size: 18px;
+        font-weight: 900;
+        font-style: italic;
         position: absolute;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
         width: 145px;
     }
     #degree {
