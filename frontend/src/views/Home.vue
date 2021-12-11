@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import checkbox from '@/components/buttons/Checkbox.vue'
+import checkbox from '@/components/buttons/Switch.vue'
 import ProbabilityBox from '@/components/probabilityBox.vue'
 
 export default {
