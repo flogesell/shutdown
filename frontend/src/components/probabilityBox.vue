@@ -52,7 +52,7 @@ export default {
             stroke: $primary;
     }
     .probability {
-        font-size: 25px;
+        font-size: 16px;
         position: absolute;
         margin-left: auto;
         margin-right: auto;

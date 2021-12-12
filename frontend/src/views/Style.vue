@@ -10,7 +10,15 @@
             </div>
             <div class="negative">
               <img src="@/assets/logo/logo_negative.svg" alt="logo negative">
-            </div>  
+            </div>
+          </div>
+          <div class="flex">
+            <div class="positive">
+              <Logo :checked=false :dark=false />
+            </div>
+            <div class="positive">
+              <Logo :checked=false :dark=true />
+            </div>
           </div>
           <p>Das Logo existiert in zwei Varianten. Auf hellen Untergründen wird stets die positive Version verwendet. Auf dunklen Hintergründen soll die negative Variante eingesetzt werden. Außerdem ist der 'Switch-Button', welcher eine zentrale Funktion in der Applikation darstellt, ebenfalls enthalten und sollte den eingesetzten Buttons weitesgehend ähnlich sein.</p>
         </li>
@@ -37,6 +45,12 @@
         </li>
         <li id="icon">
           <h2>Icon</h2>
+          <div class="flex">
+            <FlagIcon @click.native="changeActive" :activated=false class="icons" />
+            <GlobeIcon :activated=true class="icons"/>
+            <PersonIcon :activated=false class="icons"/>
+            <ArrowIcon :activated=false class="icons"/>
+          </div>
         </li> 
         <li id="switch">
           <h2>Switch</h2>
@@ -56,7 +70,8 @@
         </li> 
         <li id="button">
           <h2>Button</h2>
-          <div class="flex"></div>
+          <div class="flex">
+          </div>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
         </li> 
       </ul>
@@ -64,16 +79,40 @@
 </template>
 
 <script>
-import CheckboxMoritz from '@/components/buttons/Switch.vue';
+import CheckboxMoritz from '@/components/buttons/Switch.vue'
 import Checkbox from '@/components/buttons/Checkbox.vue'
+
 import ProbabilityBox from '@/components/probabilityBox.vue'
+
+import FlagIcon from '@/components/icons/flagIcon.vue'
+import GlobeIcon from '@/components/icons/globeIcon.vue'
+import PersonIcon from '@/components/icons/personIcon.vue'
+import ArrowIcon from '@/components/icons/arrowIcon.vue'
+
+import Logo from '@/components/Logo.vue'
 
 export default {
   name: 'App',
   components: {
     Checkbox,
     CheckboxMoritz,
-    ProbabilityBox
+    ProbabilityBox,
+    FlagIcon,
+    GlobeIcon,
+    PersonIcon,
+    ArrowIcon,
+    Logo,
+  },
+  methods: {
+    changeActive() {
+      let icn = document.getElementsByClassName(".icons")
+      console.log(icn);
+      icn.activated=false; // Make all buttons green
+      this.activated=true; // Make the clicked button black
+    }
+  },
+  mounted: function() {
+    this.changeActive();
   }
 }
 </script>
