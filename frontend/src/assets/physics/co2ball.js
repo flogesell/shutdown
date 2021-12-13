@@ -83,7 +83,7 @@ class Ball
 }
 class CO2Ball
 {
-    constructor(x, y, name, total_emissions, emissions_by_category, scale, world, c_collision_group)
+    constructor(x, y, name, total_emissions, emissions_by_category, scale, c_collision_group)
     {
         this.name = name;
         this.total_emissions = total_emissions;
@@ -100,6 +100,26 @@ class CO2Ball
         this.engine.world.gravity.scale = 0;
     }
 
+    set_scale(val)
+    {
+        this.body.scale = val;
+        this.children.forEach(child => child.body.scale = val);
+    }
+
+    get_scale()
+    {
+        return this.body.scale;
+    }
+
+    set_color(color)
+    {
+        this.body.color = color;
+    }
+
+    get_diameter()
+    {
+        return Math.sqrt(this.body.scale * this.body.current_size/ Math.PI);
+    }
     add_to_world(world)
     {
         this.body.add_to_world(world);

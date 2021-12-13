@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div id="container">
         <Ball :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
-        <Ball v-for="(item, index) in ballObjects" :key="'item' + index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :color="item.color"/>
+        <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :color="item.color"/>
         <button @click="clicker"></button>
     </div>
 </template>
@@ -33,6 +33,37 @@ export default {
     },
 
     methods: {
+        onClickChild (value) {
+            
+            if(this.balls[value].children_visible)
+            {
+                this.balls[value].toggle_children();
+                document.getElementById("container").style.left = "0px";            
+                document.getElementById("container").style.transform ="scale(1)";
+                document.getElementById("container").style.top = "0px";
+                this.balls.forEach(ball => { ball.set_color("black"); })
+                this.total_ball.color = "#ddd";
+            }
+            else
+            {
+                let x = this.balls[value].get_pos().x;
+                let y = this.balls[value].get_pos().y;
+                let d = this.balls[value].get_diameter();
+                let target_d = window.innerHeight * 0.5;
+                let scale = 0.5 * target_d/d;
+                document.getElementById("container").style.left= window.innerWidth/2 -(x*scale) + "px";            
+                document.getElementById("container").style.transform="scale("+ scale +")";
+                document.getElementById("container").style.top= window.innerHeight/2 -(y*scale) + "px";
+                this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
+                this.balls[value].toggle_children();
+                this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
+                console.log(this.balls)
+                this.total_ball.color = "transparent";
+            }
+
+            
+            
+        },
         getData(){
             let tmp_countries = [];
             let tmp_sectors = [];
@@ -78,10 +109,11 @@ export default {
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             engine.world.gravity.scale = 0; 
 
-            console.log(engine.world)
+           
             setInterval(() => {
-                //  attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+                attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
                 attractor.attract();
+                
                 this.balls.forEach(ball => {
                     ball.update();
                 })
@@ -96,11 +128,9 @@ export default {
             */
             
             this.balls[0].toggle_children();
-            console.log(this.balls[0].children)
+           
         },
-        ball_clicked(index){
-            console.log(index);
-        },
+       
         json_to_balls(countries, scale)
         {
             
@@ -165,6 +195,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    #container{
+        position: absolute;
+        display: inline-block;
+      transition: 2s;
+    }
 </style>
