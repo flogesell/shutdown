@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Ball v-for="(item, index) in ballObjects" :key="'item' + index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" />
+        <Ball :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
+        <Ball v-for="(item, index) in ballObjects" :key="'item' + index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :color="item.color"/>
         <button @click="clicker"></button>
     </div>
 </template>
@@ -16,16 +17,6 @@ export default {
     name: 'Diagramm',
     components: {
         Ball
-    },
-    props: {
-        /*
-        balls: {
-            type: Array,
-            default: () => [new CO2Ball (100, 600, 'USA', 10000, [1000], 1), 
-                            new CO2Ball (400, 600, 'Germany', 30000, [1000], 1),
-                            new CO2Ball (400, 1000, 'Leel', 20000, [1000], 1)]
-        }
-        */
     },
     computed: {
         dummy_data() {
@@ -43,11 +34,25 @@ export default {
 
     methods: {
         getData(){
-            let tmp = [];
-            this.balls.forEach(element => {
-                tmp.push(element.get_json())
+            let tmp_countries = [];
+            let tmp_sectors = [];
+            this.balls.forEach(ball => {
+                tmp_countries.push(ball.get_json());
+                if(ball.children_visible)
+                {
+                    let children = ball.get_children_json();
+                    children.forEach(child => tmp_sectors.push(child));
+                }
             });
-            this.ballObjects = tmp;
+            
+            //console.log(tmp)
+            this.ballObjects = tmp_countries.concat(tmp_sectors);
+
+            this.total_emissions = 0;
+            tmp_countries.forEach(country => this.total_emissions += country.size);
+            this.total_ball.size = this.total_emissions;
+            this.total_ball.x = (window.innerWidth / 2) - Math.sqrt(this.total_ball.size / Math.PI);
+            this.total_ball.y = (window.innerHeight / 2) - Math.sqrt(this.total_ball.size / Math.PI);
         },
         async loadData(){
             /*
@@ -67,13 +72,15 @@ export default {
         },
         run(){
             let engine = Matter.Engine.create();
-            let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 0.7, this.balls);
+            let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls);
 
-            Matter.Runner.run(engine)
-            this.balls.forEach(ball => Matter.World.add(engine.world, ball.body));
-            engine.world.gravity.scale = 0;
+            Matter.Runner.run(engine);
+            this.balls.forEach(ball => ball.add_to_world(engine.world));
+            engine.world.gravity.scale = 0; 
 
+            console.log(engine.world)
             setInterval(() => {
+                //  attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
                 attractor.attract();
                 this.balls.forEach(ball => {
                     ball.update();
@@ -82,9 +89,17 @@ export default {
             }, 33) 
         },
         clicker(){
-             this.balls.forEach(element => {
-                element.toggle_emission(0)
+            /*
+            this.balls.forEach(element => {
+                element.toggle_emission(0);
             });
+            */
+            
+            this.balls[0].toggle_children();
+            console.log(this.balls[0].children)
+        },
+        ball_clicked(index){
+            console.log(index);
         },
         json_to_balls(countries, scale)
         {
@@ -123,18 +138,26 @@ export default {
                                            countries[i].name,
                                            countries[i].total_emissions,
                                            countries[i].co2_emissions,
-                                           scale));
+                                           scale,
+                                           i + 1));
             }
             return tmp_balls;
         }
     },
 
     data() {
-         
         return{
             ballObjects: [],
             balls: [],
-            country_data: []
+            country_data: [],
+            total_ball: {
+                x: 0,
+                y: 0,
+                name: "",
+                size: 0,
+                color: '#ddd'
+            },
+            total_emissions: 0
         }
         
     }

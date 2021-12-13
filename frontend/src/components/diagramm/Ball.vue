@@ -1,5 +1,5 @@
 <template>
-  <div class="ball" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter()}">
+  <div class="ball" @click='click' :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color}">
       <p class="name" >{{ name }}</p>
   </div>
 </template>
@@ -22,6 +22,10 @@ export default {
         size: {
             type: Number,
             default: 0
+        },
+        color: {
+            type: String,
+            default: 'black'
         }
     },
     methods: {
@@ -29,8 +33,8 @@ export default {
             let diameter = 2 * Math.sqrt(this.size / Math.PI);
             return diameter + "px";
         },
-        update() {
-
+        click(){
+            console.log(this)
         }
     },
     data(){
@@ -44,7 +48,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .ball{
         position: absolute;
         display: flex;
@@ -53,11 +57,6 @@ export default {
         background-color: black;
         border-radius: 50%;
         color: white;
-        p {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
     }
     
 </style>
