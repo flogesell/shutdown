@@ -37,6 +37,7 @@ export default {
             
             if(this.balls[value].children_visible)
             {
+                this.running = true;
                 this.balls[value].toggle_children();
                 document.getElementById("container").style.left = "0px";            
                 document.getElementById("container").style.transform ="scale(1)";
@@ -46,6 +47,7 @@ export default {
             }
             else
             {
+                this.running = false;
                 let x = this.balls[value].get_pos().x;
                 let y = this.balls[value].get_pos().y;
                 let d = this.balls[value].get_diameter();
@@ -60,9 +62,6 @@ export default {
                 console.log(this.balls)
                 this.total_ball.color = "transparent";
             }
-
-            
-            
         },
         getData(){
             let tmp_countries = [];
@@ -103,21 +102,37 @@ export default {
         },
         run(){
             let engine = Matter.Engine.create();
+            let runner = Matter.Runner.create();
             let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls);
 
-            Matter.Runner.run(engine);
+            console.log(engine)
+
+            Matter.Runner.start(runner, engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             engine.world.gravity.scale = 0; 
 
+            let prev_running = this.running;
+
            
             setInterval(() => {
-                attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
-                attractor.attract();
+                if(prev_running != this.running) {
+                    if(this.running) {
+                        Matter.Runner.run(runner, engine);
+                    }
+                    else {
+                        Matter.Runner.stop(runner);
+                    }
+                }
+                if(this.running) {
+                    attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+                    attractor.attract();
+                }
                 
                 this.balls.forEach(ball => {
                     ball.update();
                 })
                 this.getData();
+                prev_running = this.running;
             }, 33) 
         },
         clicker(){
@@ -187,7 +202,8 @@ export default {
                 size: 0,
                 color: '#ddd'
             },
-            total_emissions: 0
+            total_emissions: 0,
+            running: true
         }
         
     }
