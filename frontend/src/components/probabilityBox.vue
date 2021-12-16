@@ -5,7 +5,7 @@
             <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
         </svg>
             
-        <p class="probability" :id="'number' + deg">{{ deg }}°C</p>
+        <h3 class="probability" :id="'number' + deg">{{ deg }}°C</h3>
     </div>
 </template>
 
@@ -40,18 +40,16 @@ export default {
         justify-content: center;
         text-align: center;
         position: relative;
-        font-family: 'Roboto', sans-serif;
     }
     #circle {
         stroke: $secondary;
     }
     #arc {
-            stroke: $primary;
-            position: absolute;
+        stroke: $primary;
+        position: absolute;
     }
     .probability {
-        font-size: 18px;
-        font-weight: 900;
+        transform: translate(2px, 2px);
         font-style: italic;
         position: absolute;
         margin: 0 auto;

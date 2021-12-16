@@ -70,8 +70,10 @@
         <li id="button">
           <h2>Button</h2>
           <div class="flex">
+            <Button :text='"Backward"' :backwards='true'/>
+            <Button :text='"Forward"'/>
           </div>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
+          <p>Button Elemente orientieren sich in ihrer Gestaltung an den Diagrammen. Neben dem Text wird durch Pfeile stets die Richtung der Navigation verdeutlicht.</p>
         </li> 
       </ul>
   </div>
@@ -79,6 +81,7 @@
 
 <script>
 import CheckboxMoritz from '@/components/buttons/Switch.vue'
+import Button from '@/components/buttons/Button.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
 
@@ -93,6 +96,7 @@ export default {
   name: 'App',
   components: {
     CheckboxMoritz,
+    Button,
     ProbabilityBox,
     FlagIcon,
     GlobeIcon,
