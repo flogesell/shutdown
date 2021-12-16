@@ -51,13 +51,12 @@
             <PersonIcon :activated=false class="icons"/>
             <ArrowIcon :activated=false class="icons"/>
           </div>
+          <p>Icons werden ebefalls in der primären Farbe gesetzt. Der aktive Zustand wird durch den Einsatz der dunkleren Sekundärfarbe kenntlich gemacht.</p>
         </li> 
         <li id="switch">
           <h2>Switch</h2>
           <div class="flex"><CheckboxMoritz/></div>
           <p>Der Switch-Button erinnert an Bestandteile des Logos und zählt als zentrales Element im Interface.</p>
-          <div class="flex"><Checkbox/></div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse soluta quia alias laborum laudantium obcaecati repellat itaque a recusandae aut expedita nam neque, nostrum ducimus doloremque vero sapiente dolores perspiciatis.</p>
         </li>
         <li id="diagram">
           <h2>Diagram</h2>
@@ -66,7 +65,7 @@
             <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'2,5'"/>
             <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'3,5'"/>
           </div>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
+          <p>Die Kontur der Diagramme wird in der Primärfarbe gehalten. Der Balken, welcher die Wahrscheinlichkeit in einem Winkel von 0° (=0%) bis 360° (=100%) anzeigt, erhält die dunklere Sekundärfarbe. Die Gradziele sind mittig im Kreis enthalten und durch einen Hover-Effekt kann die Wahrscheinlichkeit auch in Form einer Zahl abgelesen werden.</p>
         </li> 
         <li id="button">
           <h2>Button</h2>
@@ -80,7 +79,6 @@
 
 <script>
 import CheckboxMoritz from '@/components/buttons/Switch.vue'
-import Checkbox from '@/components/buttons/Checkbox.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
 
@@ -94,7 +92,6 @@ import Logo from '@/components/Logo.vue'
 export default {
   name: 'App',
   components: {
-    Checkbox,
     CheckboxMoritz,
     ProbabilityBox,
     FlagIcon,
