@@ -20,45 +20,42 @@ export default {
       cursor: pointer;
       position: relative;
       appearance: none; outline: none;
-      width: 54px; height: 30px;
-      border-radius: 50px; box-shadow: inset -20px 0 0 0 #ffffff;
+      width: 60px; height: 32px;
+      border-radius: 60px; box-shadow: inset -20px 0 0 0 #ffffff;
       transition-duration: 500ms;
       border: 6px $secondary solid ;
       margin: 5px 0;
   }
 
   input.apple-switch:after {
-      transition: background .5s;
+      transition: .5s;
       content: "";
       position: absolute;
       top: -6px; left: -6px;
-      width: 18px; height: 18px;
-      background-color: white;
+      width: 20px; height: 20px;
+      background-color: $background;
       border: 6px $primary solid;
       border-radius: 50%; 
-      transition: 0.1s;
   }
 
   input.apple-switch:checked {
       border-color: $secondary;
+      transition: transform .5s;
 
     &:after {
       background: $color;
     }
   }
 
+  input.apple-switch:checked:after{
+      transition: .5s;
+  }
+
   input.apple-switch:checked:after {
-      left: 20px;
-      transition: 0.1s;
+      left: 22px;
   }
   input.apple-switch:hover:after {
-    width: 20px; height: 20px;
-    margin: -2px 0 0 -2px;
-    border: 7px $primary solid;
-  }
-  input.apple-switch:checked:hover:after {
-    width: 22px; height: 22px;
-    margin: -3px 0 0 -3px;
+    transform: scale(1.2);
   }
 
 </style>
