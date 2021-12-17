@@ -3,8 +3,7 @@
 import Matter from "matter-js"
 
 
-var Vector = Matter.Vector,
-    Body   = Matter.Body
+var Vector = Matter.Vector
 
 class Attractor
 {
@@ -17,17 +16,13 @@ class Attractor
 
     attract()
     {
-
         let force = Vector.create(0, 0);
         
         this.balls.forEach(ball => {
-            
-            let dist = Vector.sub(this.pos, ball.body.position);
+            let dist = Vector.sub(this.pos, ball.get_pos());
             force = Vector.mult(dist, 0.001 * this.force);
-            Body.set(ball.body, 'velocity', Vector.add(ball.body.velocity, force));
+            ball.add_velocity(force);
         });
-
-        
     }
 }
 

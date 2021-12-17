@@ -10,9 +10,9 @@
         <div class="sector-switch"><checkbox/><p>Agrar</p></div>
       </div>
     </div>
-    <div class="flex-container" id="container-center">
-      <Diagramm/>
-    </div>
+   
+      <Diagramm class="diagramm" />
+ 
     <div class="flex-container" id="container-right">
       <div id="icon-container">
         <img :src="publicPath + 'img/icons/Vereinigungsmenge 8.svg'" alt="" />
