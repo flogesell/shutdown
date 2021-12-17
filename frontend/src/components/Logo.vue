@@ -47,9 +47,6 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/styles/_config.scss';
 
-  .logoIcon {
-      //width: 100%;
-  }
   #light {
       background-color: #F2F2F2;
       padding: 20px;
@@ -100,10 +97,6 @@ export default {
   #light {
     & .switch-btn-logo  {
       fill: white;
-
-      & .switch-btn-inside {
-        //fill: white;
-      }
 
       & .switch-btn-handle {
         & .switch-btn-handle-inside {
