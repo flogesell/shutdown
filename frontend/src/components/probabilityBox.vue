@@ -2,7 +2,7 @@
     <div @mouseenter="displayPerc" @mouseleave="displayDeg" class="probability-container">
         <svg viewBox="0 0 35 35"  width="140px" height="140px">
             <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
-            <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
+            <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="[{'stroke-dasharray': percentage + ', 100' }, {'stroke-dashoffset': percentage}]" />
         </svg>
             
         <h3 class="probability" :id="'number' + deg">{{ deg }}°C</h3>
@@ -47,6 +47,7 @@ export default {
     #arc {
         stroke: $primary;
         position: absolute;
+        animation: draw 0.5s ease-in-out forwards;
     }
     .probability {
         transform: translate(2px, 2px);
@@ -54,6 +55,11 @@ export default {
         position: absolute;
         margin: 0 auto;
         width: 145px;
+    }
+    @keyframes draw {
+        to {
+            stroke-dashoffset: 0;
+        }
     }
     #degree {
         opacity: 1;
