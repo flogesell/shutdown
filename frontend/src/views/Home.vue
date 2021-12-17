@@ -2,28 +2,33 @@
 <template>
   <div class="home">
     <div class="flex-container" id="container-left">
-      <img class="logo" src="@/assets/logo/logo_positive.svg" alt="logo positive">
-      <h2>GLOBAL</h2>
-      <div id="sectors-container">
-        <div class="sector-switch"><checkbox/><p>Verkehr</p></div>
-        <div class="sector-switch"><checkbox/><p>Energie</p></div>
-        <div class="sector-switch"><checkbox/><p>Agrar</p></div>
+      <img id="logo" src="@/assets/logo/logo_positive.svg" alt="logo positive">
+      <div id="sectors-lable-container">
+        <h2 class="flexrow-1">GLOBAL</h2>
+        <ArrowIcon class="flexrow-1" />
       </div>
+      <div id="sectors-container">
+        <div class="sector-switch"><checkbox/><p>Verkehr</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox/><p>Energie</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+      </div>
+      <div id="probability-container">
+        <ProbabilityBox percentage="13" deg="1.5" class="probBox" />
+        <ProbabilityBox percentage="27" deg="2.0" class="probBox" />
+        <ProbabilityBox percentage="60" deg="2.5" class="probBox" />
+        <ProbabilityBox percentage="40" deg="FAILED" class="probBox" />
+      </div>
+      <Button :text='"Show Effects"'/>
     </div>
    
       <Diagramm class="diagramm" />
  
     <div class="flex-container" id="container-right">
       <div id="icon-container">
-        <img :src="publicPath + 'img/icons/Vereinigungsmenge 8.svg'" alt="" />
-        <img :src="publicPath + 'img/icons/Icon_awesome-globe-americas.svg'" alt="" />
-        <img :src="publicPath + 'img/icons/Icon_ionic-ios-flag.svg'" alt="" />
-        <img :src="publicPath + 'img/icons/Icon_ionic-ios-man.svg'" alt="" />
-      </div>
-      <div id="probability-container">
-        <ProbabilityBox percentage="13" deg="1.5" class="probBox" />
-        <ProbabilityBox percentage="27" deg="2.0" class="probBox" />
-        <ProbabilityBox percentage="60" deg="2.5" class="probBox" />
+        <InformationIcon class="icon" :activated=false :small=false />
+        <FlagIcon class="icon" :activated=false />
+        <GlobeIcon class="icon" :activated=true />
+        <PersonIcon class="icon" :activated=false />
       </div>
     </div>
   </div>
@@ -32,15 +37,29 @@
 
 <script>
 import checkbox from '@/components/buttons/Switch.vue'
+import Button from '@/components/buttons/Button.vue'
+
 import ProbabilityBox from '@/components/probabilityBox.vue'
 import Diagramm from '@/components/diagramm/Diagramm.vue'
+
+import ArrowIcon from '@/components/icons/arrowIcon.vue'
+import FlagIcon from '@/components/icons/flagIcon.vue'
+import GlobeIcon from '@/components/icons/globeIcon.vue'
+import InformationIcon from '@/components/icons/informationIcon.vue'
+import PersonIcon from '@/components/icons/personIcon.vue'
 
 export default {
   name: 'Home',
   components: {
     checkbox,
+    Button,
     ProbabilityBox,
-    Diagramm
+    Diagramm,
+    ArrowIcon,
+    FlagIcon,
+    GlobeIcon,
+    InformationIcon,
+    PersonIcon,
   },
   data() {
     return {
@@ -61,23 +80,43 @@ export default {
   height: 100vh;
 }
 #container-left {
-  padding: 100px;
+  padding: 30px 0 30px 100px;
   text-align: left;
-  .logo {
-    margin-bottom: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 25%;
+  #logo {
+    margin-bottom: 50px;
+    width: 75%;
+  }
+  .flexrow-1 {
+    position: relative;
+    flex: 40%;
   }
 }
 #container-right {
-  padding: 100px;
+  padding: 30px 100px 30px 0;
+  width: 10%;
 }
 #container-center {
   width: 60%;
 }
 /* Left Container */
+#sectors-lable-container {
+  display: flex;
+  .flexrow-1 {
+    margin-right: 15px;
+  }
+}
 #sectors-container {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  .sector-info {
+    position: inherit;
+    margin-left: 5px;
+    width: 10%;
+  }
 }
 .sector-switch {
   display: flex;
@@ -87,22 +126,24 @@ export default {
     margin-left: 20px;
   }
 }
+#probability-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  text-align: center;
+  width: 100%;
+  gap: 1.2em;
+  margin: 2.4em 0;
+}
 /* Center Container */
 /* Right Container */
 #icon-container {
   width: 100%;
   display: flex;
-  img {
-    margin: 0 5px;
-  }
-}
-#probability-container {
-  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  text-align: center;
-  gap: 1.2em;
-  margin: 2.4em 0;
+  align-items: center;
+  .icon {
+    margin: 5px 0;
+  }
 }
 </style>

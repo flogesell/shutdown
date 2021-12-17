@@ -4,8 +4,7 @@
             <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
             <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="[{'stroke-dasharray': percentage + ', 100' }, {'stroke-dashoffset': percentage}]" />
         </svg>
-            
-        <h3 class="probability" :id="'number' + deg">{{ deg }}°C</h3>
+        <h3 class="probability" :id="'number' + deg">{{ deg }} {{ deg=='FAILED' ? '' : '°C' }}</h3>
     </div>
 </template>
 
@@ -25,7 +24,11 @@ export default {
         displayDeg() {
            let nbr = document.getElementById('number' + this.deg);
            let deg = this.$props.deg;
-           nbr.innerHTML = deg + "°C";
+           if(deg == "FAILED") {
+                nbr.innerHTML = deg;
+           } else {
+                nbr.innerHTML = deg + "°C";
+           }
         }
     }
 }
