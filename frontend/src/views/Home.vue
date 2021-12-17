@@ -2,7 +2,7 @@
 <template>
   <div class="home">
     <div class="flex-container" id="container-left">
-      <img id="logo" src="@/assets/logo/logo_positive.svg" alt="logo positive">
+      <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
         <h2 class="flexrow-1">GLOBAL</h2>
         <ArrowIcon class="flexrow-1" />
@@ -42,6 +42,7 @@ import Button from '@/components/buttons/Button.vue'
 import ProbabilityBox from '@/components/probabilityBox.vue'
 import Diagramm from '@/components/diagramm/Diagramm.vue'
 
+import Logo from '@/components/Logo.vue'
 import ArrowIcon from '@/components/icons/arrowIcon.vue'
 import FlagIcon from '@/components/icons/flagIcon.vue'
 import GlobeIcon from '@/components/icons/globeIcon.vue'
@@ -53,8 +54,11 @@ export default {
   components: {
     checkbox,
     Button,
+
     ProbabilityBox,
     Diagramm,
+
+    Logo,
     ArrowIcon,
     FlagIcon,
     GlobeIcon,
@@ -87,7 +91,7 @@ export default {
   width: 25%;
   #logo {
     margin-bottom: 50px;
-    width: 75%;
+    width: 100%;
   }
   .flexrow-1 {
     position: relative;

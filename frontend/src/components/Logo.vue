@@ -49,11 +49,9 @@ export default {
 
   #light {
       background-color: #F2F2F2;
-      padding: 20px;
   }
   #dark {
       background-color: $primary;
-      padding: 20px;
   }
   svg>.cls-1 {
     fill: $secondary;
