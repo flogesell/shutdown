@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: 'Switch',
+  name: 'shutdownLogo',
   data() {
     return {
       hover: false,

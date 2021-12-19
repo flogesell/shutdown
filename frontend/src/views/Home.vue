@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import checkbox from '@/components/buttons/Switch.vue'
+import checkbox from '@/components/buttons/shutdownCheckbox.vue'
 import Button from '@/components/buttons/Button.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
