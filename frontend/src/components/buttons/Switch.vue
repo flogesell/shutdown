@@ -1,15 +1,24 @@
 <template>
   <div>
-    <input class="apple-switch" type="checkbox" checked>
+    <input class="apple-switch" type="checkbox" v-model="buttonStatus" @change="emitStatus">
   </div>
 </template>
 
 <script>
 export default {
   name: 'Switch',
-  props: {
-    checked: Boolean
-  }
+  mounted() {
+  },
+  data() {
+    return {
+      buttonStatus: true,
+    }
+  },
+  methods: {
+    emitStatus() {
+      this.$emit('status', this.buttonStatus)
+    }
+  },
 }
 </script>
 

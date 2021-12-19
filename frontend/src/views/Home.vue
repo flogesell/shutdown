@@ -8,9 +8,9 @@
         <ArrowIcon class="flexrow-1" />
       </div>
       <div id="sectors-container">
-        <div class="sector-switch"><checkbox/><p>Verkehr</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox/><p>Energie</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleTraffic" /><p>Traffic</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleEnergy"/><p>Energy</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
       </div>
       <div id="probability-container">
         <ProbabilityBox percentage="13" deg="1.5" class="probBox" />
@@ -21,7 +21,7 @@
       <Button :text='"Show Effects"'/>
     </div>
    
-      <Diagramm class="diagramm" />
+      <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" />
  
     <div class="flex-container" id="container-right">
       <div id="icon-container">
@@ -67,9 +67,23 @@ export default {
   },
   data() {
     return {
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
+      traffic: true,
+      energy: true,
+      agrar: true
     }
-  }
+  },
+  methods: {
+    toggleTraffic(e) {
+      this.traffic = e;
+    },
+    toggleEnergy(e) {
+      this.energy = e;
+    },
+    toggleAgrar(e) {
+      this.agrar = e;
+    }
+  },
 }
 </script>
 

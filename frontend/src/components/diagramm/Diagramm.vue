@@ -15,6 +15,11 @@ import Matter from "matter-js"
 
 export default {
     name: 'Diagramm',
+    props: {
+        energy: Boolean,
+        traffic: Boolean,
+        agrar: Boolean
+    },
     components: {
         Ball
     },
