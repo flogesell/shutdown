@@ -8,20 +8,20 @@
         <ArrowIcon class="flexrow-1" />
       </div>
       <div id="sectors-container">
-        <div class="sector-switch"><checkbox/><p>Verkehr</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox/><p>Energie</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleTraffic" /><p>Traffic</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleEnergy"/><p>Energy</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
       </div>
       <div id="probability-container">
-        <ProbabilityBox percentage="13" deg="1.5" class="probBox" />
-        <ProbabilityBox percentage="27" deg="2.0" class="probBox" />
-        <ProbabilityBox percentage="60" deg="2.5" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
         <ProbabilityBox percentage="40" deg="FAILED" class="probBox" />
       </div>
       <Button :text='"Show Effects"'/>
     </div>
    
-      <Diagramm class="diagramm" />
+      <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" @probabilities_changed="handleProbabilities" />
  
     <div class="flex-container" id="container-right">
       <div id="icon-container">
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import checkbox from '@/components/buttons/Switch.vue'
+import checkbox from '@/components/buttons/shutdownCheckbox.vue'
 import Button from '@/components/buttons/Button.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
@@ -67,9 +67,27 @@ export default {
   },
   data() {
     return {
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
+      traffic: true,
+      energy: true,
+      agrar: true,
+      probabilities: new Array()
     }
-  }
+  },
+  methods: {
+    toggleTraffic(e) {
+      this.traffic = e;
+    },
+    toggleEnergy(e) {
+      this.energy = e;
+    },
+    toggleAgrar(e) {
+      this.agrar = e;
+    },
+    handleProbabilities(e) {
+      this.probabilities = e;
+    }
+  },
 }
 </script>
 

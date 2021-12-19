@@ -94,7 +94,7 @@ class CO2Ball
         this.children = [];
         emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", category, scale, 'grey')));
         this.children_visible = false;
-        this.children_attractor = new Attractor(x, y, 10.0, this.children);
+        this.children_attractor = new Attractor(x, y, 5.0, this.children);
         this.c_collision_group = c_collision_group;
         this.engine = Matter.Engine.create();
         this.engine.world.gravity.scale = 0;
@@ -147,6 +147,15 @@ class CO2Ball
         this.body.set_size(new_size);
     }
 
+
+    set_categories(categories)
+    {
+        for(let i = 0; i < categories.length; i++)
+        {
+            this.emissions_toggles[i] = categories[i];
+        }
+    }
+
     add_children_to_world(world)
     {
         this.children.forEach(child => 
@@ -183,6 +192,11 @@ class CO2Ball
 
     update() 
     { 
+        this.body.target_size = 0;
+        for (let i = 0; i < this.emissions_toggles.length; i++)
+        {
+            this.body.target_size += this.emissions_by_category[i] * this.emissions_toggles[i];
+        }
         this.body.update();
         if(this.children_visible)
         {

@@ -1,22 +1,31 @@
 <template>
   <div>
-    <input class="apple-switch" type="checkbox" checked>
+    <input class="shutdown-switch" type="checkbox" v-model="buttonStatus" @change="emitStatus">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Switch',
-  props: {
-    checked: Boolean
-  }
+  name: 'shutdownCheckbox',
+  mounted() {
+  },
+  data() {
+    return {
+      buttonStatus: true,
+    }
+  },
+  methods: {
+    emitStatus() {
+      this.$emit('status', this.buttonStatus)
+    }
+  },
 }
 </script>
 
 <style scoped lang="scss">
 @import '@/assets/styles/_config.scss';
 
-  input.apple-switch {
+  input.shutdown-switch {
       cursor: pointer;
       position: relative;
       appearance: none; outline: none;
@@ -27,7 +36,7 @@ export default {
       margin: 5px 0;
   }
 
-  input.apple-switch:after {
+  input.shutdown-switch:after {
       transition: .5s;
       content: "";
       position: absolute;
@@ -38,7 +47,7 @@ export default {
       border-radius: 50%; 
   }
 
-  input.apple-switch:checked {
+  input.shutdown-switch:checked {
       border-color: $secondary;
       transition: transform .5s;
 
@@ -47,14 +56,14 @@ export default {
     }
   }
 
-  input.apple-switch:checked:after{
+  input.shutdown-switch:checked:after{
       transition: .5s;
   }
 
-  input.apple-switch:checked:after {
+  input.shutdown-switch:checked:after {
       left: 22px;
   }
-  input.apple-switch:hover:after {
+  input.shutdown-switch:hover:after {
     transform: scale(1.2);
   }
 

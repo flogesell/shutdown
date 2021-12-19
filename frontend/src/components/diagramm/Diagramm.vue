@@ -15,6 +15,11 @@ import Matter from "matter-js"
 
 export default {
     name: 'Diagramm',
+    props: {
+        energy: Boolean,
+        traffic: Boolean,
+        agrar: Boolean
+    },
     components: {
         Ball
     },
@@ -105,7 +110,7 @@ export default {
             let runner = Matter.Runner.create();
             let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls);
 
-            console.log(engine)
+            //console.log(engine)
 
             Matter.Runner.start(runner, engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
@@ -115,6 +120,10 @@ export default {
 
            
             setInterval(() => {
+                let prev_categories = this.balls[0].emissions_toggles;
+                if(prev_categories[0] != this.energy || prev_categories[1] != this.traffic || prev_categories[2] != this.agrar) {
+                    this.emissions_changed = true;
+                }
                 if(prev_running != this.running) {
                     if(this.running) {
                         Matter.Runner.run(runner, engine);
@@ -129,10 +138,20 @@ export default {
                 }
                 
                 this.balls.forEach(ball => {
+                    ball.set_categories([this.energy, this.traffic, this.agrar])
                     ball.update();
                 })
+
+                if(this.emissions_changed) {
+                    let new_emissions = 0;
+                    this.balls.forEach(ball => new_emissions += ball.body.target_size);
+                    let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
+                    console.log(new_probablities);
+                    this.$emit('probabilities_changed', new_probablities);
+                }
                 this.getData();
                 prev_running = this.running;
+                this.emissions_changed = false;
             }, 33) 
         },
         clicker(){
@@ -144,6 +163,45 @@ export default {
             
             this.balls[0].toggle_children();
            
+        },
+
+        co2_to_probabilities(co2) {
+            let probability_table = [17, 33, 50, 67, 83];
+            let co2_table = [[ 900,  650,  500,  400,  300],
+                             [2300, 1700, 1350, 1150,  900],
+                             [3300, 2500, 2050, 1700, 1400]];
+
+            let indices = [-1, -1, -1];
+
+            for(let i = 0; i < 5; i++)
+            {
+                for(let j = 0; j < 3; j++)
+                {
+                    if(co2_table[j][i] > co2)
+                    {
+                        indices[j] = i;
+                    }
+                }
+            }
+
+            let probabilities = [0, 0, 0];
+
+            for(let i = 0; i < 3; i++)
+            {
+                if(indices[i] == 4) 
+                {
+                    probabilities[i] = probability_table[indices[i]].toFixed(1);
+                }
+                else if(indices[i] == -1)
+                {
+                    probabilities[i] = probability_table[0].toFixed(1);
+                }
+                else
+                {
+                    probabilities[i] = ((co2_table[i][indices[i]] - co2) / (co2_table[i][indices[i]] - co2_table[i][indices[i] + 1]) * (probability_table[indices[i] + 1] - probability_table[indices[i]]) + probability_table[indices[i]]).toFixed(1);
+                }
+            }
+            return probabilities;
         },
        
         json_to_balls(countries, scale)
@@ -203,7 +261,8 @@ export default {
                 color: '#ddd'
             },
             total_emissions: 0,
-            running: true
+            running: true,
+            emissions_changed: true
         }
         
     }
