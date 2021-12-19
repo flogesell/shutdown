@@ -145,7 +145,8 @@ export default {
                 if(this.emissions_changed) {
                     let new_emissions = 0;
                     this.balls.forEach(ball => new_emissions += ball.body.target_size);
-                    let new_probablities = this.co2_to_probabilities(new_emissions);
+                    let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
+                    console.log(new_probablities);
                     this.$emit('probabilities_changed', new_probablities);
                 }
                 this.getData();
@@ -167,8 +168,8 @@ export default {
         co2_to_probabilities(co2) {
             let probability_table = [17, 33, 50, 67, 83];
             let co2_table = [[ 900,  650,  500,  400,  300],
-                            [2300, 1700, 1350, 1150,  900],
-                            [3300, 2500, 2050, 1700, 1400]];
+                             [2300, 1700, 1350, 1150,  900],
+                             [3300, 2500, 2050, 1700, 1400]];
 
             let indices = [-1, -1, -1];
 
@@ -261,7 +262,7 @@ export default {
             },
             total_emissions: 0,
             running: true,
-            emissions_changed: false
+            emissions_changed: true
         }
         
     }
