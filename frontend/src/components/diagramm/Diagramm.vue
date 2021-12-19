@@ -190,15 +190,15 @@ export default {
             {
                 if(indices[i] == 4) 
                 {
-                    probabilities[i] = probability_table[indices[i]];
+                    probabilities[i] = probability_table[indices[i]].toFixed(1);
                 }
                 else if(indices[i] == -1)
                 {
-                    probabilities[i] = probability_table[0];
+                    probabilities[i] = probability_table[0].toFixed(1);
                 }
                 else
                 {
-                    probabilities[i] = (co2_table[i][indices[i]] - co2) / (co2_table[i][indices[i]] - co2_table[i][indices[i] + 1]) * (probability_table[indices[i] + 1] - probability_table[indices[i]]) + probability_table[indices[i]];
+                    probabilities[i] = ((co2_table[i][indices[i]] - co2) / (co2_table[i][indices[i]] - co2_table[i][indices[i] + 1]) * (probability_table[indices[i] + 1] - probability_table[indices[i]]) + probability_table[indices[i]]).toFixed(1);
                 }
             }
             return probabilities;
