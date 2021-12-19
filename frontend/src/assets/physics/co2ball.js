@@ -94,7 +94,7 @@ class CO2Ball
         this.children = [];
         emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", category, scale, 'grey')));
         this.children_visible = false;
-        this.children_attractor = new Attractor(x, y, 10.0, this.children);
+        this.children_attractor = new Attractor(x, y, 5.0, this.children);
         this.c_collision_group = c_collision_group;
         this.engine = Matter.Engine.create();
         this.engine.world.gravity.scale = 0;
