@@ -2,7 +2,7 @@
     <div @mouseenter="displayPerc" @mouseleave="displayDeg" class="probability-container">
         <svg viewBox="0 0 35 35"  width="140px" height="140px">
             <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
-            <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="[{'stroke-dasharray': percentage + ', 100' }, {'stroke-dashoffset': percentage}]" />
+            <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="'--from-width:'+Number(oldVal)+'px; --to-width:'+Number(percentage)+'px;'" :key="percentage"/>
         </svg>
         <h3 class="probability" :id="'number' + deg">{{ deg }} {{ deg=='FAILED' ? '' : '°C' }}</h3>
     </div>
@@ -11,6 +11,11 @@
 <script>
 export default {
     name: 'probabilityBox',
+    data() {
+        return {
+            oldVal: 0
+        }
+    },
     props: {
         percentage: String,
         deg: String
@@ -30,7 +35,14 @@ export default {
                 nbr.innerHTML = deg + "°C";
            }
         }
-    }
+    },
+    watch: {
+        percentage(val, oldVal) {
+            if(oldVal === undefined) this.oldVal = 0;
+            else this.oldVal = Number(oldVal);
+            console.log(val, oldVal);
+        },
+  },
 }
 </script>
 
@@ -50,6 +62,7 @@ export default {
     #arc {
         stroke: $primary;
         position: absolute;
+        stroke-linecap: round;
         animation: draw 0.5s ease-in-out forwards;
     }
     .probability {
@@ -60,8 +73,11 @@ export default {
         width: 145px;
     }
     @keyframes draw {
+        from  {
+            stroke-dasharray: var(--from-width), 100px;
+        }
         to {
-            stroke-dashoffset: 0;
+            stroke-dasharray: var(--to-width), 100px;
         }
     }
     #degree {
