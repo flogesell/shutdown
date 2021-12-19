@@ -13,15 +13,15 @@
         <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
       </div>
       <div id="probability-container">
-        <ProbabilityBox percentage="13" deg="1.5" class="probBox" />
-        <ProbabilityBox percentage="27" deg="2.0" class="probBox" />
-        <ProbabilityBox percentage="60" deg="2.5" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
         <ProbabilityBox percentage="40" deg="FAILED" class="probBox" />
       </div>
       <Button :text='"Show Effects"'/>
     </div>
    
-      <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" />
+      <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" @probabilities_changed="handleProbabilities" />
  
     <div class="flex-container" id="container-right">
       <div id="icon-container">
@@ -70,7 +70,8 @@ export default {
       publicPath: process.env.BASE_URL,
       traffic: true,
       energy: true,
-      agrar: true
+      agrar: true,
+      probabilities: new Array()
     }
   },
   methods: {
@@ -82,6 +83,9 @@ export default {
     },
     toggleAgrar(e) {
       this.agrar = e;
+    },
+    handleProbabilities(e) {
+      this.probabilities = e;
     }
   },
 }
