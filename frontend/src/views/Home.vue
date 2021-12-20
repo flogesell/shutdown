@@ -8,11 +8,7 @@
         <ArrowIcon class="flexrow-1" />
       </div>
       <div id="sectors-container">
-        <div class="sector-switch"><checkbox @status="toggleTraffic" /><p>Traffic</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox @status="toggleEnergy"/><p>Energy</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Agriculture</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Export</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Others</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <sectorSwitch v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]"/>
       </div>
       <div id="probability-container">
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
@@ -42,7 +38,7 @@
 </template>
 
 <script>
-import checkbox from '@/components/buttons/shutdownCheckbox.vue'
+import sectorSwitch from '@/components/buttons/sectorSwitch.vue'
 import Button from '@/components/buttons/Button.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
@@ -58,7 +54,7 @@ import PersonIcon from '@/components/icons/personIcon.vue'
 export default {
   name: 'Home',
   components: {
-    checkbox,
+    sectorSwitch,
     Button,
 
     ProbabilityBox,
@@ -81,9 +77,6 @@ export default {
     }
   },
   methods: {
-    toggleTraffic(e) {
-      this.traffic = e;
-    },
     toggleEnergy(e) {
       this.energy = e;
     },
@@ -94,6 +87,12 @@ export default {
       this.probabilities = e;
     }
   },
+  computed: {
+    sectors() {
+      const sectors = this.$store.state.sectors;
+      return sectors;
+    }
+  }
 }
 </script>
 
@@ -132,6 +131,7 @@ export default {
   flex-direction: column;
   align-items: end;
   z-index: 100;
+  min-width: 225px;
 }
 
 #container-center {
@@ -139,6 +139,7 @@ export default {
   left: 0px;
   position: absolute;
   z-index: 1;
+  margin: 30px 0;
 }
 /* Left Container */
 #sectors-lable-container {
