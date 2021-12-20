@@ -27,9 +27,18 @@
         <div class="icon-wrapper"><span>Info</span><InformationIcon class="icon" :activated=false :small=false /></div>
       </div>
       <div id="sector-container" class="icon-container">
-        <div class="icon-wrapper"><span>World</span><GlobeIcon class="icon" :activated=true /></div>
-        <div class="icon-wrapper"><span>Sectors</span><FlagIcon class="icon" :activated=false /></div>
-        <div class="icon-wrapper"><span>Per person </span><PersonIcon class="icon" :activated=false /></div>
+        <div class="icon-wrapper" @click="toggleTab('world')" :class="(this.$store.state.app.activeTab==='world')?'active':''">
+          <span>World</span>
+          <GlobeIcon class="icon" :activated="(this.$store.state.app.activeTab==='world')?true:false" />
+        </div>
+        <div class="icon-wrapper" @click="toggleTab('sectors')" :class="(this.$store.state.app.activeTab==='sectors')?'active':''">
+          <span>Sectors</span>
+          <FlagIcon class="icon" :activated="(this.$store.state.app.activeTab==='sectors')?true:false" />
+        </div>
+        <div class="icon-wrapper" @click="toggleTab('person')" :class="(this.$store.state.app.activeTab==='person')?'active':''">
+          <span>Per person</span>
+          <PersonIcon class="icon" :activated="(this.$store.state.app.activeTab==='person')?true:false" />
+        </div>
       </div>
       
     </div>
@@ -77,11 +86,8 @@ export default {
     }
   },
   methods: {
-    toggleEnergy(e) {
-      this.energy = e;
-    },
-    toggleAgrar(e) {
-      this.agrar = e;
+    toggleTab(tab) {
+      this.$store.commit('CHANGE_ACTIVE_TAB', tab)
     },
     handleProbabilities(e) {
       this.probabilities = e;
@@ -183,6 +189,8 @@ export default {
 }
 
 .icon-container {
+  cursor: pointer;
+  user-select: none;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -193,6 +201,17 @@ export default {
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
+    span {
+        font-family: Roboto;
+        font-size: 25px;
+    }
+    
+    &.active {
+      span {
+        font-weight: bold;
+        font-size: 25px;
+      }
+    }
   }
   .icon {
       width: 35px;
@@ -203,8 +222,11 @@ export default {
       align-items: center;
     & svg {
     height: 100%;
-    width: 100%;
-  }
+    width: 100%; 
+    & path {
+      fill: #A3A3A3 !important;
+    }
+    }
   }
 }
 </style>
