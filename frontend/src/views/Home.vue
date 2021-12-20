@@ -10,26 +10,32 @@
       <div id="sectors-container">
         <div class="sector-switch"><checkbox @status="toggleTraffic" /><p>Traffic</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
         <div class="sector-switch"><checkbox @status="toggleEnergy"/><p>Energy</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
-        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Agriculture</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Export</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Others</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
       </div>
       <div id="probability-container">
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
         <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
-        <ProbabilityBox percentage="40" deg="FAILED" class="probBox" />
+        <Button :text='"Show Effects"'/>
       </div>
-      <Button :text='"Show Effects"'/>
+      
     </div>
-   
+    <div class="flex-container" id="container-center">
       <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" @probabilities_changed="handleProbabilities" />
+    </div>
  
     <div class="flex-container" id="container-right">
-      <div id="icon-container">
-        <InformationIcon class="icon" :activated=false :small=false />
-        <FlagIcon class="icon" :activated=false />
-        <GlobeIcon class="icon" :activated=true />
-        <PersonIcon class="icon" :activated=false />
+      <div id="info-container" class="icon-container">
+        <div class="icon-wrapper"><span>Info</span><InformationIcon class="icon" :activated=false :small=false /></div>
       </div>
+      <div id="sector-container" class="icon-container">
+        <div class="icon-wrapper"><span>World</span><GlobeIcon class="icon" :activated=true /></div>
+        <div class="icon-wrapper"><span>Sectors</span><FlagIcon class="icon" :activated=false /></div>
+        <div class="icon-wrapper"><span>Per person </span><PersonIcon class="icon" :activated=false /></div>
+      </div>
+      
     </div>
   </div>
   
@@ -105,11 +111,14 @@ export default {
   padding: 30px 0 30px 100px;
   text-align: left;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   width: 25%;
+  z-index: 100;
   #logo {
     margin-bottom: 50px;
     width: 100%;
+    max-width: 225px;
   }
   .flexrow-1 {
     position: relative;
@@ -118,10 +127,18 @@ export default {
 }
 #container-right {
   padding: 30px 100px 30px 0;
-  width: 10%;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  z-index: 100;
 }
+
 #container-center {
-  width: 60%;
+  flex-grow: 1;
+  left: 0px;
+  position: absolute;
+  z-index: 1;
 }
 /* Left Container */
 #sectors-lable-container {
@@ -156,16 +173,37 @@ export default {
   width: 100%;
   gap: 1.2em;
   margin: 2.4em 0;
+  margin-top: auto;
 }
 /* Center Container */
 /* Right Container */
-#icon-container {
+#sector-container {
+  margin-top: auto;
+}
+
+.icon-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  .icon-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
   .icon {
-    margin: 5px 0;
+      width: 35px;
+      height: 35px;
+      margin: 5px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    & svg {
+    height: 100%;
+    width: 100%;
+  }
   }
 }
 </style>
