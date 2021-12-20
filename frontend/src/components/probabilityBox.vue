@@ -24,9 +24,6 @@ export default {
         deg: String
     },
     computed: {
-        percentage() {
-            return parseInt(this.$props.percentage);
-        }
     },
     methods: {
         displayPerc() {
