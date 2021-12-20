@@ -24,15 +24,15 @@ export default {
     button{
       transition: transform .5s;
       cursor: pointer;
-      width: 140px;
-      height: 140px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       border: none;
-
+      font-family: Roboto;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba($color: $primary, $alpha: .085);
+      background: $button-grey;
 
       >div{
         transform: translateY(.24em);
