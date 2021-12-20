@@ -1,7 +1,7 @@
 <template>
     <div id="container">
         <Ball :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
-        <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :color="item.color"/>
+        <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color"/>
         <button @click="clicker"></button>
     </div>
 </template>
@@ -16,9 +16,6 @@ import Matter from "matter-js"
 export default {
     name: 'Diagramm',
     props: {
-        energy: Boolean,
-        traffic: Boolean,
-        agrar: Boolean
     },
     components: {
         Ball
@@ -121,7 +118,7 @@ export default {
            
             setInterval(() => {
                 let prev_categories = this.balls[0].emissions_toggles;
-                if(prev_categories[0] != this.energy || prev_categories[1] != this.traffic || prev_categories[2] != this.agrar) {
+                if(prev_categories[0] != this.$store.state.sectors.Energy || prev_categories[1] != this.$store.state.sectors.Traffic || prev_categories[2] != this.$store.state.sectors.Agriculture) {
                     this.emissions_changed = true;
                 }
                 if(prev_running != this.running) {
@@ -138,7 +135,7 @@ export default {
                 }
                 
                 this.balls.forEach(ball => {
-                    ball.set_categories([this.energy, this.traffic, this.agrar])
+                    ball.set_categories([this.$store.state.sectors.Energy, this.$store.state.sectors.Traffic, this.$store.state.sectors.Agriculture])
                     ball.update();
                 })
 
