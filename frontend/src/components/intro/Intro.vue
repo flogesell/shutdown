@@ -150,12 +150,18 @@ export default {
     .indicator{
             
       div{
+        cursor: pointer;
         transition: background .5s;
         width: 12px;
         height: 12px;
         margin: 1.2em 6px;
         border-radius: 50%;
         border: 2px rgba($color: $secondary, $alpha: 1.0) solid;
+
+        &:hover{
+          transform: scale(1.2);
+          background: $color !important;
+        }
       }
     }
 
