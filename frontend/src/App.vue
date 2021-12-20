@@ -1,8 +1,37 @@
 <template>
   <div id="app">
-    <router-view/>
+    <!-- show loader component when data is loading -->
+    <div class="loader" v-if="loader">
+      loading ...
+    </div>
+    <!-- show rendered components if data is loaded -->
+    <router-view v-if="data && !loader && !error"/>
+    <!-- show error msg if data cannot be loaded to the app -->
+    <div v-if="error">
+      404 – Error!
+    </div>
   </div>
 </template>
+
+<script>
+import { mapActions, mapState } from 'vuex'
+import { mapFields } from 'vuex-map-fields';
+
+export default {
+  name: 'App',
+  created(){
+    this.fetchData()
+  },
+  computed: {
+    ...mapState(['loader', 'error']),
+    ...mapFields(['data', 'lang'])
+  },
+  methods: {
+    ...mapActions(['fetchData']),
+  }
+}
+</script>
+
 
 <style lang="scss">
 @import '@/assets/styles/_config.scss';
@@ -36,5 +65,11 @@ h2 {
 p {
   font-size: 18px;
   margin: 0;
+}
+
+.flex_centered{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

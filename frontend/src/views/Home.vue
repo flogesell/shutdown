@@ -1,6 +1,7 @@
 
 <template>
   <div class="home">
+    <Intro/>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
@@ -49,6 +50,7 @@
 <script>
 import sectorSwitch from '@/components/buttons/sectorSwitch.vue'
 import Button from '@/components/buttons/Button.vue'
+import Intro from '@/components/intro/Intro.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
 import Diagramm from '@/components/diagramm/Diagramm.vue'
@@ -65,6 +67,7 @@ export default {
   components: {
     sectorSwitch,
     Button,
+    Intro,
 
     ProbabilityBox,
     Diagramm,

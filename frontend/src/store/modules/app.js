@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import getCSV from '@/common/get_csv'
+import { updateField } from 'vuex-map-fields';
+
 Vue.use(Vuex)
 
 const state = {
     activeTab: 'world',
-    info: false
+    info: false,
+    loader: true,
+    error: false,
 }
 
 const mutations =  {
@@ -14,7 +19,8 @@ const mutations =  {
     },
     TOGGLE_INFO: (state) => {
         state.info = !state.info;
-    }
+    },
+    updateField
 }
 
 const actions = {
@@ -23,7 +29,18 @@ const actions = {
     },
     changeActiveTab({ commit }, tab) {
         commit('CHANGE_ACTIVE_TAB', tab)
-    }
+    },
+    async fetchData({ state }) {
+        try {
+           await getCSV(`/data/CW_HistoricalEmissions_CAIT.csv`).then((response) => {
+              state.data = response
+              state.loader = false;
+           })
+        } catch (e) {
+           state.error = true;
+           console.log(e)
+        }
+      }
 }
 
 export default {
