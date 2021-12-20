@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "axios": "^0.24.0",
-    "jquery": "^3.6.0",
-    "vuex": "^4.0.2",
-    "vuex-map-fields": "^1.4.1"
-  }
-}
