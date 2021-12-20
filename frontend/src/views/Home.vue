@@ -1,49 +1,101 @@
+
 <template>
   <div class="home">
+    <Intro/>
     <div class="flex-container" id="container-left">
-      <h2>GLOBAL</h2>
-      <div id="sectors-container">
-        <div class="sector-switch"><checkbox/><p>Verkehr</p></div>
-        <div class="sector-switch"><checkbox/><p>Energie</p></div>
-        <div class="sector-switch"><checkbox/><p>Agrar</p></div>
+      <Logo id="logo" :checked=false :dark=false />
+      <div id="sectors-lable-container">
+        <h2 class="flexrow-1">GLOBAL</h2>
+        <ArrowIcon class="flexrow-1" />
       </div>
-    </div>
-    <div class="flex-container" id="container-center"></div>
-    <div class="flex-container" id="container-right">
-      <div id="icon-container">
-        <img :src="publicPath + 'img/icons/Vereinigungsmenge 8.svg'" alt="" />
-        <img :src="publicPath + 'img/icons/Icon_awesome-globe-americas.svg'" alt="" />
-        <img :src="publicPath + 'img/icons/Icon_ionic-ios-flag.svg'" alt="" />
-        <img :src="publicPath + 'img/icons/Icon_ionic-ios-man.svg'" alt="" />
+      <div id="sectors-container">
+        <div class="sector-switch"><checkbox @status="toggleTraffic" /><p>Traffic</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleEnergy"/><p>Energy</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
+        <div class="sector-switch"><checkbox @status="toggleAgrar"/><p>Agrar</p><InformationIcon class="sector-info" :activated=false :small=true /></div>
       </div>
       <div id="probability-container">
-        <ProbabilityBox percentage="13" deg="1.5°" class="probBox" />
-        <ProbabilityBox percentage="27" deg="2.0°" class="probBox" />
-        <ProbabilityBox percentage="60" deg="2.5°" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
+        <ProbabilityBox percentage="40" deg="FAILED" class="probBox" />
+      </div>
+      <Button :text='"Show Effects"'/>
+    </div>
+   
+      <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" @probabilities_changed="handleProbabilities" />
+ 
+    <div class="flex-container" id="container-right">
+      <div id="icon-container">
+        <InformationIcon class="icon" :activated=false :small=false />
+        <FlagIcon class="icon" :activated=false />
+        <GlobeIcon class="icon" :activated=true />
+        <PersonIcon class="icon" :activated=false />
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
-import checkbox from '@/components/buttons/Checkbox.vue'
+import checkbox from '@/components/buttons/shutdownCheckbox.vue'
+import Button from '@/components/buttons/Button.vue'
+import Intro from '@/components/intro/Intro.vue'
+
 import ProbabilityBox from '@/components/probabilityBox.vue'
+import Diagramm from '@/components/diagramm/Diagramm.vue'
+
+import Logo from '@/components/Logo.vue'
+import ArrowIcon from '@/components/icons/arrowIcon.vue'
+import FlagIcon from '@/components/icons/flagIcon.vue'
+import GlobeIcon from '@/components/icons/globeIcon.vue'
+import InformationIcon from '@/components/icons/informationIcon.vue'
+import PersonIcon from '@/components/icons/personIcon.vue'
 
 export default {
   name: 'Home',
   components: {
     checkbox,
-    ProbabilityBox
+    Button,
+    Intro,
+
+    ProbabilityBox,
+    Diagramm,
+
+    Logo,
+    ArrowIcon,
+    FlagIcon,
+    GlobeIcon,
+    InformationIcon,
+    PersonIcon,
   },
   data() {
     return {
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
+      traffic: true,
+      energy: true,
+      agrar: true,
+      probabilities: new Array()
     }
-  }
+  },
+  methods: {
+    toggleTraffic(e) {
+      this.traffic = e;
+    },
+    toggleEnergy(e) {
+      this.energy = e;
+    },
+    toggleAgrar(e) {
+      this.agrar = e;
+    },
+    handleProbabilities(e) {
+      this.probabilities = e;
+    }
+  },
 }
 </script>
 
-<style lang="scss">
+
+<style lang="scss" scoped>
 .home {
   display: flex;
   justify-content: space-between;
@@ -53,22 +105,43 @@ export default {
   height: 100vh;
 }
 #container-left {
-  padding: 100px;
+  padding: 30px 0 30px 100px;
   text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  width: 25%;
+  #logo {
+    margin-bottom: 50px;
+    width: 100%;
+  }
+  .flexrow-1 {
+    position: relative;
+    flex: 40%;
+  }
 }
 #container-right {
-  padding: 100px;
+  padding: 30px 100px 30px 0;
+  width: 10%;
 }
 #container-center {
   width: 60%;
 }
-
 /* Left Container */
-
+#sectors-lable-container {
+  display: flex;
+  .flexrow-1 {
+    margin-right: 15px;
+  }
+}
 #sectors-container {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  .sector-info {
+    position: inherit;
+    margin-left: 5px;
+    width: 10%;
+  }
 }
 .sector-switch {
   display: flex;
@@ -78,22 +151,24 @@ export default {
     margin-left: 20px;
   }
 }
-
+#probability-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  text-align: center;
+  width: 100%;
+  gap: 1.2em;
+  margin: 2.4em 0;
+}
 /* Center Container */
-
-
 /* Right Container */
-
 #icon-container {
   width: 100%;
   display: flex;
-  img {
-    margin: 0 5px;
+  flex-direction: column;
+  align-items: center;
+  .icon {
+    margin: 5px 0;
   }
 }
-#probability-container {
-  
-}
-
-
 </style>

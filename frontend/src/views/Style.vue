@@ -10,7 +10,15 @@
             </div>
             <div class="negative">
               <img src="@/assets/logo/logo_negative.svg" alt="logo negative">
-            </div>  
+            </div>
+          </div>
+          <div class="flex">
+            <div class="positive">
+              <Logo :checked=false :dark=false />
+            </div>
+            <div class="positive">
+              <Logo :checked=false :dark=true />
+            </div>
           </div>
           <p>Das Logo existiert in zwei Varianten. Auf hellen Untergründen wird stets die positive Version verwendet. Auf dunklen Hintergründen soll die negative Variante eingesetzt werden. Außerdem ist der 'Switch-Button', welcher eine zentrale Funktion in der Applikation darstellt, ebenfalls enthalten und sollte den eingesetzten Buttons weitesgehend ähnlich sein.</p>
         </li>
@@ -29,7 +37,7 @@
           <div class="flex">
             <h1>Chapter – Roboto Bold, 2.4em</h1>
             <h2>Headline – Roboto Bold, 1.6em</h2>
-            <h3>Subline – Roboto Bold, 1.2em</h3>
+            <h3>Subline – Roboto Bold, 1.3em</h3>
             <p>Text positiv – Roboto Regular, 1em</p>
             <p class="negative">Text negativ – Roboto Medium, 1em</p>
           </div>
@@ -37,41 +45,75 @@
         </li>
         <li id="icon">
           <h2>Icon</h2>
+          <div class="flex">
+            <FlagIcon @click.native="changeActive" :activated=false class="icons" />
+            <GlobeIcon :activated=true class="icons"/>
+            <PersonIcon :activated=false class="icons"/>
+            <ArrowIcon :activated=false class="icons"/>
+          </div>
+          <p>Icons werden ebefalls in der primären Farbe gesetzt. Der aktive Zustand wird durch den Einsatz der dunkleren Sekundärfarbe kenntlich gemacht.</p>
         </li> 
         <li id="switch">
           <h2>Switch</h2>
           <div class="flex"><CheckboxMoritz/></div>
           <p>Der Switch-Button erinnert an Bestandteile des Logos und zählt als zentrales Element im Interface.</p>
-          <div class="flex"><Checkbox/></div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse soluta quia alias laborum laudantium obcaecati repellat itaque a recusandae aut expedita nam neque, nostrum ducimus doloremque vero sapiente dolores perspiciatis.</p>
         </li>
         <li id="diagram">
           <h2>Diagram</h2>
           <div class="flex">
-            <probability-box :percentage='Math.round(Math.random()*100)' :deg="'1,5°C'"/>
+            <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'1,5'"/>
+            <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'2,5'"/>
+            <Probability-box :percentage='Math.round(Math.random()*100)' :deg="'3,5'"/>
           </div>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
+          <p>Die Kontur der Diagramme wird in der Primärfarbe gehalten. Der Balken, welcher die Wahrscheinlichkeit in einem Winkel von 0° (=0%) bis 360° (=100%) anzeigt, erhält die dunklere Sekundärfarbe. Die Gradziele sind mittig im Kreis enthalten und durch einen Hover-Effekt kann die Wahrscheinlichkeit auch in Form einer Zahl abgelesen werden.</p>
         </li> 
         <li id="button">
           <h2>Button</h2>
-          <div class="flex"></div>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui porro deserunt dolores non, vel asperiores quidem, illo sit fugit molestias beatae obcaecati! Vel velit voluptatem deleniti nisi quis, sit incidunt.</p>
+          <div class="flex">
+            <Button :text='"Backward"' :backwards='true'/>
+            <Button :text='"Forward"'/>
+          </div>
+          <p>Button Elemente orientieren sich in ihrer Gestaltung an den Diagrammen. Neben dem Text wird durch Pfeile stets die Richtung der Navigation verdeutlicht.</p>
         </li> 
       </ul>
   </div>
 </template>
 
 <script>
-import CheckboxMoritz from '@/components/buttons/Switch.vue';
-import Checkbox from '@/components/buttons/Checkbox.vue'
-import probabilityBox from '@/components/probabilityBox.vue'
+import CheckboxMoritz from '@/components/buttons/shutdownCheckbox.vue'
+import Button from '@/components/buttons/Button.vue'
+
+import ProbabilityBox from '@/components/probabilityBox.vue'
+
+import FlagIcon from '@/components/icons/flagIcon.vue'
+import GlobeIcon from '@/components/icons/globeIcon.vue'
+import PersonIcon from '@/components/icons/personIcon.vue'
+import ArrowIcon from '@/components/icons/arrowIcon.vue'
+
+import Logo from '@/components/Logo.vue'
 
 export default {
   name: 'App',
   components: {
-    Checkbox,
     CheckboxMoritz,
-    probabilityBox
+    Button,
+    ProbabilityBox,
+    FlagIcon,
+    GlobeIcon,
+    PersonIcon,
+    ArrowIcon,
+    Logo,
+  },
+  methods: {
+    changeActive() {
+      let icn = document.getElementsByClassName(".icons")
+      console.log(icn);
+      icn.activated=false; // Make all buttons green
+      this.activated=true; // Make the clicked button black
+    }
+  },
+  mounted: function() {
+    this.changeActive();
   }
 }
 </script>

@@ -7,14 +7,13 @@
     <div v-else>
       <!-- show rendered components if data is loaded -->
       <div v-if="data">
-
+        <router-view/>
       </div>
       <!-- show error msg if data cannot be loaded to the app -->
       <div v-else>
         404 – Error!
       </div>
     </div>
-    <router-view/>
     <footer>shutdown – HS Augsburg</footer>
   </div>
 </template>
@@ -72,5 +71,11 @@ h2 {
 p {
   font-size: 18px;
   margin: 0;
+}
+
+.flex_centered{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

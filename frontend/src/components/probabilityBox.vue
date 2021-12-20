@@ -1,47 +1,84 @@
 <template>
     <div @mouseenter="displayPerc" @mouseleave="displayDeg" class="probability-container">
-        <svg viewBox="0 0 35 35" id="circle" width="140px" height="140px">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="2" />
+        <svg viewBox="0 0 35 35"  width="140px" height="140px">
+            <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
+            <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="'--from-width:'+Number(oldVal)+'px; --to-width:'+Number(percentage)+'px;'" :key="percentage"/>
         </svg>
-        <svg viewBox="0 0 35 35" id="arc" width="140px" height="140px">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#aaa" stroke-width="2" :style="{ 'stroke-dasharray': percentage + ', 100' }" />
-        </svg>
-        <p class="probability" id="number">{{ deg }}</p>
+        <h3 class="probability" :id="'number' + deg">{{ deg }} {{ deg=='FAILED' ? '' : '°C' }}</h3>
     </div>
 </template>
 
 <script>
 export default {
     name: 'probabilityBox',
+    data() {
+        return {
+            oldVal: 0
+        }
+    },
     props: {
         percentage: String,
         deg: String
     },
     methods: {
         displayPerc() {
-           let nbr = document.getElementById('number');
+           let nbr = document.getElementById('number' + this.deg);
            let prc = this.$props.percentage;
-           nbr.innerHTML = prc + "%";
+           nbr.innerHTML = prc + "%<br>likely";
         },
         displayDeg() {
-           let nbr = document.getElementById('number');
+           let nbr = document.getElementById('number' + this.deg);
            let deg = this.$props.deg;
-           nbr.innerHTML = deg;
+           if(deg == "FAILED") {
+                nbr.innerHTML = deg;
+           } else {
+                nbr.innerHTML = deg + "°C";
+           }
         }
-    }
+    },
+    watch: {
+        percentage(val, oldVal) {
+            if(oldVal === undefined) this.oldVal = 0;
+            else this.oldVal = Number(oldVal);
+            console.log(val, oldVal);
+        },
+  },
 }
 </script>
 
 <style scoped lang="scss">
+@import '@/assets/styles/_config.scss';
+
     .probability-container {
-        margin-top: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+    }
+    #circle {
+        stroke: $secondary;
     }
     #arc {
-        margin-left: -140px;
+        stroke: $primary;
+        position: absolute;
+        stroke-linecap: round;
+        animation: draw 0.5s ease-in-out forwards;
     }
     .probability {
-        margin-top: -90px;
-        font-size: 25px;
+        transform: translate(2px, 2px);
+        font-style: italic;
+        position: absolute;
+        margin: 0 auto;
+        width: 145px;
+    }
+    @keyframes draw {
+        from  {
+            stroke-dasharray: var(--from-width), 100px;
+        }
+        to {
+            stroke-dasharray: var(--to-width), 100px;
+        }
     }
     #degree {
         opacity: 1;
