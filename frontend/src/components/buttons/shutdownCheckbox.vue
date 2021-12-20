@@ -7,11 +7,15 @@
 <script>
 export default {
   name: 'shutdownCheckbox',
+  props: {
+    status: Boolean
+  },
   mounted() {
+    this.buttonStatus = this.status;
   },
   data() {
     return {
-      buttonStatus: true,
+      buttonStatus: false,
     }
   },
   methods: {

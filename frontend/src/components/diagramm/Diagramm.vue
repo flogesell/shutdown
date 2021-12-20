@@ -25,7 +25,7 @@ export default {
     },
     computed: {
         dummy_data() {
-            return this.$store.state.CAIT;
+            return this.$store.state.data.CAIT;
         }
     },
     async mounted(){

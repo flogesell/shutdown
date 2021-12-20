@@ -24,6 +24,6 @@ export default {
     fill: $secondary;
 }
 .activated>svg>path {
-    fill: $color;
+    fill: $primary;
 }
 </style>
