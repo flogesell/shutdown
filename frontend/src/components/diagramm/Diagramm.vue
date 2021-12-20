@@ -48,7 +48,7 @@ export default {
                 document.getElementById("container").style.transform ="scale(1)";
                 document.getElementById("container").style.top = "0px";
                 this.balls.forEach(ball => { ball.set_color("black"); })
-                this.total_ball.color = "#ddd";
+                this.total_ball.color = "#FFC833";
             }
             else
             {
@@ -258,7 +258,7 @@ export default {
                 y: 0,
                 name: "",
                 size: 0,
-                color: '#ddd'
+                color: '#FFC833'
             },
             total_emissions: 0,
             running: true,
@@ -274,6 +274,6 @@ export default {
     #container{
         position: absolute;
         display: inline-block;
-      transition: 2s;
+        transition: 2s;
     }
 </style>

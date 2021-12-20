@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <router-view/>
-    <footer>shutdown – HS Augsburg</footer>
   </div>
 </template>
 
@@ -13,7 +12,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $primary;
-  margin: 1.2em;
   gap: 1.2em;
   display: flex;
   flex-flow: column nowrap;

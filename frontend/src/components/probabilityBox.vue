@@ -1,10 +1,13 @@
 <template>
-    <div @mouseenter="displayPerc" @mouseleave="displayDeg" class="probability-container">
-        <svg viewBox="0 0 35 35"  width="140px" height="140px">
+    <div class="probability-container">
+        <svg viewBox="0 0 35 35"  width="120px" height="120px">
             <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
             <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="'--from-width:'+Number(oldVal)+'px; --to-width:'+Number(percentage)+'px;'" :key="percentage"/>
         </svg>
-        <h3 class="probability" :id="'number' + deg">{{ deg }} {{ deg=='FAILED' ? '' : '°C' }}</h3>
+        <div class="deg-perc-wrapper">
+            <h3 class="degrees" :id="'number' + deg">{{ deg}} {{ deg=='FAILED' ? '' : '°C' }}</h3>
+            <h3 class="probability" :id="'number' + deg">{{ percentage + "%" }} likely</h3>
+        </div>
     </div>
 </template>
 
@@ -19,6 +22,11 @@ export default {
     props: {
         percentage: String,
         deg: String
+    },
+    computed: {
+        percentage() {
+            return parseInt(this.$props.percentage);
+        }
     },
     methods: {
         displayPerc() {
@@ -55,22 +63,36 @@ export default {
         justify-content: center;
         text-align: center;
         position: relative;
+        user-select: none;
     }
     #circle {
-        stroke: $secondary;
+        //stroke: $secondary;
+        fill: #FFDC7C;
     }
     #arc {
         stroke: $primary;
         position: absolute;
-        stroke-linecap: round;
+        //stroke-linecap: round;
         animation: draw 0.5s ease-in-out forwards;
     }
-    .probability {
-        transform: translate(2px, 2px);
-        font-style: italic;
+    .deg-perc-wrapper {
+        display: flex;
+        flex-direction: column;
         position: absolute;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .degrees {
         margin: 0 auto;
-        width: 145px;
+        font-weight: bold;
+        font-size: 25px;
+    }
+    .probability {
+        font-style: italic;
+        font-weight: 200;
+        font-size: 16px;
+        width: 100%;
     }
     @keyframes draw {
         from  {
@@ -82,6 +104,7 @@ export default {
     }
     #degree {
         opacity: 1;
+        color: $black;
     }
     #percentage {
         opacity: 0;
