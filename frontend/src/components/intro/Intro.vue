@@ -5,13 +5,13 @@
       <button id="close" @click="skip_intro()"><h2>&#x2715;</h2></button>
       <img src="@/assets/logo/logo_positive.svg" alt="Logo"/>
     </div>
-    <ol>
+    <ol ref="slider">
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
       <h3>{{paragraph}}</h3>
     </li>
     <Button :text="'next'" id="next"/>
     </ol>
-    <div class="indicator flex_centered">
+    <div ref="indicator" class="indicator flex_centered">
     <div v-for="(paragraph, index) in text" :key="index"></div>
     </div>
     </div>
@@ -38,8 +38,31 @@ export default {
   methods: {
     skip_intro(){
       this.visible = false
+    },
+
+    updateIndicator(){
+      let slider = this.$refs.slider
+      let active = Math.round(slider.scrollLeft / slider.clientWidth)
+      let points = slider.parentElement.querySelector('.indicator').children
+
+      if(slider.scrollLeft % slider.clientWidth){
+        active = Math.round(slider.scrollLeft / slider.clientWidth)
+        for(let el of points){
+          el.style.background = 'none'
+        }
+      }
+      points[active].style.background = '#A3A3A3'
     }
-  }
+  },
+  mounted(){
+    // set active point on mounting the Intro component
+    this.updateIndicator()
+
+    // update active point on scroll
+    this.$refs.slider.addEventListener('scroll', () =>{
+      this.updateIndicator()
+    })
+  },
 }
 </script>
 
@@ -127,6 +150,7 @@ export default {
     .indicator{
             
       div{
+        transition: background .5s;
         width: 12px;
         height: 12px;
         margin: 1.2em 6px;

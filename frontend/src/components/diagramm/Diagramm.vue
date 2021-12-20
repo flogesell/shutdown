@@ -146,7 +146,7 @@ export default {
                     let new_emissions = 0;
                     this.balls.forEach(ball => new_emissions += ball.body.target_size);
                     let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
-                    console.log(new_probablities);
+                    //console.log(new_probablities);
                     this.$emit('probabilities_changed', new_probablities);
                 }
                 this.getData();

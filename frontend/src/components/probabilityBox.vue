@@ -40,7 +40,6 @@ export default {
         percentage(val, oldVal) {
             if(oldVal === undefined) this.oldVal = 0;
             else this.oldVal = Number(oldVal);
-            console.log(val, oldVal);
         },
   },
 }
