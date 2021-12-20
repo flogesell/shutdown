@@ -66,12 +66,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/_config.scss';
     .ball{
         position: absolute;
         display: flex;
         align-content: center;
         justify-content: center;
-        background-color: black;
+        background-color: $primary;
+        opacity: 0.9;
         border-radius: 50%;
         transition: background-color 1s;
         
