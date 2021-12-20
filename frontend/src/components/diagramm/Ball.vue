@@ -1,6 +1,7 @@
 <template>
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
-      <p class="name" >{{ name }}</p>
+      <p class="name" >{{ name }}</p><br>
+      <p class="amount" >{{ (size /1000 ).toFixed(2)  }} Gt</p>
   </div>
 </template>
 
@@ -18,6 +19,10 @@ export default {
         name: {
             type: String,
             default: "not named"
+        },
+        iso: {
+            type: String,
+            default: "no iso"
         },
         size: {
             type: Number,
@@ -67,9 +72,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/_config.scss';
-    .ball{
+    .ball {
+        font-family: Roboto;
         position: absolute;
         display: flex;
+        flex-direction: column;
         align-content: center;
         justify-content: center;
         background-color: $primary;
@@ -82,6 +89,10 @@ export default {
             justify-content: center;
             align-items: center;
             user-select: none;
+        }
+
+        .amount {
+            font-weight: 200;
         }
     }
     
