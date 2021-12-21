@@ -12,6 +12,7 @@
         <sectorSwitch v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]"/>
       </div>
       <div id="probability-container">
+        <h2>Probabilities for reaching climate goals</h2>
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
         <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
@@ -135,6 +136,7 @@ export default {
     position: relative;
     flex: 40%;
   }
+
 }
 #container-right {
   padding: 30px 100px 30px 0;
@@ -143,7 +145,7 @@ export default {
   flex-direction: column;
   align-items: flex-end;
   z-index: 100;
-  min-width: 225px;
+  min-width: 300px;
 }
 
 #container-center {
@@ -187,6 +189,9 @@ export default {
   gap: 1.2em;
   margin: 2.4em 0;
   margin-top: auto;
+  h2 {
+    text-align: left;
+  }
 }
 /* Center Container */
 /* Right Container */
