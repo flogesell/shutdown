@@ -37,7 +37,8 @@ export default {
   },
   methods: {
     skip_intro(){
-      this.visible = false
+      this.visible = false;
+      localStorage.setItem('intro', true)
     },
 
     updateIndicator(){

@@ -1,7 +1,7 @@
 
 <template>
   <div class="home">
-    <Intro/>
+    <Intro v-if="!introAlreadySeen"/>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
@@ -100,6 +100,9 @@ export default {
     sectors() {
       const sectors = this.$store.state.sectors;
       return sectors;
+    },
+    introAlreadySeen() {
+      return localStorage.getItem('intro')
     }
   }
 }
@@ -138,7 +141,7 @@ export default {
   width: 15%;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   z-index: 100;
   min-width: 225px;
 }
