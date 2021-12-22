@@ -26,21 +26,10 @@
  
     <div class="flex-container" id="container-right">
       <div id="info-container" class="icon-container">
-        <div class="icon-wrapper"><span>Info</span><InformationIcon class="icon" :activated=false :small=false /></div>
+        <iconButton @info="$store.commit('TOGGLE_INFO')" action="info" icon="info"/>
       </div>
       <div id="sector-container" class="icon-container">
-        <div class="icon-wrapper" @click="toggleTab('world')" :class="(this.$store.state.app.activeTab==='world')?'active':''">
-          <span>World</span>
-          <GlobeIcon class="icon" :activated="(this.$store.state.app.activeTab==='world')?true:false" />
-        </div>
-        <div class="icon-wrapper" @click="toggleTab('sectors')" :class="(this.$store.state.app.activeTab==='sectors')?'active':''">
-          <span>Sectors</span>
-          <FlagIcon class="icon" :activated="(this.$store.state.app.activeTab==='sectors')?true:false" />
-        </div>
-        <div class="icon-wrapper" @click="toggleTab('person')" :class="(this.$store.state.app.activeTab==='person')?'active':''">
-          <span>Per person</span>
-          <PersonIcon class="icon" :activated="(this.$store.state.app.activeTab==='person')?true:false" />
-        </div>
+        <tabContainer v-for="tab in tabs" :key="tab" :tab="tab"/>
       </div>
       
     </div>
@@ -50,6 +39,8 @@
 
 <script>
 import sectorSwitch from '@/components/buttons/sectorSwitch.vue'
+import tabContainer from '@/components/buttons/tabContainer.vue'
+import iconButton from '@/components/buttons/iconButton.vue'
 import Button from '@/components/buttons/Button.vue'
 import Intro from '@/components/intro/Intro.vue'
 
@@ -58,10 +49,7 @@ import Diagramm from '@/components/diagramm/Diagramm.vue'
 
 import Logo from '@/components/Logo.vue'
 import ArrowIcon from '@/components/icons/arrowIcon.vue'
-import FlagIcon from '@/components/icons/flagIcon.vue'
-import GlobeIcon from '@/components/icons/globeIcon.vue'
-import InformationIcon from '@/components/icons/informationIcon.vue'
-import PersonIcon from '@/components/icons/personIcon.vue'
+
 
 export default {
   name: 'Home',
@@ -75,10 +63,8 @@ export default {
 
     Logo,
     ArrowIcon,
-    FlagIcon,
-    GlobeIcon,
-    InformationIcon,
-    PersonIcon,
+    iconButton,
+    tabContainer
   },
   data() {
     return {
@@ -101,6 +87,10 @@ export default {
     sectors() {
       const sectors = this.$store.state.sectors;
       return sectors;
+    },
+    tabs() {
+      const tabs = this.$store.state.app.tabs;
+      return tabs;
     },
     introAlreadySeen() {
       return localStorage.getItem('intro')
@@ -214,7 +204,7 @@ export default {
     gap: 10px;
     span {
         font-family: Roboto;
-        font-size: 25px;
+        font-size: 1.4em;
     }
     
     &.active {

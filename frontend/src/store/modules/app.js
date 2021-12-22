@@ -7,7 +7,8 @@ import { updateField } from 'vuex-map-fields';
 Vue.use(Vuex)
 
 const state = {
-    activeTab: 'world',
+    activeTab: 'global',
+    tabs: ['global', 'sectors', 'per person'],
     info: false,
     loader: true,
     error: false,
