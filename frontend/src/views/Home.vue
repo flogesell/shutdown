@@ -6,10 +6,13 @@
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
         <h2 class="flexrow-1">GLOBAL</h2>
-        <ArrowIcon class="flexrow-1" />
       </div>
       <div id="sectors-container">
         <sectorSwitch v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]"/>
+        <div class="reset-button">
+          <span>Reset</span>
+          <ArrowIcon class="icon" />
+        </div>
       </div>
       <div id="probability-container">
         <h2>Probabilities for reaching climate goals</h2>
@@ -29,9 +32,9 @@
         <div class="icon-wrapper"><span>Info</span><InformationIcon class="icon" :activated=false :small=false /></div>
       </div>
       <div id="sector-container" class="icon-container">
-        <div class="icon-wrapper" @click="toggleTab('world')" :class="(this.$store.state.app.activeTab==='world')?'active':''">
-          <span>World</span>
-          <GlobeIcon class="icon" :activated="(this.$store.state.app.activeTab==='world')?true:false" />
+        <div class="icon-wrapper" @click="toggleTab('global')" :class="(this.$store.state.app.activeTab==='global')?'active':''">
+          <span>Global</span>
+          <GlobeIcon class="icon" :activated="(this.$store.state.app.activeTab==='global')?true:false" />
         </div>
         <div class="icon-wrapper" @click="toggleTab('sectors')" :class="(this.$store.state.app.activeTab==='sectors')?'active':''">
           <span>Sectors</span>
@@ -189,6 +192,10 @@ export default {
   gap: 1.2em;
   margin: 2.4em 0;
   margin-top: auto;
+  .probBox, button {
+    width: 100px;
+    height: 100px;
+  }
   h2 {
     text-align: left;
   }
@@ -197,6 +204,11 @@ export default {
 /* Right Container */
 #sector-container {
   margin-top: auto;
+}
+
+.reset-button {
+  display: flex;
+  font-size: 1.1em;
 }
 
 .icon-container {
@@ -214,13 +226,12 @@ export default {
     gap: 10px;
     span {
         font-family: Roboto;
-        font-size: 25px;
+        font-size: 1.2em;
     }
     
     &.active {
       span {
         font-weight: bold;
-        font-size: 25px;
       }
     }
   }
