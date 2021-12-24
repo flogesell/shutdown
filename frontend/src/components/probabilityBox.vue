@@ -1,11 +1,11 @@
 <template>
     <div class="probability-container">
-        <svg viewBox="0 0 35 35"  width="120px" height="120px">
+        <svg viewBox="0 0 35 35"  width="150px" height="150px">
             <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
             <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="'--from-width:'+Number(oldVal)+'px; --to-width:'+Number(percentage)+'px;'" :key="percentage"/>
         </svg>
         <div class="deg-perc-wrapper">
-            <h3 class="degrees" :id="'number' + deg">{{ deg}} {{ deg=='FAILED' ? '' : '°C' }}</h3>
+            <h3 class="degrees" :id="'number' + deg">{{deg.replace('.',',')+'°C'}}</h3>
             <h3 class="probability" :id="'number' + deg">{{ parseInt(percentage) + "%" }} likely</h3>
         </div>
     </div>
@@ -82,12 +82,12 @@ export default {
     .degrees {
         margin: 0 auto;
         font-weight: bold;
-        font-size: 25px;
+        font-size: 1.5em;
     }
     .probability {
         font-style: italic;
         font-weight: 200;
-        font-size: 16px;
+        font-size: 1em;
         width: 100%;
     }
     @keyframes draw {
