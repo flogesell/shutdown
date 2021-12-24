@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 const state = {
     activeTab: 'global',
+    tabs: ['global', 'sectors', 'per person'],
     info: false,
     loader: true,
     error: false,
