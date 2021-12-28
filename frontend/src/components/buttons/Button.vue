@@ -33,6 +33,7 @@ export default {
       justify-content: center;
       align-items: center;
       background: $button-grey;
+      box-shadow: 2px 2px 6px rgba($color: $secondary, $alpha: 1.0);
 
       >div{
         transform: translateY(.24em);

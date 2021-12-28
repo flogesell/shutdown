@@ -12,6 +12,12 @@ h3{
   font-size: 1.3em;
 }
 
+.vue-typer{
+  .custom.char {
+    color: $primary;
+  }
+}
+
 .negative{
    font-weight: 500;
 }
