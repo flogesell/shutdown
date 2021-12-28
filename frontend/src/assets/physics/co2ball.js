@@ -59,7 +59,7 @@ class Ball
 
     update()
     {
-        let ease = 0.96;
+        let ease = 0.93;
         let factor = ease + (1 - ease) * ((this.target_size / this.current_size));
         let correction_term = 1 + ((this.current_size / (this.body.area / this.scale) - 1) / 2);
 
@@ -83,7 +83,7 @@ class Ball
 }
 class CO2Ball
 {
-    constructor(x, y, name, total_emissions, emissions_by_category, scale, c_collision_group)
+    constructor(x, y, name, total_emissions, emissions_by_category, scale)
     {
         this.name = name;
         this.total_emissions = total_emissions;
@@ -95,7 +95,6 @@ class CO2Ball
         emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", category, scale, 'grey')));
         this.children_visible = false;
         this.children_attractor = new Attractor(x, y, 5.0, this.children);
-        this.c_collision_group = c_collision_group;
         this.engine = Matter.Engine.create();
         this.engine.world.gravity.scale = 0;
     }
@@ -153,6 +152,7 @@ class CO2Ball
         for(let i = 0; i < categories.length; i++)
         {
             this.emissions_toggles[i] = categories[i];
+            this.children[i].target_size = this.emissions_by_category[i] * categories[i] + 1;
         }
     }
 
@@ -192,12 +192,13 @@ class CO2Ball
 
     update() 
     { 
-        this.body.target_size = 0;
+        this.body.target_size = this.total_emissions;
         for (let i = 0; i < this.emissions_toggles.length; i++)
         {
-            this.body.target_size += this.emissions_by_category[i] * this.emissions_toggles[i];
+            this.body.target_size -= this.emissions_by_category[i] * !this.emissions_toggles[i];
         }
         this.body.update();
+
         if(this.children_visible)
         {
             this.children_attractor.pos = this.body.get_pos();
