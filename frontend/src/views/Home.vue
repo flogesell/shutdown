@@ -2,14 +2,14 @@
 <template>
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
-    <Infobox id="infobox" :headline="'Energy'" :content="'the energysector is a highly inefficient sector!'" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen =false"/>
+    <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
         <h2 class="flexrow-1">Global</h2>
       </div>
       <div id="sectors-container">
-        <SectorSwitch  class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="infoboxOpen =! infoboxOpen"/>
+        <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="infoboxOpen =! infoboxOpen" v-on:makeInfoboxHeadline="makeHeadline(index)" />
         <div class="reset-button">
           <span id="reset-text">Reset</span>
           <ArrowIcon class="icon" />
@@ -80,6 +80,7 @@ export default {
       agrar: true,
       probabilities: new Array(),
       infoboxOpen: false,
+      infoboxHeadline: "Traffic",
     }
   },
   methods: {
@@ -88,6 +89,11 @@ export default {
     },
     handleProbabilities(e) {
       this.probabilities = e;
+    },
+    makeHeadline(sector) {
+      console.log("clicked!")
+      console.log("sector");
+      this.infoboxHeadline = sector;
     }
   },
   computed: {
@@ -101,7 +107,7 @@ export default {
     },
     introAlreadySeen() {
       return localStorage.getItem('intro')
-    }
+    },
   }
 }
 </script>
@@ -196,6 +202,10 @@ export default {
 #sector-container {
   margin-top: auto;
 }
+.sector-btn:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
 
 .reset-button {
   display: flex;
@@ -244,6 +254,13 @@ export default {
       fill: #A3A3A3 !important;
     }
     }
+  }
+}
+
+//----- Media Screen small desktop -----//@at-root
+@media screen and (max-height: 720px) {
+  #probability-container {
+    width: 70%;
   }
 }
 </style>

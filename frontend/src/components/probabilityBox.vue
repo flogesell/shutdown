@@ -105,4 +105,14 @@ export default {
     #percentage {
         opacity: 0;
     }
+
+    //----- Media Screen small desktop -----//@at-root
+    @media screen and (max-height: 720px) {
+        .degrees {
+            font-size: 1em;
+        }
+        .probability {
+            font-size: .7em;
+        }
+    }
 </style>

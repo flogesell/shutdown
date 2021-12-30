@@ -1,8 +1,9 @@
 
 <template>
   <div class="sector-switch">
-      <checkbox :status="status" @status="toggle" />
-      <div class="sector-btn" v-on:click="$emit('toggleInfobox')">
+      <Checkbox v-if="smallSwitch > 720" :status="status" :small="false" @status="toggle" />
+      <Checkbox v-if="smallSwitch <= 720" :status="status" :small="true" @status="toggle" />
+      <div class="sector-btn" v-on:click="$emit('toggleInfobox'); $emit('makeInfoboxHeadline')">
         <p>{{ name }}</p>
         <InformationIcon class="sector-info" :activated=false :small=true />
       </div>
@@ -10,25 +11,37 @@
 </template>
 
 <script>
-import checkbox from '@/components/buttons/shutdownCheckbox.vue'
+import Checkbox from '@/components/buttons/shutdownCheckbox.vue'
 import InformationIcon from '@/components/icons/informationIcon.vue'
 
 export default {
   name: 'sectorSwitch',
   components: {
-    checkbox,
+    Checkbox,
     InformationIcon
   },
   props: {
       name: String,
       status: Boolean
   },
+  data() {
+    return {
+      isSmall: false,
+    }
+  },
   methods: {
     toggle(e) {
       this.$store.commit('CHANGE_SECTOR_STATE', { name: this.name, status: e })
       //this.traffic = e;
-    },
+    }
   },
+  computed: {
+    smallSwitch() {
+      const height = window.innerHeight;
+      console.log(height);
+      return height;
+    }
+  }
 }
 </script>
 
