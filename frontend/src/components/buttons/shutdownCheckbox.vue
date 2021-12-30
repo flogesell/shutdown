@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input class="shutdown-switch" type="checkbox" v-model="buttonStatus" @change="emitStatus">
+    <input class="shutdown-switch" :id="[ small ? 'small' : 'large' ]" type="checkbox" v-model="buttonStatus" @change="emitStatus">
   </div>
 </template>
 
@@ -8,7 +8,8 @@
 export default {
   name: 'shutdownCheckbox',
   props: {
-    status: Boolean
+    status: Boolean,
+    small: Boolean
   },
   mounted() {
     this.buttonStatus = this.status;
@@ -69,6 +70,24 @@ export default {
   }
   input.shutdown-switch:hover:after {
     transform: scale(1.2);
+  }
+
+  //------ small ------//
+
+  input.shutdown-switch#small {
+      width: 40px; height: 21px;
+      border-radius: 26px; box-shadow: inset -13px 0 0 0 #ffffff;
+      border: 4px $secondary solid ;
+      margin: 3.5px 0;
+  }
+
+  input.shutdown-switch#small:after {
+      top: -4px; left: -4px;
+      width: 13px; height: 13px;
+      border: 4px $primary solid;
+  }
+  input.shutdown-switch#small:checked:after {
+      left: 14.5px;
   }
 
 </style>
