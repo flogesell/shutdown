@@ -1,8 +1,8 @@
 <template>
     <div :class="[ activated ? 'activated' : 'inactive' ]" >
-        <svg xmlns="http://www.w3.org/2000/svg" width="25.414" height="27.981" viewBox="0 0 25.414 27.981">
-            <path id="Vereinigungsmenge_8" data-name="Vereinigungsmenge 8" d="M-3978.929,1414.152c-3.583-3.216-8.52-3.786-11.687-3.767v8.216l-9.384-10.8,9.384-10.8v8.346c4.809.295,13.616,1.64,14.862,7.5,1.727,8.122-11.146,11.135-11.146,11.135S-3973.235,1419.263-3978.929,1414.152Z" transform="translate(4000.5 -1396.5)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="17.5" height="17.5" viewBox="0 0 23.125 23.125">
+            <path id="Icon_awesome-undo-alt" data-name="Icon awesome-undo-alt" d="M12.1.562a11.523,11.523,0,0,0-7.966,3.2L2.473,2.1a1.119,1.119,0,0,0-1.91.791v6.25A1.119,1.119,0,0,0,1.681,10.26h6.25a1.119,1.119,0,0,0,.791-1.91L6.776,6.4A7.832,7.832,0,1,1,6.967,18.02a.559.559,0,0,0-.763.026L4.355,19.9a.561.561,0,0,0,.022.813A11.563,11.563,0,1,0,12.1.562Z" transform="translate(-0.563 -0.562)" fill="#575756"/>
+        </svg> 
     </div>
 </template>
 
@@ -21,9 +21,9 @@ export default {
 @import '@/assets/styles/_config.scss';
 
 .inactive>svg>path {
-    fill: $secondary;
+    fill: $primary;
 }
 .activated>svg>path {
-    fill: $primary;
+    fill: $secondary;
 }
 </style>

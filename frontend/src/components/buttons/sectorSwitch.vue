@@ -2,8 +2,10 @@
 <template>
   <div class="sector-switch">
       <checkbox :status="status" @status="toggle" />
+      <div class="sector-btn" v-on:click="$emit('toggleInfobox')">
         <p>{{ name }}</p>
         <InformationIcon class="sector-info" :activated=false :small=true />
+      </div>
     </div>
 </template>
 
@@ -36,11 +38,14 @@ export default {
     display: flex;
     width: 100%;
     align-items: center;
+}
+.sector-btn {
+    width: 100%; 
+    display: flex;
     p {
         margin-left: 20px;
     }
 }
-
 .sector-info {
     position: inherit;
     margin-left: 5px;

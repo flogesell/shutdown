@@ -14,7 +14,7 @@ export default {
   props: {
     text: String,
     backwards: Boolean
-  }
+  },
 }
 </script>
 
@@ -24,8 +24,8 @@ export default {
     button{
       transition: transform .5s;
       cursor: pointer;
-      width: 120px;
-      height: 120px;
+      width: 100%;
+
       border-radius: 50%;
       border: none;
       font-family: Roboto;
