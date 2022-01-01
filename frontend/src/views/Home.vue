@@ -9,7 +9,7 @@
         <h2 class="flexrow-1">Global</h2>
       </div>
       <div id="sectors-container">
-        <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="infoboxOpen =! infoboxOpen" v-on:makeInfoboxHeadline="makeHeadline(index)" />
+        <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
         <div class="reset-button">
           <span id="reset-text">Reset</span>
           <ArrowIcon class="icon" />
@@ -81,6 +81,7 @@ export default {
       probabilities: new Array(),
       infoboxOpen: false,
       infoboxHeadline: "Traffic",
+      oldSector: "",
     }
   },
   methods: {
@@ -91,9 +92,16 @@ export default {
       this.probabilities = e;
     },
     makeHeadline(sector) {
-      console.log("clicked!")
-      console.log("sector");
       this.infoboxHeadline = sector;
+    },
+    toggleSectorInfobox(sector) {
+      if(this.oldSector == sector || this.infoboxOpen == false) {
+         this.infoboxOpen =! this.infoboxOpen;
+      } else {
+        this.infoboxOpen = false;
+        setTimeout(() => { this.infoboxOpen = true }, 500);
+      }
+      this.oldSector = sector;
     }
   },
   computed: {
