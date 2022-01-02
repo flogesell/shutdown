@@ -55,7 +55,10 @@
         </li> 
         <li id="switch">
           <h2>Switch</h2>
-          <div class="flex"><CheckboxMoritz/></div>
+          <div class="flex">
+            <ShutdownCheckbox />
+            <ShutdownCheckbox :small=true />
+          </div>
           <p>Der Switch-Button erinnert an Bestandteile des Logos und zählt als zentrales Element im Interface.</p>
         </li>
         <li id="diagram">
@@ -80,7 +83,7 @@
 </template>
 
 <script>
-import CheckboxMoritz from '@/components/buttons/shutdownCheckbox.vue'
+import ShutdownCheckbox from '@/components/buttons/shutdownCheckbox.vue'
 import Button from '@/components/buttons/Button.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
@@ -95,7 +98,7 @@ import Logo from '@/components/Logo.vue'
 export default {
   name: 'App',
   components: {
-    CheckboxMoritz,
+    ShutdownCheckbox,
     Button,
     ProbabilityBox,
     FlagIcon,

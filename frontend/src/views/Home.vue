@@ -2,24 +2,25 @@
 <template>
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
+    <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
-        <h2 class="flexrow-1">GLOBAL</h2>
+        <h2 class="flexrow-1">Global</h2>
       </div>
       <div id="sectors-container">
-        <sectorSwitch v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]"/>
+        <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
         <div class="reset-button">
-          <span>Reset</span>
+          <span id="reset-text">Reset</span>
           <ArrowIcon class="icon" />
         </div>
       </div>
+      <h2 id="probability-headline">Probabilities for reaching climate goals</h2>
       <div id="probability-container">
-        <h2>Probabilities for reaching climate goals</h2>
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
         <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
-        <Button :text='"Show Effects"'/>
+        <Button :text='"Show</br>Effects"' id="probButton" />
       </div>
       
     </div>
@@ -41,7 +42,7 @@
 </template>
 
 <script>
-import sectorSwitch from '@/components/buttons/sectorSwitch.vue'
+import SectorSwitch from '@/components/buttons/sectorSwitch.vue'
 import tabContainer from '@/components/buttons/tabContainer.vue'
 import iconButton from '@/components/buttons/iconButton.vue'
 import Button from '@/components/buttons/Button.vue'
@@ -49,6 +50,7 @@ import Intro from '@/components/intro/Intro.vue'
 
 import ProbabilityBox from '@/components/probabilityBox.vue'
 import Diagramm from '@/components/diagramm/Diagramm.vue'
+import Infobox from '@/components/infoboxes/Infobox.vue'
 
 import Logo from '@/components/Logo.vue'
 import ArrowIcon from '@/components/icons/arrowIcon.vue'
@@ -57,12 +59,13 @@ import ArrowIcon from '@/components/icons/arrowIcon.vue'
 export default {
   name: 'Home',
   components: {
-    sectorSwitch,
+    SectorSwitch,
     Button,
     Intro,
 
     ProbabilityBox,
     Diagramm,
+    Infobox,
 
     Logo,
     ArrowIcon,
@@ -75,7 +78,10 @@ export default {
       traffic: true,
       energy: true,
       agrar: true,
-      probabilities: new Array()
+      probabilities: new Array(),
+      infoboxOpen: false,
+      infoboxHeadline: "Traffic",
+      oldSector: "",
     }
   },
   methods: {
@@ -84,6 +90,18 @@ export default {
     },
     handleProbabilities(e) {
       this.probabilities = e;
+    },
+    makeHeadline(sector) {
+      this.infoboxHeadline = sector;
+    },
+    toggleSectorInfobox(sector) {
+      if(this.oldSector == sector || this.infoboxOpen == false) {
+         this.infoboxOpen =! this.infoboxOpen;
+      } else {
+        this.infoboxOpen = false;
+        setTimeout(() => { this.infoboxOpen = true }, 500);
+      }
+      this.oldSector = sector;
     }
   },
   computed: {
@@ -97,7 +115,7 @@ export default {
     },
     introAlreadySeen() {
       return localStorage.getItem('intro')
-    }
+    },
   }
 }
 </script>
@@ -117,7 +135,6 @@ export default {
   text-align: left;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   width: 25%;
   z-index: 100;
   #logo {
@@ -128,6 +145,7 @@ export default {
   .flexrow-1 {
     position: relative;
     flex: 40%;
+    margin-bottom: 15px;
   }
 
 }
@@ -155,6 +173,9 @@ export default {
     margin-right: 15px;
   }
 }
+#infobox {
+  z-index: 101;
+}
 #sectors-container {
   width: 100%;
   display: flex;
@@ -173,32 +194,34 @@ export default {
     margin-left: 20px;
   }
 }
-#probability-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  text-align: center;
-  width: 100%;
-  gap: 1.2em;
-  margin: 2.4em 0;
+#probability-headline {
+  margin: 15px 0;
   margin-top: auto;
-  .probBox, button {
-    width: 100px;
-    height: 100px;
-  }
-  h2 {
-    text-align: left;
-  }
+}
+#probability-container {
+  display: grid;
+  width: 100%;
+  height: auto;
+  grid-template-columns: 50% 50%;
+  grid-gap: 1.2em;
 }
 /* Center Container */
 /* Right Container */
 #sector-container {
   margin-top: auto;
 }
+.sector-btn:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
 
 .reset-button {
   display: flex;
   font-size: 1.1em;
+  margin-top: 15px;
+  #reset-text {
+    margin-right: 15px;
+  }
 }
 
 .icon-container {
@@ -239,6 +262,13 @@ export default {
       fill: #A3A3A3 !important;
     }
     }
+  }
+}
+
+//----- Media Screen small desktop -----//@at-root
+@media screen and (max-height: 720px) {
+  #probability-container {
+    width: 70%;
   }
 }
 </style>

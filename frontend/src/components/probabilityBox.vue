@@ -1,6 +1,6 @@
 <template>
     <div class="probability-container">
-        <svg viewBox="0 0 35 35"  width="150px" height="150px">
+        <svg viewBox="0 0 35 35">
             <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
             <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="'--from-width:'+Number(oldVal)+'px; --to-width:'+Number(percentage)+'px;'" :key="percentage"/>
         </svg>
@@ -104,5 +104,15 @@ export default {
     }
     #percentage {
         opacity: 0;
+    }
+
+    //----- Media Screen small desktop -----//@at-root
+    @media screen and (max-height: 720px) {
+        .degrees {
+            font-size: 1em;
+        }
+        .probability {
+            font-size: .7em;
+        }
     }
 </style>
