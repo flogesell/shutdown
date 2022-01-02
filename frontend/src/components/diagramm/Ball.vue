@@ -1,7 +1,7 @@
 <template>
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="name" >{{ name }}</p><br>
-      <p class="amount" >{{ (size /1000 ).toFixed(2)  }} Gt</p>
+      <p class="amount" >{{ (size / 1000 ).toFixed(2)  }} Gt</p>
   </div>
 </template>
 

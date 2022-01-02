@@ -12,7 +12,7 @@ class Ball
         this.body = Matter.Bodies.circle(x, y, Math.sqrt(scale * size / Math.PI));
         this.color = color;
         this.world;
-    }
+    } 
 
     set_collision_group(group)
     {
@@ -77,13 +77,14 @@ class Ball
             yv:    this.body.position.y - Math.sqrt(this.scale * this.current_size / Math.PI),
             size:  this.current_size * this.scale,
             name:  this.name,
-            color: this.color
+            color: this.color,
+            emissions: this.current_size
         }
     }
 }
 class CO2Ball
 {
-    constructor(x, y, name, total_emissions, emissions_by_category, scale)
+    constructor(x, y, name, total_emissions, emissions_by_category, population, scale)
     {
         this.name = name;
         this.total_emissions = total_emissions;
@@ -97,6 +98,9 @@ class CO2Ball
         this.children_attractor = new Attractor(x, y, 5.0, this.children);
         this.engine = Matter.Engine.create();
         this.engine.world.gravity.scale = 0;
+        this.population = population;
+        this.world_population = 7673.0;
+        this.per_person = false;
     }
 
     set_scale(val)
@@ -117,8 +121,14 @@ class CO2Ball
 
     get_diameter()
     {
-        return Math.sqrt(this.body.scale * this.body.current_size/ Math.PI);
+        return Math.sqrt(this.body.scale * this.body.current_size / Math.PI);
     }
+
+    set_per_person(val)
+    {
+        this.per_person = val;
+    }
+
     add_to_world(world)
     {
         this.body.add_to_world(world);
@@ -197,6 +207,13 @@ class CO2Ball
         {
             this.body.target_size -= this.emissions_by_category[i] * !this.emissions_toggles[i];
         }
+
+        if(this.per_person)
+        {
+            console.log(this.name + ": " + this.population)
+            this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
+        }
+
         this.body.update();
 
         if(this.children_visible)

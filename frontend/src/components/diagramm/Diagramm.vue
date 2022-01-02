@@ -2,7 +2,6 @@
     <div id="container">
         <Ball :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color"/>
-        <button @click="clicker"></button>
     </div>
 </template>
 
@@ -25,7 +24,7 @@ export default {
             return this.$store.state.data.CAIT;
         }
     },
-    async mounted(){
+    async mounted() {
         await this.loadData();
         this.run();
     },
@@ -35,7 +34,7 @@ export default {
     },
 
     methods: {
-        onClickChild (value) {
+        onClickChild(value) {
             
             if(this.balls[value].children_visible)
             {
@@ -65,7 +64,7 @@ export default {
                 this.total_ball.color = "transparent";
             }
         },
-        getData(){
+        getData() {
             let tmp_countries = [];
             let tmp_sectors = [];
             this.balls.forEach(ball => {
@@ -86,7 +85,7 @@ export default {
             this.total_ball.x = (window.innerWidth / 2) - Math.sqrt(this.total_ball.size / Math.PI);
             this.total_ball.y = (window.innerHeight / 2) - Math.sqrt(this.total_ball.size / Math.PI);
         },
-        async loadData(){
+        async loadData() {
             /*
             this.country_data = await cait_to_json('../assets/CAIT/total/', 
                                       'cait_total_allGHG.csv',
@@ -98,11 +97,11 @@ export default {
                                      */
 
             
-            this.balls = this.json_to_balls(this.dummy_data, 4);
+            this.balls = this.json_to_balls(this.dummy_data, this.$store.state.data.population, 4);
             
             
         },
-        run(){
+        run() {
             let engine = Matter.Engine.create();
             let runner = Matter.Runner.create();
             let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls);
@@ -113,53 +112,62 @@ export default {
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             engine.world.gravity.scale = 0; 
 
-            let prev_running = this.running;
-
-           
+            
             setInterval(() => {
-                let prev_categories = this.balls[0].emissions_toggles;
-                if(prev_categories[0] != this.$store.state.sectors.Energy || prev_categories[1] != this.$store.state.sectors.Traffic || prev_categories[2] != this.$store.state.sectors.Agriculture) {
-                    this.emissions_changed = true;
-                }
-                if(prev_running != this.running) {
-                    if(this.running) {
-                        Matter.Runner.run(runner, engine);
-                    }
-                    else {
-                        Matter.Runner.stop(runner);
-                    }
-                }
-                if(this.running) {
-                    attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
-                    attractor.attract();
-                }
-                
-                this.balls.forEach(ball => {
-                    ball.set_categories([this.$store.state.sectors.Energy, this.$store.state.sectors.Traffic, this.$store.state.sectors.Agriculture])
-                    ball.update();
-                })
-
-                if(this.emissions_changed) {
-                    let new_emissions = 0;
-                    this.balls.forEach(ball => new_emissions += ball.body.target_size);
-                    let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
-                    //console.log(new_probablities);
-                    this.$emit('probabilities_changed', new_probablities);
+                switch (this.$store.state.app.activeTab){
+                    case 'global':
+                        this.global_tab(engine, runner, attractor, false);
+                        break;
+                    case 'sectors':
+                        break;
+                    case 'per person':
+                        this.global_tab(engine, runner, attractor, true);
+                        break;
+                    default:
+                        this.global_tab(engine, runner, attractor, false);
+                        break;
                 }
                 this.getData();
-                prev_running = this.running;
-                this.emissions_changed = false;
+                this.prev_running = this.running;
             }, 33) 
         },
-        clicker(){
-            /*
-            this.balls.forEach(element => {
-                element.toggle_emission(0);
-            });
-            */
+        
+        global_tab(engine, runner, attractor, per_person) {
+            this.balls.forEach(ball => ball.set_per_person(per_person));
+
+            let prev_categories = this.balls[0].emissions_toggles;
+
+            if(prev_categories[0] != this.$store.state.sectors.Energy || prev_categories[1] != this.$store.state.sectors.Traffic || prev_categories[2] != this.$store.state.sectors.Agriculture) {
+                this.emissions_changed = true;
+            }
             
-            this.balls[0].toggle_children();
-           
+            if(this.prev_running != this.running) {
+                if(this.running) {
+                    Matter.Runner.run(runner, engine);
+                }
+                else {
+                    Matter.Runner.stop(runner);
+                }
+            }
+
+            if(this.running) {
+                attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+                attractor.attract();
+            }
+            
+            this.balls.forEach(ball => {
+                ball.set_categories([this.$store.state.sectors.Energy, this.$store.state.sectors.Traffic, this.$store.state.sectors.Agriculture])
+                ball.update();
+            });
+
+            if(this.emissions_changed) {
+                let new_emissions = 0;
+                this.balls.forEach(ball => new_emissions += ball.body.target_size);
+                let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
+                //console.log(new_probablities);
+                this.$emit('probabilities_changed', new_probablities);
+            }
+            this.emissions_changed = false;
         },
 
         co2_to_probabilities(co2) {
@@ -183,37 +191,33 @@ export default {
 
             let probabilities = [0, 0, 0];
 
-            for(let i = 0; i < 3; i++)
-            {
-                if(indices[i] == 4) 
-                {
+            for(let i = 0; i < 3; i++) {
+                if(indices[i] == 4) {
                     probabilities[i] = probability_table[indices[i]].toFixed(1);
                 }
-                else if(indices[i] == -1)
-                {
+                else if(indices[i] == -1) {
                     probabilities[i] = probability_table[0].toFixed(1);
                 }
-                else
-                {
+                else {
                     probabilities[i] = ((co2_table[i][indices[i]] - co2) / (co2_table[i][indices[i]] - co2_table[i][indices[i] + 1]) * (probability_table[indices[i] + 1] - probability_table[indices[i]]) + probability_table[indices[i]]).toFixed(1);
                 }
             }
             return probabilities;
         },
        
-        json_to_balls(countries, scale)
-        {
+        json_to_balls(countries, population, scale) {
             
             //ordering countries by total co2 emissions
-            for(let i = 0; i < countries.length; i++)
-            {
-                for(let j = 0; j < countries.length; j++)
-                {
-                    if(countries[j].co2_emissions[0] < countries[i].co2_emissions[0])
-                    {
+            for(let i = 0; i < countries.length; i++) {
+                for(let j = 0; j < countries.length; j++) {
+                    if(countries[j].co2_emissions[0] < countries[i].co2_emissions[0]) {
                         let tmp      = countries[j];
                         countries[j] = countries[i];
                         countries[i] = tmp;
+
+                        let tmp2      = population[j];
+                        population[j] = population[i];
+                        population[i] = tmp2;
                     }
                 }
             }
@@ -231,22 +235,21 @@ export default {
 
             let tmp_balls = [];
 
-            for(let i = 0; i < countries.length - 1; i++)
-            {
+            for(let i = 0; i < countries.length - 1; i++) {
                 tmp_balls.push(new CO2Ball(w0 + dist * (i % grid_columns) - (dist * grid_columns) / 2, 
                                            h0 + dist * parseInt(i / grid_columns) - (dist * grid_rows) / 2,
                                            countries[i].name,
                                            countries[i].total_emissions,
                                            countries[i].co2_emissions,
-                                           scale,
-                                           i + 1));
+                                           population[i].population,
+                                           scale));
             }
             return tmp_balls;
         }
     },
 
     data() {
-        return{
+        return {
             ballObjects: [],
             balls: [],
             country_data: [],
@@ -259,6 +262,7 @@ export default {
             },
             total_emissions: 0,
             running: true,
+            prev_running: true,
             emissions_changed: true
         }
         
