@@ -101,6 +101,7 @@ class CO2Ball
         this.population = population;
         this.world_population = 7673.0;
         this.per_person = false;
+        this.global_emissions = 0;
     }
 
     set_scale(val)
@@ -124,8 +125,9 @@ class CO2Ball
         return Math.sqrt(this.body.scale * this.body.current_size / Math.PI);
     }
 
-    set_per_person(val)
+    set_per_person(val, global_emissions)
     {
+        this.global_emissions = global_emissions;
         this.per_person = val;
     }
 
@@ -210,7 +212,8 @@ class CO2Ball
 
         if(this.per_person)
         {
-            console.log(this.name + ": " + this.population)
+            console.log(this.global_emissions)
+            //world_population / 15 is provisional, should be global emissions / number of countries
             this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
         }
 

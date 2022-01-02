@@ -133,7 +133,10 @@ export default {
         },
         
         global_tab(engine, runner, attractor, per_person) {
-            this.balls.forEach(ball => ball.set_per_person(per_person));
+            let prev_total = 0;
+            this.balls.forEach(ball => prev_total += ball.body.target_size);
+
+            console.log(prev_total)
 
             let prev_categories = this.balls[0].emissions_toggles;
 
@@ -156,6 +159,7 @@ export default {
             }
             
             this.balls.forEach(ball => {
+                ball.set_per_person(per_person, prev_total)
                 ball.set_categories([this.$store.state.sectors.Energy, this.$store.state.sectors.Traffic, this.$store.state.sectors.Agriculture])
                 ball.update();
             });
@@ -171,16 +175,16 @@ export default {
         },
 
         co2_to_probabilities(co2) {
-            let probability_table = [17, 33, 50, 67, 83];
-            let co2_table = [[ 900,  650,  500,  400,  300],
-                             [2300, 1700, 1350, 1150,  900],
-                             [3300, 2500, 2050, 1700, 1400]];
+            let probability_table = [0, 17, 33, 50, 67, 83];
+            let co2_table = [[1350,  900,  650,  500,  400,  300],
+                             [4000, 2300, 1700, 1350, 1150,  900],
+                             [5000, 3300, 2500, 2050, 1700, 1400]];
 
             let indices = [-1, -1, -1];
 
-            for(let i = 0; i < 5; i++)
+            for(let i = 0; i < co2_table[0].length; i++)
             {
-                for(let j = 0; j < 3; j++)
+                for(let j = 0; j < co2_table.length; j++)
                 {
                     if(co2_table[j][i] > co2)
                     {
@@ -191,8 +195,8 @@ export default {
 
             let probabilities = [0, 0, 0];
 
-            for(let i = 0; i < 3; i++) {
-                if(indices[i] == 4) {
+            for(let i = 0; i < co2_table.length; i++) {
+                if(indices[i] == co2_table[0].length - 1) {
                     probabilities[i] = probability_table[indices[i]].toFixed(1);
                 }
                 else if(indices[i] == -1) {
