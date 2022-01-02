@@ -19,7 +19,7 @@ export default {
     action: String 
   },
   methods: {
-  },
+  }
 }
 </script>
 

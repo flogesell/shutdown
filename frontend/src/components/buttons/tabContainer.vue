@@ -28,6 +28,7 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/styles/_config.scss';
 .icon-wrapper {
+  margin: 5px;
     width: 100%;
     display: flex;
     align-items: center;
