@@ -6,7 +6,7 @@
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
-        <h2 class="flexrow-1">Global</h2>
+        <h2 class="flexrow-1">Emission Sectors</h2>
       </div>
       <div id="sectors-container">
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
@@ -15,8 +15,9 @@
           <ArrowIcon class="icon" />
         </div>
       </div>
-      <h2 id="probability-headline">Probabilities for reaching climate goals</h2>
+      
       <div id="probability-container">
+        <h2 id="probability-headline">Probabilities for reaching climate goals</h2>
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
         <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
@@ -30,7 +31,7 @@
  
     <div class="flex-container" id="container-right">
       <div id="info-container" class="icon-container">
-        <iconButton @info="$store.commit('TOGGLE_INFO')" action="info" icon="info"/>
+        <iconButton @info="$router.push('info')" action="info" icon="info"/>
       </div>
       <div id="sector-container" class="icon-container">
         <tabContainer v-for="tab in tabs" :key="tab" :tab="tab"/>
@@ -135,8 +136,9 @@ export default {
   text-align: left;
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 22%;
   z-index: 100;
+  min-width: 420px;
   #logo {
     margin-bottom: 50px;
     width: 100%;
@@ -203,7 +205,20 @@ export default {
   width: 100%;
   height: auto;
   grid-template-columns: 50% 50%;
-  grid-gap: 1.2em;
+  margin-top: auto;
+  grid-gap: 15px 0;
+  //grid-gap: 1.2em;
+
+  #probability-headline {
+    grid-column: span 2;
+  }
+
+  .probBox, #probButton {
+    max-width: 130px;
+    max-height: 130px;
+  }
+
+
 }
 /* Center Container */
 /* Right Container */
