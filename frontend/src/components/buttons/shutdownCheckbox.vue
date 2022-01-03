@@ -24,6 +24,11 @@ export default {
       this.$emit('status', this.buttonStatus)
     }
   },
+  watch: {
+    status: function () {
+      this.buttonStatus = this.status;
+    }
+  },
 }
 </script>
 

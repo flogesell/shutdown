@@ -10,7 +10,7 @@
       </div>
       <div id="sectors-container">
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
-        <div class="reset-button">
+        <div class="reset-button" @click="reset">
           <span id="reset-text">Reset</span>
           <ArrowIcon class="icon" />
         </div>
@@ -88,6 +88,9 @@ export default {
   methods: {
     toggleTab(tab) {
       this.$store.commit('CHANGE_ACTIVE_TAB', tab)
+    },
+    reset() {
+      this.$store.commit('RESET')
     },
     handleProbabilities(e) {
       this.probabilities = e;

@@ -14,6 +14,13 @@ const state = {
 const mutations =  {
     CHANGE_SECTOR_STATE: (state, data) => {
         state[data.name] = data.status
+    },
+    RESET: (state) => {
+        state.Traffic = true;
+        state.Energy = true;
+        state.Agriculture = true;
+        state.Export = true;
+        state.Others = true;
     }
 }
 
