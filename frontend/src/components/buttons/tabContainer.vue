@@ -2,7 +2,7 @@
 <template>
   <div class="icon-wrapper" @click="toggleTab(tab)" :class="($store.state.app.activeTab===tab)?'active':''">
     <span style="text-transform: capitalize;">{{tab}}</span>
-    <icon :activated="($store.state.app.activeTab===tab)?true:false" :icon="tab" />
+    <icon :activated="($store.state.app.activeTab===tab)?true:false" :icon="getIcon" />
   </div>
 </template>
 
@@ -22,6 +22,21 @@ export default {
       this.$store.commit('CHANGE_ACTIVE_TAB', this.tab)
     },
   },
+  computed: {
+    getIcon() {
+      const icon = this.tab;
+      switch (icon) {
+        case "Per Country":
+          return "global"
+        case "Per Sector":
+          return "sectors"
+        case "Per person":
+          return "person"
+        default:
+          return "none"
+      }
+    }
+  }
 }
 </script>
 
