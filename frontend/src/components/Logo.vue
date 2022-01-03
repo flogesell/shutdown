@@ -48,7 +48,7 @@ export default {
 @import '@/assets/styles/_config.scss';
 
   #light {
-      background-color: #F2F2F2;
+      background-color: $background;
   }
   #dark {
       background-color: $primary;
