@@ -3,6 +3,7 @@
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
     <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
+    <div class="position"> <h1>{{(getPosition.back) ? '🠔 ' : ''}}{{getPosition.tab}}</h1></div>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
@@ -21,7 +22,7 @@
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
         <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
-        <Button :text='"Show</br>Effects"' id="probButton" />
+        <Button @click="$router.push('/effects')" :text='"Show</br>Effects"' id="probButton" />
       </div>
       
     </div>
@@ -120,6 +121,11 @@ export default {
     introAlreadySeen() {
       return localStorage.getItem('intro')
     },
+    getPosition() {
+      if(this.$store.state.app.activeTab && this.$store.state.app.activeSpecific.length === 0) {
+        return { tab: this.$store.state.app.activeTab, back: false}
+      } else return { tab: this.$store.state.app.activeSpecific, back: true};
+    },
   }
 }
 </script>
@@ -133,6 +139,12 @@ export default {
 }
 .flex-container {
   height: 100vh;
+}
+.position {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  padding-top: 30px;
 }
 #container-left {
   padding: 30px 0 30px 100px;
@@ -237,6 +249,7 @@ export default {
   display: flex;
   font-size: 1.1em;
   margin-top: 15px;
+  cursor: pointer;
   #reset-text {
     margin-right: 15px;
   }
