@@ -55,6 +55,7 @@ export default {
     width: 100%; 
     display: flex;
     p {
+      user-select: none;
         margin-left: 20px;
     }
 }
