@@ -7,7 +7,7 @@ const state = {
     Traffic: true,
     Energy: true,
     Agriculture: true,
-    Export: false,
+    Export: true,
     Others: true
 }
 
