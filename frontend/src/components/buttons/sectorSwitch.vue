@@ -38,7 +38,6 @@ export default {
   computed: {
     smallSwitch() {
       const height = window.innerHeight;
-      console.log(height);
       return height;
     }
   }

@@ -61,7 +61,7 @@ export default {
                 this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
                 this.balls[value].toggle_children();
                 this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
-                console.log(this.balls)
+                //console.log(this.balls)
                 this.total_ball.color = "transparent";
             }
         },
