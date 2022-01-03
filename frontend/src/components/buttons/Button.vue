@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="shootArrow" v-on:mouseover="prepArrow">
+  <button v-on:click="$emit('click')">
       <div class="deg-perc-wrapper">
         <h3 v-html="text"></h3>
         <h2 id="arrow">{{ (backwards ? '&larr;' : '&rarr;') }}</h2>
