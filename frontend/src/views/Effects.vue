@@ -5,7 +5,7 @@
     <div class="text">
       <p>Your personal effects of your shutdown scenario will be displayed here later.</p>
       </div>
-    <Button :text='"Try</br>again!"' id="probButton" @click="$router.push('/')" />
+    <Button :text='"Try</br>again!"' id="probButton" @click="tryAgain" />
   </div>
   
 </template>
@@ -23,7 +23,13 @@ export default {
   data() {
     return {
     }
-  }
+  },
+  methods: {
+    tryAgain() {
+      this.$router.push('/')
+      this.$store.commit('RESET')
+    },
+  },
 }
 </script>
 
