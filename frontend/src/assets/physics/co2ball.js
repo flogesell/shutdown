@@ -129,6 +129,20 @@ class CO2Ball
     {
         this.global_emissions = global_emissions;
         this.per_person = val;
+        if(val)
+        {
+            for(let i = 0; i < this.children.length; i++)
+            {
+                this.children[i].set_size((this.emissions_by_category[i] / this.population) * (this.world_population / 15));
+            }
+        }
+        else
+        {
+            for(let i = 0; i < this.children.length; i++)
+            {
+                this.children[i].set_size(this.emissions_by_category[i]);
+            }
+        }
     }
 
     add_to_world(world)
@@ -155,6 +169,7 @@ class CO2Ball
         {
             new_size -= this.emissions_by_category[i] * this.emissions_toggles[i];
         }
+        
         this.body.set_size(new_size);
     }
 
@@ -165,6 +180,10 @@ class CO2Ball
         {
             this.emissions_toggles[i] = categories[i];
             this.children[i].target_size = this.emissions_by_category[i] * categories[i] + 1;
+            if(this.per_person)
+            {
+                this.children[i].target_size = (this.children[i].target_size / this.population) * (this.world_population / 15);
+            }
         }
     }
 
