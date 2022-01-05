@@ -1,7 +1,7 @@
 <template>
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="name" >{{ name }}</p><br>
-      <p class="amount" >{{ (size / 1000 ).toFixed(2)  }} Gt</p>
+      <p class="amount" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
   </div>
 </template>
 
@@ -35,14 +35,15 @@ export default {
             type:String,
             default: "black",
         },
+        emissions: {
+            type: Number,
+            default: 0
+        }
     },
     methods: {
         diameter() {
             let diameter = 2 * Math.sqrt(this.size / Math.PI);
             return diameter + "px";
-        },
-        update() {
-
         },
         startZoom(key) {
             if(this.color != "transparent"){
@@ -97,6 +98,4 @@ export default {
     }
     
 </style>
-
-//constructor(x, y, name, total_emissions, emissions_by_category, scale)
     
