@@ -2,11 +2,13 @@
     <div id="container">
         <Ball :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color"/>
+        <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'black'"/>
     </div>
 </template>
 
 <script>
 import Ball from './Ball.vue'
+import Scale from './Scale.vue'
 import CO2Ball from '@/assets/physics/co2ball'
 import Attractor from '@/assets/physics/attractor'
 import Matter from "matter-js"
@@ -17,11 +19,15 @@ export default {
     props: {
     },
     components: {
-        Ball
+        Ball,
+        Scale
     },
     computed: {
         dummy_data() {
             return this.$store.state.data.CAIT;
+        },
+        center: function() {
+            return {x: window.innerWidth/2, y: window.innerHeight/2}
         }
     },
     async mounted() {
@@ -60,7 +66,6 @@ export default {
                 this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
                 this.balls[value].toggle_children();
                 this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
-                console.log(this.balls)
                 this.total_ball.color = "transparent";
             }
         },
@@ -76,7 +81,6 @@ export default {
                 }
             });
             
-            //console.log(tmp)
             this.ballObjects = tmp_countries.concat(tmp_sectors);
 
             this.total_emissions = 0;
@@ -97,7 +101,7 @@ export default {
                                      */
 
             
-            this.balls = this.json_to_balls(this.dummy_data, this.$store.state.data.population, 4);
+            this.balls = this.json_to_balls(this.dummy_data, this.$store.state.data.population, this.scale);
             
             
         },
@@ -105,8 +109,6 @@ export default {
             let engine = Matter.Engine.create();
             let runner = Matter.Runner.create();
             let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls);
-
-            //console.log(engine)
 
             Matter.Runner.start(runner, engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
@@ -135,8 +137,6 @@ export default {
         global_tab(engine, runner, attractor, per_person) {
             let prev_total = 0;
             this.balls.forEach(ball => prev_total += ball.body.target_size);
-
-            console.log(prev_total)
 
             let prev_categories = this.balls[0].emissions_toggles;
 
@@ -168,7 +168,6 @@ export default {
                 let new_emissions = 0;
                 this.balls.forEach(ball => new_emissions += ball.body.target_size);
                 let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
-                //console.log(new_probablities);
                 this.$emit('probabilities_changed', new_probablities);
             }
             this.emissions_changed = false;
@@ -256,6 +255,7 @@ export default {
         return {
             ballObjects: [],
             balls: [],
+            scale: 4,
             country_data: [],
             total_ball: {
                 x: 0,
