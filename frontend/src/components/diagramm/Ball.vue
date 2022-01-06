@@ -3,7 +3,7 @@
       <p class="name" >{{ name }}</p><br>
       <p class="amount" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
     <div v-if="legend" class="legend" :style="{'border-color': color}">
-        <div class="test" :style="{'color': color}">1000Gt CO2</div>
+        <div class="test" :style="{'color': color}"> {{ (emissions / 1000).toFixed(2)  }} Gt CO2</div>
     </div>
   </div>
 </template>
