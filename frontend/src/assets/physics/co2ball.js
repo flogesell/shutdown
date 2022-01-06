@@ -12,7 +12,7 @@ class Ball
         this.body = Matter.Bodies.circle(x, y, Math.sqrt(scale * size / Math.PI));
         this.color = color;
         this.world;
-    }
+    } 
 
     set_collision_group(group)
     {
@@ -59,7 +59,7 @@ class Ball
 
     update()
     {
-        let ease = 0.96;
+        let ease = 0.92;
         let factor = ease + (1 - ease) * ((this.target_size / this.current_size));
         let correction_term = 1 + ((this.current_size / (this.body.area / this.scale) - 1) / 2);
 
@@ -77,13 +77,14 @@ class Ball
             yv:    this.body.position.y - Math.sqrt(this.scale * this.current_size / Math.PI),
             size:  this.current_size * this.scale,
             name:  this.name,
-            color: this.color
+            color: this.color,
+            emissions: this.current_size
         }
     }
 }
 class CO2Ball
 {
-    constructor(x, y, name, total_emissions, emissions_by_category, scale, c_collision_group)
+    constructor(x, y, name, total_emissions, emissions_by_category, population, scale)
     {
         this.name = name;
         this.total_emissions = total_emissions;
@@ -95,9 +96,12 @@ class CO2Ball
         emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", category, scale, 'grey')));
         this.children_visible = false;
         this.children_attractor = new Attractor(x, y, 5.0, this.children);
-        this.c_collision_group = c_collision_group;
         this.engine = Matter.Engine.create();
         this.engine.world.gravity.scale = 0;
+        this.population = population;
+        this.world_population = 7673.0;
+        this.per_person = false;
+        this.global_emissions = 0;
     }
 
     set_scale(val)
@@ -118,8 +122,29 @@ class CO2Ball
 
     get_diameter()
     {
-        return Math.sqrt(this.body.scale * this.body.current_size/ Math.PI);
+        return Math.sqrt(this.body.scale * this.body.current_size / Math.PI);
     }
+
+    set_per_person(val, global_emissions)
+    {
+        this.global_emissions = global_emissions;
+        this.per_person = val;
+        if(val)
+        {
+            for(let i = 0; i < this.children.length; i++)
+            {
+                this.children[i].set_size((this.emissions_by_category[i] / this.population) * (this.world_population / 15));
+            }
+        }
+        else
+        {
+            for(let i = 0; i < this.children.length; i++)
+            {
+                this.children[i].set_size(this.emissions_by_category[i]);
+            }
+        }
+    }
+
     add_to_world(world)
     {
         this.body.add_to_world(world);
@@ -144,6 +169,7 @@ class CO2Ball
         {
             new_size -= this.emissions_by_category[i] * this.emissions_toggles[i];
         }
+        
         this.body.set_size(new_size);
     }
 
@@ -153,6 +179,11 @@ class CO2Ball
         for(let i = 0; i < categories.length; i++)
         {
             this.emissions_toggles[i] = categories[i];
+            this.children[i].target_size = this.emissions_by_category[i] * categories[i] + 1;
+            if(this.per_person)
+            {
+                this.children[i].target_size = (this.children[i].target_size / this.population) * (this.world_population / 15);
+            }
         }
     }
 
@@ -192,12 +223,21 @@ class CO2Ball
 
     update() 
     { 
-        this.body.target_size = 0;
+        this.body.target_size = this.total_emissions;
         for (let i = 0; i < this.emissions_toggles.length; i++)
         {
-            this.body.target_size += this.emissions_by_category[i] * this.emissions_toggles[i];
+            this.body.target_size -= this.emissions_by_category[i] * !this.emissions_toggles[i];
         }
+
+        if(this.per_person)
+        {
+            console.log(this.global_emissions)
+            //world_population / 15 is provisional, should be global emissions / number of countries
+            this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
+        }
+
         this.body.update();
+
         if(this.children_visible)
         {
             this.children_attractor.pos = this.body.get_pos();

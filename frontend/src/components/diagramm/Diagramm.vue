@@ -1,13 +1,15 @@
 <template>
     <div id="container">
-        <Ball :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
-        <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color"/>
-        <button @click="clicker"></button>
+        <Ball legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color" :emissions="total_ball.emissions"/>
+        <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
+        <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
+        
     </div>
 </template>
 
 <script>
 import Ball from './Ball.vue'
+import Scale from './Scale.vue'
 import CO2Ball from '@/assets/physics/co2ball'
 import Attractor from '@/assets/physics/attractor'
 import Matter from "matter-js"
@@ -18,14 +20,18 @@ export default {
     props: {
     },
     components: {
-        Ball
+        Ball,
+        Scale
     },
     computed: {
         dummy_data() {
             return this.$store.state.data.CAIT;
+        },
+        center: function() {
+            return {x: window.innerWidth/2, y: window.innerHeight/2}
         }
     },
-    async mounted(){
+    async mounted() {
         await this.loadData();
         this.run();
     },
@@ -35,7 +41,7 @@ export default {
     },
 
     methods: {
-        onClickChild (value) {
+        onClickChild(value) {
             
             if(this.balls[value].children_visible)
             {
@@ -61,11 +67,10 @@ export default {
                 this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
                 this.balls[value].toggle_children();
                 this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
-                //console.log(this.balls)
                 this.total_ball.color = "transparent";
             }
         },
-        getData(){
+        getData() {
             let tmp_countries = [];
             let tmp_sectors = [];
             this.balls.forEach(ball => {
@@ -77,16 +82,20 @@ export default {
                 }
             });
             
-            //console.log(tmp)
             this.ballObjects = tmp_countries.concat(tmp_sectors);
 
-            this.total_emissions = 0;
-            tmp_countries.forEach(country => this.total_emissions += country.size);
-            this.total_ball.size = this.total_emissions;
+            this.total_size = 0;
+            let total_emissions = 0;
+            tmp_countries.forEach(country => {
+                this.total_size += country.size;
+                total_emissions += country.emissions;
+            });
+            this.total_ball.size = this.total_size;
+            this.total_ball.emissions = total_emissions;
             this.total_ball.x = (window.innerWidth / 2) - Math.sqrt(this.total_ball.size / Math.PI);
             this.total_ball.y = (window.innerHeight / 2) - Math.sqrt(this.total_ball.size / Math.PI);
         },
-        async loadData(){
+        async loadData() {
             /*
             this.country_data = await cait_to_json('../assets/CAIT/total/', 
                                       'cait_total_allGHG.csv',
@@ -98,81 +107,89 @@ export default {
                                      */
 
             
-            this.balls = this.json_to_balls(this.dummy_data, 4);
+            this.balls = this.json_to_balls(this.dummy_data, this.$store.state.data.population, this.scale);
             
             
         },
-        run(){
+        run() {
             let engine = Matter.Engine.create();
             let runner = Matter.Runner.create();
             let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls);
-
-            //console.log(engine)
 
             Matter.Runner.start(runner, engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             engine.world.gravity.scale = 0; 
 
-            let prev_running = this.running;
-
-           
+            
             setInterval(() => {
-                let prev_categories = this.balls[0].emissions_toggles;
-                if(prev_categories[0] != this.$store.state.sectors.Energy || prev_categories[1] != this.$store.state.sectors.Traffic || prev_categories[2] != this.$store.state.sectors.Agriculture) {
-                    this.emissions_changed = true;
-                }
-                if(prev_running != this.running) {
-                    if(this.running) {
-                        Matter.Runner.run(runner, engine);
-                    }
-                    else {
-                        Matter.Runner.stop(runner);
-                    }
-                }
-                if(this.running) {
-                    attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
-                    attractor.attract();
-                }
-                
-                this.balls.forEach(ball => {
-                    ball.set_categories([this.$store.state.sectors.Energy, this.$store.state.sectors.Traffic, this.$store.state.sectors.Agriculture])
-                    ball.update();
-                })
-
-                if(this.emissions_changed) {
-                    let new_emissions = 0;
-                    this.balls.forEach(ball => new_emissions += ball.body.target_size);
-                    let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
-                    //console.log(new_probablities);
-                    this.$emit('probabilities_changed', new_probablities);
+                switch (this.$store.state.app.activeTab){
+                    case 'global':
+                        this.global_tab(engine, runner, attractor, false);
+                        break;
+                    case 'sectors':
+                        break;
+                    case 'per person':
+                        this.global_tab(engine, runner, attractor, true);
+                        break;
+                    default:
+                        this.global_tab(engine, runner, attractor, false);
+                        break;
                 }
                 this.getData();
-                prev_running = this.running;
-                this.emissions_changed = false;
+                this.prev_running = this.running;
             }, 33) 
         },
-        clicker(){
-            /*
-            this.balls.forEach(element => {
-                element.toggle_emission(0);
-            });
-            */
+        
+        global_tab(engine, runner, attractor, per_person) {
+            let prev_total = 0;
+            this.balls.forEach(ball => prev_total += ball.body.target_size);
+
+            let prev_categories = this.balls[0].emissions_toggles;
+
+            if(prev_categories[0] != this.$store.state.sectors.Energy || prev_categories[1] != this.$store.state.sectors.Traffic || prev_categories[2] != this.$store.state.sectors.Agriculture) {
+                this.emissions_changed = true;
+            }
             
-            this.balls[0].toggle_children();
-           
+            if(this.prev_running != this.running) {
+                if(this.running) {
+                    Matter.Runner.run(runner, engine);
+                }
+                else {
+                    Matter.Runner.stop(runner);
+                }
+            }
+
+            if(this.running) {
+                attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+                attractor.attract();
+            }
+            
+            this.balls.forEach(ball => {
+                ball.set_per_person(per_person, prev_total)
+                ball.set_categories([this.$store.state.sectors.Energy, this.$store.state.sectors.Traffic, this.$store.state.sectors.Agriculture])
+                ball.update();
+            });
+
+            if(this.emissions_changed) {
+                let new_emissions = 0;
+                this.balls.forEach(ball => new_emissions += ball.body.target_size);
+                let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
+                this.$emit('probabilities_changed', new_probablities);
+            }
+            this.emissions_changed = false;
         },
 
         co2_to_probabilities(co2) {
-            let probability_table = [17, 33, 50, 67, 83];
-            let co2_table = [[ 900,  650,  500,  400,  300],
-                             [2300, 1700, 1350, 1150,  900],
-                             [3300, 2500, 2050, 1700, 1400]];
+            let probability_table = [0, 17, 33, 50, 67, 83];
+            let co2_table = [[1350,  900,  650,  500,  400,  300],
+                             [4000, 2300, 1700, 1350, 1150,  900],
+                             [5000, 3300, 2500, 2050, 1700, 1400]];
 
             let indices = [-1, -1, -1];
 
-            for(let i = 0; i < 5; i++)
+            for(let i = 0; i < co2_table[0].length; i++)
             {
-                for(let j = 0; j < 3; j++)
+                for(let j = 0; j < co2_table.length; j++)
                 {
                     if(co2_table[j][i] > co2)
                     {
@@ -183,37 +200,33 @@ export default {
 
             let probabilities = [0, 0, 0];
 
-            for(let i = 0; i < 3; i++)
-            {
-                if(indices[i] == 4) 
-                {
+            for(let i = 0; i < co2_table.length; i++) {
+                if(indices[i] == co2_table[0].length - 1) {
                     probabilities[i] = probability_table[indices[i]].toFixed(1);
                 }
-                else if(indices[i] == -1)
-                {
+                else if(indices[i] == -1) {
                     probabilities[i] = probability_table[0].toFixed(1);
                 }
-                else
-                {
+                else {
                     probabilities[i] = ((co2_table[i][indices[i]] - co2) / (co2_table[i][indices[i]] - co2_table[i][indices[i] + 1]) * (probability_table[indices[i] + 1] - probability_table[indices[i]]) + probability_table[indices[i]]).toFixed(1);
                 }
             }
             return probabilities;
         },
        
-        json_to_balls(countries, scale)
-        {
+        json_to_balls(countries, population, scale) {
             
             //ordering countries by total co2 emissions
-            for(let i = 0; i < countries.length; i++)
-            {
-                for(let j = 0; j < countries.length; j++)
-                {
-                    if(countries[j].co2_emissions[0] < countries[i].co2_emissions[0])
-                    {
+            for(let i = 0; i < countries.length; i++) {
+                for(let j = 0; j < countries.length; j++) {
+                    if(countries[j].co2_emissions[0] < countries[i].co2_emissions[0]) {
                         let tmp      = countries[j];
                         countries[j] = countries[i];
                         countries[i] = tmp;
+
+                        let tmp2      = population[j];
+                        population[j] = population[i];
+                        population[i] = tmp2;
                     }
                 }
             }
@@ -231,34 +244,36 @@ export default {
 
             let tmp_balls = [];
 
-            for(let i = 0; i < countries.length - 1; i++)
-            {
+            for(let i = 0; i < countries.length - 1; i++) {
                 tmp_balls.push(new CO2Ball(w0 + dist * (i % grid_columns) - (dist * grid_columns) / 2, 
                                            h0 + dist * parseInt(i / grid_columns) - (dist * grid_rows) / 2,
                                            countries[i].name,
                                            countries[i].total_emissions,
                                            countries[i].co2_emissions,
-                                           scale,
-                                           i + 1));
+                                           population[i].population,
+                                           scale));
             }
             return tmp_balls;
         }
     },
 
     data() {
-        return{
+        return {
             ballObjects: [],
             balls: [],
+            scale: 4,
             country_data: [],
             total_ball: {
                 x: 0,
                 y: 0,
                 name: "",
                 size: 0,
+                emissions: 0,
                 color: '#FFC833'
             },
             total_emissions: 0,
             running: true,
+            prev_running: true,
             emissions_changed: true
         }
         

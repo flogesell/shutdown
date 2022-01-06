@@ -1,7 +1,10 @@
 <template>
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="name" >{{ name }}</p><br>
-      <p class="amount" >{{ (size /1000 ).toFixed(2)  }} Gt</p>
+      <p class="amount" v-if="!legend" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
+    <div v-if="legend" class="legend" :style="{'border-color': color}">
+        <div class="test" :style="{'color': color}"> {{ (emissions / 1000).toFixed(2)  }} Gt CO2</div>
+    </div>
   </div>
 </template>
 
@@ -35,14 +38,19 @@ export default {
             type:String,
             default: "black",
         },
+        emissions: {
+            type: Number,
+            default: 0
+        },
+        legend: {
+            type: Boolean,
+            default: false
+        },
     },
     methods: {
         diameter() {
             let diameter = 2 * Math.sqrt(this.size / Math.PI);
             return diameter + "px";
-        },
-        update() {
-
         },
         startZoom(key) {
             if(this.color != "transparent"){
@@ -94,9 +102,27 @@ export default {
         .amount {
             font-weight: 200;
         }
+
+        .legend {
+        position: absolute;
+        top: 0px;
+        width: 20vw;
+        min-width: 400px;
+        height: 1px;
+        left: 50%;
+        border-bottom: 2px solid;
+
+        .test {
+            text-align: right;
+            font-weight: 500;
+            height: 25px;
+            display: flex;
+            flex-direction: column-reverse;
+            margin-top: -25px;
+            font-size: 1.4em;
+        }
+    }
     }
     
 </style>
-
-//constructor(x, y, name, total_emissions, emissions_by_category, scale)
     
