@@ -84,6 +84,7 @@ export default {
             height: 25px;
             display: flex;
             flex-direction: column-reverse;
+            margin-top: -25px;
         }
     }
     
