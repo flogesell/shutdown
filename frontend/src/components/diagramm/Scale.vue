@@ -1,6 +1,10 @@
 <template>
     <div>
-        <div class="ring" v-for="ring in rings" :key="ring.x" :style="{'left': ring.x + 'px', 'top': ring.y + 'px', 'height': ring.diameter + 'px', 'width': ring.diameter + 'px', 'border-color': color}"></div>
+        <div class="ring" v-for="(ring, index) in rings" :key="ring.x" :style="{'left': ring.x + 'px', 'top': ring.y + 'px', 'height': ring.diameter + 'px', 'width': ring.diameter + 'px', 'border-color': color}">
+            <div v-if="!(index % 2)" class="legend" :style="{'border-color': color}">
+                <div class="test">{{ring.co2}}Gt CO2</div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -42,7 +46,8 @@ export default {
                 let tmp = {
                     x: this.x - diameter/2,
                     y: this.y - diameter/2,
-                    diameter: diameter
+                    diameter: diameter,
+                    co2: ((i+1) * this.increment / 1000)
                 }
                 tmp_rings.push(tmp)
             }
@@ -61,9 +66,25 @@ export default {
         background-color: transparent;
         border-radius: 50%;
         border-style: solid;
-        border-width: 1px;
+        border-width: 2px;
         opacity: 0.5;
-        
+    }
+
+    .legend {
+        position: absolute;
+        bottom: -2px;
+        width: 20vw;
+        min-width: 400px;
+        height: 1px;
+        left: 50%;
+        border-bottom: 2px solid;
+        .test {
+            text-align: right;
+            font-weight: 500;
+            height: 25px;
+            display: flex;
+            flex-direction: column-reverse;
+        }
     }
     
 </style>

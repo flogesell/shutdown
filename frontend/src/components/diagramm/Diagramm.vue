@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-        <Ball :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
+        <Ball legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color"/>
         <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
         
