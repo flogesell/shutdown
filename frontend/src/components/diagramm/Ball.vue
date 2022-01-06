@@ -1,7 +1,7 @@
 <template>
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="name" >{{ name }}</p><br>
-      <p class="amount" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
+      <p class="amount" v-if="!legend" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
     <div v-if="legend" class="legend" :style="{'border-color': color}">
         <div class="test" :style="{'color': color}">1000Gt CO2</div>
     </div>
@@ -118,6 +118,8 @@ export default {
             height: 25px;
             display: flex;
             flex-direction: column-reverse;
+            margin-top: -25px;
+            font-size: 1.4em;
         }
     }
     }
