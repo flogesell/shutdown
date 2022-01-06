@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ring" v-for="ring in rings" :key="ring.x" :style="{'left': ring.x + 'px', 'top': ring.y + 'px', 'height': ring.diameter + 'px', 'width': ring.diameter + 'px', 'stroke': color}"></div>
+        <div class="ring" v-for="ring in rings" :key="ring.x" :style="{'left': ring.x + 'px', 'top': ring.y + 'px', 'height': ring.diameter + 'px', 'width': ring.diameter + 'px', 'border-color': color}"></div>
     </div>
 </template>
 

@@ -81,7 +81,7 @@ export default {
         align-content: center;
         justify-content: center;
         background-color: $primary;
-        opacity: 0.9;
+        opacity: 0.7;
         border-radius: 50%;
         transition: background-color 1s;
         

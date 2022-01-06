@@ -59,7 +59,7 @@ class Ball
 
     update()
     {
-        let ease = 0.93;
+        let ease = 0.92;
         let factor = ease + (1 - ease) * ((this.target_size / this.current_size));
         let correction_term = 1 + ((this.current_size / (this.body.area / this.scale) - 1) / 2);
 
