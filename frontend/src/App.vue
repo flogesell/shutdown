@@ -34,6 +34,9 @@ export default {
     window.addEventListener("resize", this.setWidth);
     this.width = window.innerWidth;
   },
+  destroyed() {
+    window.removeEventListener("resize", this.setWidth);
+  },
   computed: {
     ...mapState(['loader', 'error']),
     ...mapFields(['data', 'lang']),
@@ -44,12 +47,7 @@ export default {
     setWidth() {
       this.width = window.innerWidth;
     }
-  },
-  watch: {
-    windowWidth: function () {
-      this.width = windowWidth
-    }
-  },
+  }
 }
 </script>
 
