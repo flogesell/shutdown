@@ -5,10 +5,15 @@
       loading ...
     </div>
     <!-- show rendered components if data is loaded -->
-    <router-view v-if="data && !loader && !error"/>
+    <router-view v-if="data && !loader && !error && (width>1600)"/>
     <!-- show error msg if data cannot be loaded to the app -->
     <div v-if="error">
       404 – Error!
+    </div>
+    <div v-if="width<1600" class="unspported-browser">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/OOjs_UI_icon_alert.svg/240px-OOjs_UI_icon_alert.svg.png">
+      <h2>You are using an unsupported Browser</h2>
+      <p>This website is currently only intended for use on desktop computers with Firefox, Chrome or Safari</p>
     </div>
   </div>
 </template>
@@ -19,16 +24,32 @@ import { mapFields } from 'vuex-map-fields';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      width: 0,
+    }
+  },
   created(){
-    this.fetchData()
+    this.fetchData();
+    window.addEventListener("resize", this.setWidth);
+    this.width = window.innerWidth;
   },
   computed: {
     ...mapState(['loader', 'error']),
-    ...mapFields(['data', 'lang'])
+    ...mapFields(['data', 'lang']),
+    
   },
   methods: {
     ...mapActions(['fetchData']),
-  }
+    setWidth() {
+      this.width = window.innerWidth;
+    }
+  },
+  watch: {
+    windowWidth: function () {
+      this.width = windowWidth
+    }
+  },
 }
 </script>
 
@@ -45,6 +66,7 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  height: 100%;
 }
 
 #nav {
@@ -72,4 +94,16 @@ p {
   justify-content: center;
   align-items: center;
 }
+
+.unspported-browser {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  img, h2 {
+    margin-bottom: 15px;
+  }
+}
+
 </style>
