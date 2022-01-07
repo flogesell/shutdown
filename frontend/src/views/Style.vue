@@ -110,7 +110,6 @@ export default {
   methods: {
     changeActive() {
       let icn = document.getElementsByClassName(".icons")
-      //console.log(icn);
       icn.activated=false; // Make all buttons green
       this.activated=true; // Make the clicked button black
     }

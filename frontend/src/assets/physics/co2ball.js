@@ -231,7 +231,7 @@ class CO2Ball
 
         if(this.per_person)
         {
-            console.log(this.global_emissions)
+            //console.log(this.global_emissions)
             //world_population / 15 is provisional, should be global emissions / number of countries
             this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
         }

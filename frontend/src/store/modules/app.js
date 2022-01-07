@@ -40,7 +40,6 @@ const actions = {
            })
         } catch (e) {
            state.error = true;
-           console.log(e)
         }
       }
 }
