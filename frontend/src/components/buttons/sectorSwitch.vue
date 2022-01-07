@@ -1,6 +1,6 @@
 
 <template>
-  <div class="sector-switch">
+  <div class="sector-switch" :class="name.toLowerCase()">
       <Checkbox v-if="smallSwitch > 720" :status="status" :small="false" @status="toggle" />
       <Checkbox v-if="smallSwitch <= 720" :status="status" :small="true" @status="toggle" />
       <div class="sector-btn" v-on:click="$emit('toggleInfobox'); $emit('makeInfoboxHeadline')">

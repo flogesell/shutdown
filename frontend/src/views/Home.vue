@@ -202,6 +202,9 @@ export default {
     margin-left: 5px;
     width: 10%;
   }
+  .sector-switch.export {
+    margin-top: 15px;
+  }
 }
 .sector-switch {
   display: flex;

@@ -7,8 +7,8 @@ const state = {
     Traffic: true,
     Energy: true,
     Agriculture: true,
-    Export: true,
-    Others: true
+    Others: true,
+    Export: true
 }
 
 const mutations =  {
