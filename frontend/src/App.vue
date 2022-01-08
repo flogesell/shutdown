@@ -5,12 +5,12 @@
       loading ...
     </div>
     <!-- show rendered components if data is loaded -->
-    <router-view v-if="data && !loader && !error && (width>1600)"/>
+    <router-view v-if="data && !loader && !error && (width>=1000)"/>
     <!-- show error msg if data cannot be loaded to the app -->
     <div v-if="error">
       404 – Error!
     </div>
-    <div v-if="width<1600" class="unspported-browser">
+    <div v-if="width<=1000" class="unspported-browser">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/OOjs_UI_icon_alert.svg/240px-OOjs_UI_icon_alert.svg.png">
       <h2>You are using an unsupported Browser</h2>
       <p>This website is currently only intended for use on desktop computers with Firefox, Chrome or Safari</p>
