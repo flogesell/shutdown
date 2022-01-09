@@ -1,6 +1,7 @@
 <template>
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
-      <p class="name" >{{ name }}</p><br>
+      <p class="name" v-if="(!legend) && (iso != 'no iso')">{{ iso }}</p><br>
+      <p class="name" v-if="(!legend) && (iso == 'no iso')">{{ name }}</p><br>
       <p class="amount" v-if="!legend" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
     <div v-if="legend" class="legend" :style="{'border-color': color}">
         <div class="test" :style="{'color': color}"> {{ (emissions / 1000).toFixed(2)  }} Gt CO2</div>

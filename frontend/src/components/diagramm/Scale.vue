@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="ring" v-for="(ring, index) in rings" :key="ring.x" :style="{'left': ring.x + 'px', 'top': ring.y + 'px', 'height': ring.diameter + 'px', 'width': ring.diameter + 'px', 'border-color': color}">
-            <div v-if="!(index % 2)" class="legend" :style="{'border-color': color}">
-                <div class="test">{{ring.co2}} Gt CO2</div>
+        <div class="ring" v-for="(ring, index) in rings" :key="ring.x" :style="{'left': ring.x + 'px', 'top': ring.y + 'px', 'height': ring.diameter + 'px', 'width': ring.diameter + 'px', 'border-color': current_color}">
+            <div v-if="!(index % 2)" class="legend" :style="{'border-color': current_color}">
+                <div class="test" :style="{'color': current_color}">{{ring.co2}} Gt CO2</div>
             </div>
         </div>
     </div>
@@ -52,6 +52,14 @@ export default {
                 tmp_rings.push(tmp)
             }
             return tmp_rings;
+        },
+        current_color: function () {
+            if(this.$store.state.app.activeSpecific == ''){
+                return this.color;
+            }
+            else {
+                return 'transparent';
+            }
         }
     }
 }

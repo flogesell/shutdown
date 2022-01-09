@@ -3,8 +3,8 @@
         <Ball :legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color" :emissions="total_ball.emissions"/>
         <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
-        
     </div>
+
 </template>
 
 <script>
@@ -42,11 +42,12 @@ export default {
 
     methods: {
         onClickChild(value) {
-            
+            console.log(this.ballObjects)
             if(this.balls[value].children_visible)
             {
                 //zooming out
                 this.running = true;
+                this.$store.state.app.activeSpecific = '';
                 this.balls[value].toggle_children();
                 document.getElementById("container").style.left = "0px";            
                 document.getElementById("container").style.transform ="scale(1)";
@@ -58,6 +59,7 @@ export default {
             {
                 //zooming in
                 this.running = false;
+                this.$store.state.app.activeSpecific = this.balls[value].name;
                 let x = this.balls[value].get_pos().x;
                 let y = this.balls[value].get_pos().y;
                 let d = this.balls[value].get_diameter();
@@ -254,7 +256,9 @@ export default {
                 tmp_balls.push(new CO2Ball(w0 + dist * (i % grid_columns) - (dist * grid_columns) / 2, 
                                            h0 + dist * parseInt(i / grid_columns) - (dist * grid_rows) / 2,
                                            countries[i].name,
+                                           countries[i].iso,
                                            countries[i].total_emissions,
+                                           ['Traffic', 'Energy', 'Agriculture', 'Others'],
                                            countries[i].co2_emissions,
                                            population[i].population,
                                            scale));
