@@ -8,7 +8,7 @@ class Ball
         this.name = name;
         this.iso = iso;
         this.initial_pos = {x: x, y: y};
-        this.current_size = size;
+        this.current_size = 10;
         this.target_size = size;
         this.scale = scale;
         this.body = Matter.Bodies.circle(x, y, Math.sqrt(scale * size / Math.PI));
@@ -42,10 +42,14 @@ class Ball
 
     reset_size()
     {
-        let position = this.body.position
-        this.body = Matter.Bodies.circle(position.x, position.y, Math.sqrt(this.scale * 1 / Math.PI))
+        let position = this.body.position;
+        if(this.name == 'Others') console.log(position);
+        Matter.World.remove(this.world, this.body);
+        this.body = Matter.Bodies.circle(position.x, position.y, Math.sqrt(this.scale * 10 / Math.PI))
+        if(this.name == 'Others') console.log(this.body.position);
         Matter.World.add(this.world, this.body);
-        this.current_size = 1;
+        if(this.name == 'Others') console.log(this.body.position);
+        this.current_size = 10;
     }
 
     set_size(size)
@@ -66,7 +70,10 @@ class Ball
     update()
     {
         let ease = 0.92;
+
         let factor = ease + (1 - ease) * ((this.target_size / this.current_size));
+        if(factor < 1) factor = 1 + (factor - 1) * 2;
+        if(factor - 1 > 1) factor = 2;
         let correction_term = 1 + ((this.current_size / (this.body.area / this.scale) - 1) / 2);
 
         let next_size = this.current_size * factor;

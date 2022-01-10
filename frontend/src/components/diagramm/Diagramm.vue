@@ -151,14 +151,14 @@ export default {
                 
                 if(this.active_tab != this.prev_tab) {
                     if(this.active_tab == 'per sector') {
-                        //this.sector_balls.forEach(ball => ball.reset_size());
                         Matter.Runner.start(runner, sector_engine);
                         Matter.Runner.stop(runner, engine);
+                        this.sector_balls.forEach(ball => ball.reset_size());
                     }
                     else if(this.prev_tab == 'per sector'){
-                        //this.balls.forEach(ball => ball.reset_size());
                         Matter.Runner.start(runner, engine);
                         Matter.Runner.stop(runner, sector_engine);
+                        this.balls.forEach(ball => ball.reset_size());
                     }
                 }
                 
