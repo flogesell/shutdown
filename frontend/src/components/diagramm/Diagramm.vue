@@ -32,6 +32,9 @@ export default {
     },
     async mounted() {
         await this.loadData();
+        document.getElementById("container").style.left = "0px"; 
+        document.getElementById("container").style.transform ="scale(1)";
+        document.getElementById("container").style.top = "0px";
         this.run();
     },
 
