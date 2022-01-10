@@ -1,10 +1,10 @@
 <template>
     <div id="container">
         <Ball :legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color" :emissions="total_ball.emissions"/>
-        <Scale :x="this.center.x" :y="this.center.y" :increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
+        <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
-        
     </div>
+
 </template>
 
 <script>
@@ -42,10 +42,12 @@ export default {
 
     methods: {
         onClickChild(value) {
-            
+            console.log(this.ballObjects)
             if(this.balls[value].children_visible)
             {
+                //zooming out
                 this.running = true;
+                this.$store.state.app.activeSpecific = '';
                 this.balls[value].toggle_children();
                 document.getElementById("container").style.left = "0px";            
                 document.getElementById("container").style.transform ="scale(1)";
@@ -55,7 +57,9 @@ export default {
             }
             else
             {
+                //zooming in
                 this.running = false;
+                this.$store.state.app.activeSpecific = this.balls[value].name;
                 let x = this.balls[value].get_pos().x;
                 let y = this.balls[value].get_pos().y;
                 let d = this.balls[value].get_diameter();
@@ -119,14 +123,13 @@ export default {
             Matter.Runner.start(runner, engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             engine.world.gravity.scale = 0; 
-
             
             setInterval(() => {
-                switch (this.$store.state.app.activeTab){
-                    case 'global':
+                switch (this.$store.state.app.activeTab.toLowerCase()){
+                    case 'per country':
                         this.global_tab(engine, runner, attractor, false);
                         break;
-                    case 'sectors':
+                    case 'per sector':
                         break;
                     case 'per person':
                         this.global_tab(engine, runner, attractor, true);
@@ -144,9 +147,11 @@ export default {
             let prev_total = 0;
             this.balls.forEach(ball => prev_total += ball.body.target_size);
 
-            let prev_categories = this.balls[0].emissions_toggles;
+            let prev_sectors = this.balls[0].emissions_toggles;
 
-            if(prev_categories[0] != this.$store.state.sectors.Energy || prev_categories[1] != this.$store.state.sectors.Traffic || prev_categories[2] != this.$store.state.sectors.Agriculture) {
+            let current_sectors = this.$store.state.sectors
+
+            if(prev_sectors[0] != current_sectors.Energy || prev_sectors[1] != current_sectors.Traffic || prev_sectors[2] != current_sectors.Agriculture || prev_sectors[3] != current_sectors.Others) {
                 this.emissions_changed = true;
             }
             
@@ -166,7 +171,10 @@ export default {
             
             this.balls.forEach(ball => {
                 ball.set_per_person(per_person, prev_total)
-                ball.set_categories([this.$store.state.sectors.Energy, this.$store.state.sectors.Traffic, this.$store.state.sectors.Agriculture])
+                ball.set_categories([this.$store.state.sectors.Energy, 
+                                     this.$store.state.sectors.Traffic, 
+                                     this.$store.state.sectors.Agriculture, 
+                                     this.$store.state.sectors.Others])
                 ball.update();
             });
 
@@ -248,7 +256,9 @@ export default {
                 tmp_balls.push(new CO2Ball(w0 + dist * (i % grid_columns) - (dist * grid_columns) / 2, 
                                            h0 + dist * parseInt(i / grid_columns) - (dist * grid_rows) / 2,
                                            countries[i].name,
+                                           countries[i].iso,
                                            countries[i].total_emissions,
+                                           ['Traffic', 'Energy', 'Agriculture', 'Others'],
                                            countries[i].co2_emissions,
                                            population[i].population,
                                            scale));

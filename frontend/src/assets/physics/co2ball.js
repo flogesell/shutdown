@@ -3,14 +3,17 @@ import Attractor from '@/assets/physics/attractor'
 
 class Ball
 {
-    constructor(x, y, name, size, scale, color)
+    constructor(x, y, name, iso, size, scale, color)
     {
         this.name = name;
+        this.iso = iso;
+        this.initial_pos = {x: x, y: y};
         this.current_size = size;
         this.target_size = size;
         this.scale = scale;
         this.body = Matter.Bodies.circle(x, y, Math.sqrt(scale * size / Math.PI));
         this.color = color;
+        this.current_color = color;
         this.world;
     } 
 
@@ -63,11 +66,23 @@ class Ball
         let factor = ease + (1 - ease) * ((this.target_size / this.current_size));
         let correction_term = 1 + ((this.current_size / (this.body.area / this.scale) - 1) / 2);
 
-        this.current_size *= factor;
+        let next_size = this.current_size * factor;
+        
 
-        Matter.Body.scale(this.body, 
-                          correction_term + ((factor - 1) / 2), 
-                          correction_term + ((factor - 1) / 2));
+        if(next_size < 5) 
+        {
+            this.current_color = 'transparent';
+            //Matter.Body.setPosition(this.body, this.initial_pos)
+        }
+        else 
+        {
+            this.current_size *= factor;
+            this.current_color = this.color;
+            Matter.Body.scale(this.body, 
+                correction_term + ((factor - 1) / 2), 
+                correction_term + ((factor - 1) / 2));
+        }
+
     }
 
     get_json()
@@ -77,23 +92,31 @@ class Ball
             yv:    this.body.position.y - Math.sqrt(this.scale * this.current_size / Math.PI),
             size:  this.current_size * this.scale,
             name:  this.name,
-            color: this.color,
-            emissions: this.current_size
+            iso:   this.iso,
+            color: this.current_color,
+            emissions: this.current_size * (this.current_size > 20)
         }
     }
 }
 class CO2Ball
 {
-    constructor(x, y, name, total_emissions, emissions_by_category, population, scale)
+    constructor(x, y, name, iso, total_emissions, sector_names, emissions_by_category, population, scale)
     {
         this.name = name;
+        this.iso = iso;
         this.total_emissions = total_emissions;
         this.emissions_by_category = emissions_by_category;
         this.emissions_toggles = [];
         emissions_by_category.forEach(() => this.emissions_toggles.push(false));
-        this.body = new Ball(x, y, this.name, total_emissions, scale, 'black');
+        this.body = new Ball(x, y, this.name, iso, total_emissions, scale, 'black');
         this.children = [];
-        emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", category, scale, 'grey')));
+        //emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", '', category, scale, 'grey')));
+        
+        for(let i = 0; i < emissions_by_category.length; i++)
+        {
+            this.children.push(new Ball(x, y, sector_names[i], '', emissions_by_category[i], scale, 'grey'));
+        }
+        
         this.children_visible = false;
         this.children_attractor = new Attractor(x, y, 5.0, this.children);
         this.engine = Matter.Engine.create();
