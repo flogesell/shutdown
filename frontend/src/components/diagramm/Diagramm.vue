@@ -1,10 +1,9 @@
 <template>
-    <div id="container">
+    <div id="container" @clicked="zoom_out">
         <Ball :legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color" :emissions="total_ball.emissions"/>
         <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
     </div>
-
 </template>
 
 <script>
@@ -42,37 +41,42 @@ export default {
 
     methods: {
         onClickChild(value) {
-            console.log(this.ballObjects)
-            if(this.balls[value].children_visible)
-            {
-                //zooming out
-                this.running = true;
-                this.$store.state.app.activeSpecific = '';
-                this.balls[value].toggle_children();
-                document.getElementById("container").style.left = "0px";            
-                document.getElementById("container").style.transform ="scale(1)";
-                document.getElementById("container").style.top = "0px";
-                this.balls.forEach(ball => { ball.set_color("black"); })
-                this.total_ball.color = "#FFC833";
+            //console.log(this.ballObjects)
+            if(this.balls[value].children_visible) {
+                this.zoom_out();
             }
-            else
-            {
-                //zooming in
-                this.running = false;
-                this.$store.state.app.activeSpecific = this.balls[value].name;
-                let x = this.balls[value].get_pos().x;
-                let y = this.balls[value].get_pos().y;
-                let d = this.balls[value].get_diameter();
-                let target_d = window.innerHeight * 0.5;
-                let scale = 0.5 * target_d/d;
-                document.getElementById("container").style.left= window.innerWidth/2 -(x*scale) + "px";            
-                document.getElementById("container").style.transform="scale("+ scale +")";
-                document.getElementById("container").style.top= window.innerHeight/2 -(y*scale) + "px";
-                this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
-                this.balls[value].toggle_children();
-                this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
-                this.total_ball.color = "transparent";
+            else {
+                this.zoom_in(value);
             }
+        },
+        zoom_out() {
+            this.zoomed_in = false;
+            this.running = true;
+            this.$store.commit('RESET_ACTIVE_SPECIFIC')
+            this.balls[this.zoomed_ball_index].toggle_children();
+            document.getElementById("container").style.left = "0px";            
+            document.getElementById("container").style.transform ="scale(1)";
+            document.getElementById("container").style.top = "0px";
+            this.balls.forEach(ball => { ball.set_color("black"); })
+            this.total_ball.color = "#FFC833";
+        },
+        zoom_in(index) {
+            this.zoomed_in = true;
+            this.zoomed_ball_index = index;
+            this.running = false;
+            this.$store.state.app.activeSpecific = this.balls[index].name;
+            let x = this.balls[index].get_pos().x;
+            let y = this.balls[index].get_pos().y;
+            let d = this.balls[index].get_diameter();
+            let target_d = window.innerHeight * 0.5;
+            let scale = 0.5 * target_d/d;
+            document.getElementById("container").style.left= window.innerWidth/2 -(x*scale) + "px";            
+            document.getElementById("container").style.transform="scale("+ scale +")";
+            document.getElementById("container").style.top= window.innerHeight/2 -(y*scale) + "px";
+            this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
+            this.balls[index].toggle_children();
+            this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
+            this.total_ball.color = "transparent";
         },
         getData() {
             let tmp_countries = [];
@@ -123,8 +127,12 @@ export default {
             Matter.Runner.start(runner, engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             engine.world.gravity.scale = 0; 
+
             
             setInterval(() => {
+                if(this.$store.state.app.activeSpecific == '' && this.zoomed_in) {
+                    this.zoom_out();
+                }
                 switch (this.$store.state.app.activeTab.toLowerCase()){
                     case 'per country':
                         this.global_tab(engine, runner, attractor, false);
@@ -156,6 +164,7 @@ export default {
             }
             
             if(this.prev_running != this.running) {
+                console.log('hllO')
                 if(this.running) {
                     Matter.Runner.run(runner, engine);
                 }
@@ -258,7 +267,7 @@ export default {
                                            countries[i].name,
                                            countries[i].iso,
                                            countries[i].total_emissions,
-                                           ['Traffic', 'Energy', 'Agriculture', 'Others'],
+                                           ['Energy', 'Traffic', 'Agriculture', 'Others'],
                                            countries[i].co2_emissions,
                                            population[i].population,
                                            scale));
@@ -284,7 +293,9 @@ export default {
             total_emissions: 0,
             running: true,
             prev_running: true,
-            emissions_changed: true
+            emissions_changed: true,
+            zoomed_in: false,
+            zoomed_ball_index: 0
         }
         
     }

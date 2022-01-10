@@ -3,7 +3,7 @@
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
     <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
-    <div class="position"> <h1>{{(getPosition.back) ? '🠔 ' : ''}}{{getPosition.tab}}</h1></div>
+    <div class="position" @click="resetZoom"> <h1>{{(getPosition.back) ? '🠔 ' : ''}}{{getPosition.tab}}</h1></div>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
@@ -87,6 +87,9 @@ export default {
     }
   },
   methods: {
+    resetZoom() {
+      this.$store.commit('RESET_ACTIVE_SPECIFIC')
+    },
     toggleTab(tab) {
       this.$store.commit('CHANGE_ACTIVE_TAB', tab)
     },

@@ -22,6 +22,9 @@ const mutations =  {
     TOGGLE_INFO: (state) => {
         state.info = !state.info;
     },
+    RESET_ACTIVE_SPECIFIC: () => {
+        state.activeSpecific = '';
+    },
     updateField
 }
 
