@@ -12,6 +12,7 @@ class Ball
         this.target_size = size;
         this.scale = scale;
         this.body = Matter.Bodies.circle(x, y, Math.sqrt(scale * size / Math.PI));
+        Matter.Body.set(this.body, "frictionAir", 0.03)
         this.color = color;
         this.current_color = color;
         this.world;
@@ -41,7 +42,9 @@ class Ball
 
     reset_size()
     {
-        this.body = Matter.Bodies.circle(this.body.position.x, this.body.position.x, Math.sqrt(this.scale * 1 / Math.PI))
+        let position = this.body.position
+        this.body = Matter.Bodies.circle(position.x, position.y, Math.sqrt(this.scale * 1 / Math.PI))
+        Matter.World.add(this.world, this.body);
         this.current_size = 1;
     }
 
@@ -79,8 +82,8 @@ class Ball
             this.current_size *= factor;
             this.current_color = this.color;
             Matter.Body.scale(this.body, 
-                correction_term + ((factor - 1) / 2), 
-                correction_term + ((factor - 1) / 2));
+                              correction_term + ((factor - 1) / 2), 
+                              correction_term + ((factor - 1) / 2));
         }
 
     }
@@ -133,6 +136,11 @@ class CO2Ball
         this.children.forEach(child => child.body.scale = val);
     }
 
+    reset_size()
+    {
+        this.body.reset_size();
+    }
+
     get_scale()
     {
         return this.body.scale;
@@ -180,7 +188,11 @@ class CO2Ball
         })
         */
     }
-
+    
+    remove_from_world(world)
+    {
+        this.body.remove_from_world(world);
+    }
     toggle_emission(index)
     {
         if(index < this.emissions_toggles.length)
@@ -217,6 +229,11 @@ class CO2Ball
             Matter.World.add(world, child);
             child.collisionFilter.group = this.c_collision_group;
         })
+    }
+
+    has_children()
+    {
+        return this.children.length > 0;
     }
 
     toggle_children()
