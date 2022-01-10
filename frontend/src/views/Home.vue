@@ -148,6 +148,7 @@ export default {
   width: 100%;
   text-align: center;
   padding-top: 30px;
+  z-index: 6;
 }
 #container-left {
   padding: 30px 0 30px 100px;
