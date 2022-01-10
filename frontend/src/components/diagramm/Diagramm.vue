@@ -48,7 +48,7 @@ export default {
     methods: {
         onClickChild(value) {
             //console.log(this.ballObjects)
-            if(this.balls[value].has_children()){
+            if(this.active_tab != 'per sector'){
                 if(this.balls[value].children_visible) {
                     this.zoom_out();
                 }
@@ -322,12 +322,12 @@ export default {
                 }
             }
             //placing the balls in a grid pattern
-            let max_size = countries[0].co2_emissions[0];
-            let dist = 4 * Math.sqrt(scale * max_size / Math.PI);
+            //let max_size = countries[0].co2_emissions[0];
+            //let dist = 4 * Math.sqrt(scale * max_size / Math.PI);
 
-            let grid_columns = parseInt(Math.sqrt(countries.length));
-            if(countries.length < 5) grid_columns = countries.length;
-            let grid_rows = parseInt(countries.length / 5) + 1;
+            //let grid_columns = parseInt(Math.sqrt(countries.length));
+            //if(countries.length < 5) grid_columns = countries.length;
+            //let grid_rows = parseInt(countries.length / 5) + 1;
 
             let w0 = window.innerWidth / 2;
             let h0 = window.innerHeight / 2;
@@ -336,8 +336,8 @@ export default {
             let tmp_balls = [];
 
             for(let i = 0; i < countries.length - 1; i++) {
-                tmp_balls.push(new CO2Ball(w0 + dist * (i % grid_columns) - (dist * grid_columns) / 2, 
-                                           h0 + dist * parseInt(i / grid_columns) - (dist * grid_rows) / 2,
+                tmp_balls.push(new CO2Ball(w0 - 50 + Math.random() * 100, 
+                                           h0 - 50 + Math.random() * 100,
                                            countries[i].name,
                                            countries[i].iso,
                                            countries[i].total_emissions,

@@ -13,6 +13,7 @@ class Ball
         this.scale = scale;
         this.body = Matter.Bodies.circle(x, y, Math.sqrt(scale * size / Math.PI));
         Matter.Body.set(this.body, "frictionAir", 0.03)
+        Matter.Body.set(this.body, "friction", 0.0) 
         this.color = color;
         this.current_color = color;
         this.world;
@@ -122,9 +123,12 @@ class CO2Ball
         this.children = [];
         //emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", '', category, scale, 'grey')));
         
-        for(let i = 0; i < emissions_by_category.length; i++)
+        if(this.population != 0)
         {
-            this.children.push(new Ball(x, y, sector_names[i], '', emissions_by_category[i], scale, 'grey'));
+            for(let i = 0; i < emissions_by_category.length; i++) 
+            {
+                this.children.push(new Ball(x, y, sector_names[i], '', emissions_by_category[i], scale, 'grey'));
+            }
         }
         
         this.children_visible = false;
@@ -240,7 +244,7 @@ class CO2Ball
 
     has_children()
     {
-        return this.children.length > 0;
+        return (this.children.length > 0);
     }
 
     toggle_children()
