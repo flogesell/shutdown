@@ -43,13 +43,12 @@ class Ball
 
     reset_size()
     {
-        let position = this.body.position;
-        if(this.name == 'Others') console.log(position);
+        //let position = this.body.position;
         Matter.World.remove(this.world, this.body);
-        this.body = Matter.Bodies.circle(position.x, position.y, Math.sqrt(this.scale * 10 / Math.PI))
-        if(this.name == 'Others') console.log(this.body.position);
+        this.body = Matter.Bodies.circle(window.innerWidth / 2 - 50 + 100 * Math.random(), 
+                                         window.innerHeight / 2 - 50 + 100 * Math.random(), 
+                                         Math.sqrt(this.scale * 10 / Math.PI))
         Matter.World.add(this.world, this.body);
-        if(this.name == 'Others') console.log(this.body.position);
         this.current_size = 10;
     }
 
@@ -256,9 +255,9 @@ class CO2Ball
             Matter.Runner.run(this.engine);
             this.children.forEach(child => 
             {
+                child.add_to_world(this.engine.world);
                 child.reset_size(); 
                 child.set_pos({x: this.get_pos().x + 100 * Math.random(), y: this.get_pos().y + 100 * Math.random()})
-                child.add_to_world(this.engine.world);
             })
         } 
         else

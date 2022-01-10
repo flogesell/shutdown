@@ -1,7 +1,7 @@
 <template>
     <div id="container" @clicked="zoom_out">
         <Ball :legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color" :emissions="total_ball.emissions"/>
-        <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
+        <Scale :x="this.center.x" :y="this.center.y" :increment="this.scale_increment" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
     </div>
 </template>
@@ -26,6 +26,9 @@ export default {
         active_tab: function() {
             return this.$store.state.app.activeTab.toLowerCase();
         },
+        sectors: function() {
+            return this.$store.state.sectors;
+        },
         dummy_data() {
             return this.$store.state.data.CAIT;
         },
@@ -49,10 +52,7 @@ export default {
         onClickChild(value) {
             //console.log(this.ballObjects)
             if(this.active_tab != 'per sector'){
-                if(this.balls[value].children_visible) {
-                    this.zoom_out();
-                }
-                else {
+                if(!(this.balls[value].children_visible)) {
                     this.zoom_in(value);
                 }
             }
@@ -145,17 +145,19 @@ export default {
 
             
             setInterval(() => {
-                if(this.active_tab == '' && this.zoomed_in) {
+                if(this.$store.state.app.activeSpecific == '' && this.zoomed_in) {
                     this.zoom_out();
                 }
                 
                 if(this.active_tab != this.prev_tab) {
                     if(this.active_tab == 'per sector') {
+                        
                         Matter.Runner.start(runner, sector_engine);
-                        Matter.Runner.stop(runner, engine);
+                        //Matter.Runner.stop(runner, engine);
                         this.sector_balls.forEach(ball => ball.reset_size());
+                        console.log('meemlool')
                     }
-                    else if(this.prev_tab == 'per sector'){
+                    else if(this.prev_tab == 'per sector') {
                         Matter.Runner.start(runner, engine);
                         Matter.Runner.stop(runner, sector_engine);
                         this.balls.forEach(ball => ball.reset_size());
@@ -238,19 +240,11 @@ export default {
                 this.emissions_changed = true;
             }
             
-            if(this.prev_running != this.running) {
-                if(this.running) {
-                    Matter.Runner.run(runner, engine);
-                }
-                else {
-                    Matter.Runner.stop(runner);
-                }
-            }
-
-            if(this.running) {
-                attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
-                attractor.attract();
-            }
+            //Matter.Runner.run(runner, engine);
+            
+            attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+            attractor.attract();
+            
 
             this.sector_balls.forEach(ball => {
                 ball.set_categories([this.$store.state.sectors.Energy, 
@@ -407,11 +401,13 @@ export default {
             },
             total_emissions: 0,
             running: true,
+            prev_sectors: [],
             prev_running: true,
             prev_tab: '',
             emissions_changed: true,
             zoomed_in: false,
-            zoomed_ball_index: 0
+            zoomed_ball_index: 0,
+            scale_increment: 10000
         }
         
     }
