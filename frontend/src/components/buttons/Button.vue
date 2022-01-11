@@ -5,6 +5,7 @@
         <h2 id="arrow">{{ (backwards ? '&larr;' : '&rarr;') }}</h2>
       </div>
       <svg viewBox="0 0 35 35">
+             <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="'--from-width:'+Number(oldVal)+'px; --to-width:'+Number(percentage)+'px;'" :key="percentage"/>
             <path id="circle" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" />
         </svg>
   </button>
@@ -68,7 +69,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $button-grey;
+  background: transparent;
 
   >div {
     >#arrow {
@@ -87,5 +88,14 @@ button {
         font-size: .7em;
     }
 }
+
+.probability-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        user-select: none;
+    }
 
 </style>
