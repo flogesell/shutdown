@@ -13,7 +13,7 @@
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
         <div class="reset-button" @click="reset">
           <span id="reset-text">Reset</span>
-          <ArrowIcon class="icon" />
+          <Icon icon="reset" :activated="true"/>
         </div>
       </div>
       
@@ -32,7 +32,7 @@
  
     <div class="flex-container" id="container-right">
       <div id="info-container" class="icon-container">
-        <iconButton @info="$router.push('info')" action="info" icon="info"/>
+        <iconButton @info="$router.push('info')" action="info" icon="info" :activated="true"/>
       </div>
       <div id="sector-container" class="icon-container">
         <tabContainer v-for="tab in tabs" :key="tab" :tab="tab"/>
@@ -54,8 +54,8 @@ import ProbabilityBox from '@/components/probabilityBox.vue'
 import Diagramm from '@/components/diagramm/Diagramm.vue'
 import Infobox from '@/components/infoboxes/Infobox.vue'
 
+import Icon from '@/components/icons/icon.vue'
 import Logo from '@/components/Logo.vue'
-import ArrowIcon from '@/components/icons/arrowIcon.vue'
 
 
 export default {
@@ -70,7 +70,7 @@ export default {
     Infobox,
 
     Logo,
-    ArrowIcon,
+    Icon,
     iconButton,
     tabContainer
   },
@@ -253,8 +253,13 @@ export default {
   font-size: 1.1em;
   margin-top: 15px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   #reset-text {
     margin-right: 15px;
+  }
+  .icon {
+
   }
 }
 

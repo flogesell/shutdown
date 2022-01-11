@@ -2,7 +2,7 @@
 <template>
   <div class="icon-wrapper" @click="$emit(action)">
     <span style="text-transform: capitalize;">{{action}}</span>
-    <icon :activated="false" :icon="icon" />
+    <icon :activated="activated" :icon="icon" />
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
   },
   props: {
     icon: String,
-    action: String 
+    action: String,
+    activated: Boolean
   },
   methods: {
   }
