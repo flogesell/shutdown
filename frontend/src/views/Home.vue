@@ -7,7 +7,7 @@
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
-        <h2 class="flexrow-1">Emission Sectors</h2>
+        <h2 class="flexrow-1">Global Emission Sectors</h2>
       </div>
       <div id="sectors-container">
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
@@ -159,7 +159,7 @@ export default {
   z-index: 100;
   min-width: 420px;
   #logo {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     width: 100%;
     max-width: 225px;
   }
@@ -238,6 +238,7 @@ export default {
   .probBox, #probButton {
     max-width: 130px;
     max-height: 130px;
+    width: 70%;
   }
 
 
