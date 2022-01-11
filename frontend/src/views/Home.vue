@@ -239,7 +239,8 @@ export default {
     max-width: 130px;
     max-height: 130px;
     width: 70%;
-    place-self: center; 
+    align-self: center;
+    //place-self: center; 
   }
 
 
