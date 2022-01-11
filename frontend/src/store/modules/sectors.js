@@ -26,7 +26,7 @@ const mutations =  {
         state.Traffic = false;
         state.Energy = false;
         state.Agriculture = false;
-        state.Export = false;
+        state.Export = true;
         state.Others = false;
     }
 }
