@@ -199,6 +199,7 @@ export default {
         position: absolute;
         bottom: 1.2em;
         right: 1.2em;
+        max-width: 120px;
     }
   }
 
