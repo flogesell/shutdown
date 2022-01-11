@@ -34,7 +34,7 @@
       <div id="info-container" class="icon-container">
         <iconButton @info="$router.push('info')" action="info" icon="info" :activated="true"/>
       </div>
-      <div id="sector-container" class="icon-container">
+      <div id="sector-container" class="icon-container" v-if="!getPosition.back">
         <tabContainer v-for="tab in tabs" :key="tab" :tab="tab"/>
       </div>
       
