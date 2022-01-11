@@ -8,10 +8,12 @@ class Ball
         this.name = name;
         this.iso = iso;
         this.initial_pos = {x: x, y: y};
-        this.current_size = size;
+        this.current_size = 10;
         this.target_size = size;
         this.scale = scale;
         this.body = Matter.Bodies.circle(x, y, Math.sqrt(scale * size / Math.PI));
+        Matter.Body.set(this.body, "frictionAir", 0.03)
+        Matter.Body.set(this.body, "friction", 0.0) 
         this.color = color;
         this.current_color = color;
         this.world;
@@ -41,8 +43,13 @@ class Ball
 
     reset_size()
     {
-        this.body = Matter.Bodies.circle(this.body.position.x, this.body.position.x, Math.sqrt(this.scale * 1 / Math.PI))
-        this.current_size = 1;
+        //let position = this.body.position;
+        Matter.World.remove(this.world, this.body);
+        this.body = Matter.Bodies.circle(window.innerWidth / 2 - 50 + 100 * Math.random(), 
+                                         window.innerHeight / 2 - 50 + 100 * Math.random(), 
+                                         Math.sqrt(this.scale * 10 / Math.PI))
+        Matter.World.add(this.world, this.body);
+        this.current_size = 10;
     }
 
     set_size(size)
@@ -63,7 +70,10 @@ class Ball
     update()
     {
         let ease = 0.92;
+
         let factor = ease + (1 - ease) * ((this.target_size / this.current_size));
+        if(factor < 1) factor = 1 + (factor - 1) * 2;
+        if(factor - 1 > 1) factor = 2;
         let correction_term = 1 + ((this.current_size / (this.body.area / this.scale) - 1) / 2);
 
         let next_size = this.current_size * factor;
@@ -79,8 +89,8 @@ class Ball
             this.current_size *= factor;
             this.current_color = this.color;
             Matter.Body.scale(this.body, 
-                correction_term + ((factor - 1) / 2), 
-                correction_term + ((factor - 1) / 2));
+                              correction_term + ((factor - 1) / 2), 
+                              correction_term + ((factor - 1) / 2));
         }
 
     }
@@ -112,9 +122,12 @@ class CO2Ball
         this.children = [];
         //emissions_by_category.forEach(category => this.children.push(new Ball(x, y, "", '', category, scale, 'grey')));
         
-        for(let i = 0; i < emissions_by_category.length; i++)
+        if(this.population != 0)
         {
-            this.children.push(new Ball(x, y, sector_names[i], '', emissions_by_category[i], scale, 'grey'));
+            for(let i = 0; i < emissions_by_category.length; i++) 
+            {
+                this.children.push(new Ball(x, y, sector_names[i], '', emissions_by_category[i], scale, 'grey'));
+            }
         }
         
         this.children_visible = false;
@@ -131,6 +144,11 @@ class CO2Ball
     {
         this.body.scale = val;
         this.children.forEach(child => child.body.scale = val);
+    }
+
+    reset_size()
+    {
+        this.body.reset_size();
     }
 
     get_scale()
@@ -180,7 +198,11 @@ class CO2Ball
         })
         */
     }
-
+    
+    remove_from_world(world)
+    {
+        this.body.remove_from_world(world);
+    }
     toggle_emission(index)
     {
         if(index < this.emissions_toggles.length)
@@ -219,6 +241,11 @@ class CO2Ball
         })
     }
 
+    has_children()
+    {
+        return (this.children.length > 0);
+    }
+
     toggle_children()
     {
         this.children_visible = !this.children_visible;
@@ -228,9 +255,9 @@ class CO2Ball
             Matter.Runner.run(this.engine);
             this.children.forEach(child => 
             {
+                child.add_to_world(this.engine.world);
                 child.reset_size(); 
                 child.set_pos({x: this.get_pos().x + 100 * Math.random(), y: this.get_pos().y + 100 * Math.random()})
-                child.add_to_world(this.engine.world);
             })
         } 
         else
