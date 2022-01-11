@@ -155,9 +155,9 @@ export default {
   text-align: left;
   display: flex;
   flex-direction: column;
-  width: 22%;
+  width: 25%;
   z-index: 100;
-  min-width: 420px;
+  min-width: 370px;
   #logo {
     margin-bottom: 25px;
     width: 100%;
@@ -239,6 +239,7 @@ export default {
     max-width: 130px;
     max-height: 130px;
     width: 70%;
+    place-self: center; 
   }
 
 
@@ -256,15 +257,11 @@ export default {
 .reset-button {
   display: flex;
   font-size: 1.1em;
-  margin-top: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
   #reset-text {
     margin-right: 15px;
-  }
-  .icon {
-
   }
 }
 
