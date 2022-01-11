@@ -135,6 +135,12 @@ export default {
 
 
 <style lang="scss" scoped>
+html, body {
+  height: 100%;
+} 
+body {
+  overflow-y: hidden;
+}
 .home {
   display: flex;
   justify-content: space-between;
