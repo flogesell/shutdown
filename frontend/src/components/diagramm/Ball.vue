@@ -2,7 +2,7 @@
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor(), }">
       <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
       <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )" :style="{'font-size' : this.font_size}">{{ name }}</p>
-      <p class="amount" v-if="(!legend) && this.size > 1500" :style="{'font-size' : this.font_size}">{{ (emissions / 1000).toFixed(2)  }} Gt</p>
+      <p class="amount" v-if="(!legend) && this.show_emissions" :style="{'font-size' : this.font_size}">{{ (emissions / 1000).toFixed(2)  }} Gt</p>
     <div v-if="legend" class="legend" :style="{'border-color': color}">
         <div class="test" :style="{'color': color}"> {{ (emissions / 1000).toFixed(2)  }} Gt CO2</div>
     </div>
@@ -54,7 +54,10 @@ export default {
     },
     computed: {
         font_size: function () {
-            return (1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size))) / this.zoom_factor + "em";
+            return (1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size / this.zoom_factor))) + "em";
+        },
+        show_emissions: function() {
+            return ((1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size * this.zoom_factor))) > 0.8)
         }
     },
     methods: {

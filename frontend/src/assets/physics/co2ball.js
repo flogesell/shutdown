@@ -257,7 +257,7 @@ class CO2Ball
             {
                 child.add_to_world(this.engine.world);
                 child.reset_size(); 
-                child.set_pos({x: this.get_pos().x + 100 * Math.random(), y: this.get_pos().y + 100 * Math.random()})
+                child.set_pos({x: this.get_pos().x - 50 + 100 * Math.random(), y: this.get_pos().y - 50 + 100 * Math.random()})
             })
         } 
         else
