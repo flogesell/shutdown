@@ -1,8 +1,8 @@
 <template>
-  <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
-      <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)">{{ iso }}</p>
-      <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )">{{ name }}</p>
-      <p class="amount" v-if="!legend" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
+  <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor(), }">
+      <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
+      <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )" :style="{'font-size' : this.font_size}">{{ name }}</p>
+      <p class="amount" v-if="(!legend) && this.size > 1500" :style="{'font-size' : this.font_size}">{{ (emissions / 1000).toFixed(2)  }} Gt</p>
     <div v-if="legend" class="legend" :style="{'border-color': color}">
         <div class="test" :style="{'color': color}"> {{ (emissions / 1000).toFixed(2)  }} Gt CO2</div>
     </div>
@@ -47,6 +47,15 @@ export default {
             type: Boolean,
             default: false
         },
+        zoom_factor: {
+            type: Number,
+            default: 1
+        }
+    },
+    computed: {
+        font_size: function () {
+            return (1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size))) / this.zoom_factor + "em";
+        }
     },
     methods: {
         diameter() {
@@ -101,28 +110,28 @@ export default {
         }
 
         .amount {
-            font-weight: 200;
+            font-weight: 250;
         }
 
         .legend {
-        position: absolute;
-        top: 0px;
-        width: 20vw;
-        min-width: 400px;
-        height: 1px;
-        left: 50%;
-        border-bottom: 2px solid;
+            position: absolute;
+            top: 0px;
+            width: 20vw;
+            min-width: 400px;
+            height: 1px;
+            left: 50%;
+            border-bottom: 2px solid;
 
-        .test {
-            text-align: right;
-            font-weight: 500;
-            height: 25px;
-            display: flex;
-            flex-direction: column-reverse;
-            margin-top: -25px;
-            font-size: 1.4em;
+            .test {
+                text-align: right;
+                font-weight: 500;
+                height: 25px;
+                display: flex;
+                flex-direction: column-reverse;
+                margin-top: -25px;
+                font-size: 1.4em;
+            }
         }
-    }
     }
     
 </style>
