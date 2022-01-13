@@ -1,16 +1,24 @@
 <template>
-  <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
+  <div class="ball" :class="(zoomIn) ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)">{{ iso }}</p>
       <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )">{{ name }}</p>
-      <p class="amount" v-if="!legend" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
-    <div v-if="legend" class="legend" :style="{'border-color': color}">
-        <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
-    </div>
+      <div class="only-for-big-circles" v-if="(emissions) > 1000 || zoomed" >
+        <p class="amount" v-if="!legend" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
+        <div v-if="legend" class="legend" :style="{'border-color': color}">
+            <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
+        </div>
+        <Icon v-if="!legend && emissions > 3000 && zoomIn" icon="hover" :activated="true"/>
+      </div>
   </div>
 </template>
 
 <script>
+import Icon from '@/components/icons/icon.vue'
+
 export default {
+    components: {
+        Icon,
+    },
     props: {
         x: {
             type: Number,
@@ -48,6 +56,11 @@ export default {
             default: false
         },
     },
+    data() {
+        return {
+            hover: false
+        }
+    },
     methods: {
         diameter() {
             let diameter = 2 * Math.sqrt(this.size / Math.PI);
@@ -68,6 +81,12 @@ export default {
         }
     },
     computed: {
+        zoomed() {
+            return this.$store.state.app.activeSpecific.length > 0 && this.$store.state.app.activeSpecific === this.name;
+        },
+        zoomIn() {
+            return this.$store.state.app.activeSpecific.length === 0;
+        },
         tab() {
             return this.$store.state.app.activeTab;
         },
@@ -97,7 +116,16 @@ export default {
         opacity: 0.7;
         border-radius: 50%;
         transition: background-color 1s;
+
+        &.no-zoom:hover {
+            background-color: #535353 !important;
+            border: 2px solid black;
+        }
         
+        .icon {
+            width: 100%;
+            position: absolute;
+        }
         p {
             display: flex;
             justify-content: center;
@@ -111,13 +139,13 @@ export default {
         }
 
         .legend {
-        position: absolute;
-        top: 0px;
-        width: 20vw;
-        min-width: 400px;
-        height: 1px;
-        left: 50%;
-        border-bottom: 2px solid;
+            position: absolute;
+            top: 0px;
+            width: 20vw;
+            min-width: 400px;
+            height: 1px;
+            left: 50%;
+            border-bottom: 2px solid;
 
         .test {
             text-align: right;
