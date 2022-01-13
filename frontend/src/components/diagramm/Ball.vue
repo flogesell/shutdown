@@ -2,9 +2,9 @@
   <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)">{{ iso }}</p>
       <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )">{{ name }}</p>
-      <p class="amount" v-if="!legend" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
+      <p class="amount" v-if="!legend" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
     <div v-if="legend" class="legend" :style="{'border-color': color}">
-        <div class="test" :style="{'color': color}"> {{ (emissions / 1000).toFixed(2)  }} Gt CO2</div>
+        <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
     </div>
   </div>
 </template>
@@ -67,6 +67,11 @@ export default {
             }
         }
     },
+    computed: {
+        tab() {
+            return this.$store.state.app.activeTab;
+        },
+    },
     data(){
         return {
             styleObject: {
@@ -102,6 +107,7 @@ export default {
 
         .amount {
             font-weight: 200;
+            text-align: center;
         }
 
         .legend {
