@@ -3,7 +3,7 @@
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
     <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
-    <div class="position" @click="resetZoom"> <h1>{{(getPosition.back) ? '🠔 ' : ''}}{{getPosition.tab}}</h1></div>
+    <div class="position" @click="resetZoom"> <h1><Icon v-if="getPosition.back" icon="backwards" :activated="true"/>{{getPosition.tab}}</h1></div>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
@@ -157,6 +157,11 @@ body {
   text-align: center;
   padding-top: 30px;
   z-index: 6;
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 #container-left {
   padding: 30px 0 30px 100px;
@@ -244,6 +249,10 @@ body {
   margin-top: auto;
   grid-gap: 15px 0;
   //grid-gap: 1.2em;
+
+   .probBox:nth-child(3), #probButton {
+      margin-left: -50px !important;
+    }
 
 
   #probability-headline {
