@@ -9,7 +9,7 @@
       <div id="sectors-lable-container">
         <h2 class="flexrow-1">Emission Sectors</h2>
       </div>
-      <div id="sectors-container">
+      <div id="sectors-container" :class="getPosition.tab.replace(' ','-').toLowerCase()">
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
         <div class="reset-button" @click="reset">
           <span id="reset-text">Reset</span>
@@ -132,6 +132,8 @@ export default {
 
 
 <style lang="scss" scoped>
+@import '@/assets/styles/_config.scss';
+
 .home {
   display: flex;
   justify-content: space-between;
@@ -193,6 +195,9 @@ export default {
 #infobox {
   z-index: 101;
 }
+.per-sector .export {
+  display: none;
+}
 #sectors-container {
   width: 100%;
   display: flex;
@@ -203,7 +208,10 @@ export default {
     width: 10%;
   }
   .sector-switch.export {
-    margin-top: 15px;
+    border-top: 2px solid;
+    border-image: linear-gradient(90deg, #A3A3A3 50%, transparent 50%) 1;
+    padding-top: 7.5px;
+    margin-top: 7.5px;
   }
 }
 .sector-switch {
