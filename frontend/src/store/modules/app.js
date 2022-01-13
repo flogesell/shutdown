@@ -13,14 +13,21 @@ const state = {
     info: false,
     loader: true,
     error: false,
+    logoSwitch: false
 }
 
 const mutations =  {
     CHANGE_ACTIVE_TAB: (state, tab) => {
         state.activeTab = tab;
     },
+    CHANGE_LOGO_SWITCH: (state) => {
+        state.logoSwitch = !state.logoSwitch;
+    },
     TOGGLE_INFO: (state) => {
         state.info = !state.info;
+    },
+    RESET_ACTIVE_SPECIFIC: () => {
+        state.activeSpecific = '';
     },
     updateField
 }

@@ -33,6 +33,10 @@ export default {
     this.fetchData();
     window.addEventListener("resize", this.setWidth);
     this.width = window.innerWidth;
+    if(this.currentRouteName == "Home") {
+      document.body.style.height = "100%"
+      document.body.style.overflowY = "hidden";
+    }
   },
   destroyed() {
     window.removeEventListener("resize", this.setWidth);
@@ -40,7 +44,9 @@ export default {
   computed: {
     ...mapState(['loader', 'error']),
     ...mapFields(['data', 'lang']),
-    
+    currentRouteName() {
+        return this.$route.name;
+    },
   },
   methods: {
     ...mapActions(['fetchData']),
@@ -50,7 +56,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss">
 @import '@/assets/styles/_config.scss';

@@ -3,11 +3,11 @@
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
     <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
-    <div class="position"> <h1>{{(getPosition.back) ? '🠔 ' : ''}}{{getPosition.tab}}</h1></div>
+    <div class="position" @click="resetZoom"> <h1>{{(getPosition.back) ? '🠔 ' : ''}}{{getPosition.tab}}</h1></div>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
-        <h2 class="flexrow-1">Emission Sectors</h2>
+        <h2 class="flexrow-1">Global Emission Sectors</h2>
       </div>
       <div id="sectors-container" :class="getPosition.tab.replace(' ','-').toLowerCase()">
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
@@ -34,7 +34,7 @@
       <div id="info-container" class="icon-container">
         <iconButton @info="$router.push('info')" action="info" icon="info" :activated="true"/>
       </div>
-      <div id="sector-container" class="icon-container">
+      <div id="sector-container" class="icon-container" v-if="!getPosition.back">
         <tabContainer v-for="tab in tabs" :key="tab" :tab="tab"/>
       </div>
       
@@ -87,6 +87,9 @@ export default {
     }
   },
   methods: {
+    resetZoom() {
+      this.$store.commit('RESET_ACTIVE_SPECIFIC')
+    },
     toggleTab(tab) {
       this.$store.commit('CHANGE_ACTIVE_TAB', tab)
     },
@@ -134,6 +137,12 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/_config.scss';
 
+html, body {
+  height: 100%;
+} 
+body {
+  overflow-y: hidden;
+}
 .home {
   display: flex;
   justify-content: space-between;
@@ -147,17 +156,18 @@ export default {
   width: 100%;
   text-align: center;
   padding-top: 30px;
+  z-index: 6;
 }
 #container-left {
   padding: 30px 0 30px 100px;
   text-align: left;
   display: flex;
   flex-direction: column;
-  width: 22%;
+  width: 25%;
   z-index: 100;
-  min-width: 420px;
+  min-width: 370px;
   #logo {
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     width: 100%;
     max-width: 225px;
   }
@@ -242,6 +252,9 @@ export default {
   .probBox, #probButton {
     max-width: 130px;
     max-height: 130px;
+    width: 70%;
+    align-self: center;
+    //place-self: center; 
   }
 
 
@@ -259,15 +272,11 @@ export default {
 .reset-button {
   display: flex;
   font-size: 1.1em;
-  margin-top: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
   #reset-text {
     margin-right: 15px;
-  }
-  .icon {
-
   }
 }
 

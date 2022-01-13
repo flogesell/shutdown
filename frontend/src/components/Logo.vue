@@ -38,7 +38,14 @@ export default {
   methods: {
     switchButton() {
       this.status = !this.status;
-      this.$emit('status', this.status)
+      this.$store.commit('CHANGE_LOGO_SWITCH');
+      if(this.status) this.$store.commit('NULL_SECTORS');
+      else this.$store.commit('RESET');
+    }
+  },
+  watch: {
+    checked: function () {
+      this.status = this.checked;
     }
   }
 }

@@ -1,10 +1,9 @@
 <template>
-    <div id="container">
+    <div id="container" @clicked="zoom_out">
         <Ball :legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color" :emissions="total_ball.emissions"/>
-        <Scale :x="this.center.x" :y="this.center.y" increment="10000" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
+        <Scale :x="this.center.x" :y="this.center.y" :increment="this.scale_increment" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
         <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
     </div>
-
 </template>
 
 <script>
@@ -24,6 +23,12 @@ export default {
         Scale
     },
     computed: {
+        active_tab: function() {
+            return this.$store.state.app.activeTab.toLowerCase();
+        },
+        sectors: function() {
+            return this.$store.state.sectors;
+        },
         dummy_data() {
             return this.$store.state.data.CAIT;
         },
@@ -33,6 +38,9 @@ export default {
     },
     async mounted() {
         await this.loadData();
+        document.getElementById("container").style.left = "0px"; 
+        document.getElementById("container").style.transform ="scale(1)";
+        document.getElementById("container").style.top = "0px";
         this.run();
     },
 
@@ -42,44 +50,48 @@ export default {
 
     methods: {
         onClickChild(value) {
-            console.log(this.ballObjects)
-            if(this.balls[value].children_visible)
-            {
-                //zooming out
-                this.running = true;
-                this.$store.state.app.activeSpecific = '';
-                this.balls[value].toggle_children();
-                document.getElementById("container").style.left = "0px";            
-                document.getElementById("container").style.transform ="scale(1)";
-                document.getElementById("container").style.top = "0px";
-                this.balls.forEach(ball => { ball.set_color("black"); })
-                this.total_ball.color = "#FFC833";
-            }
-            else
-            {
-                //zooming in
-                this.running = false;
-                this.$store.state.app.activeSpecific = this.balls[value].name;
-                let x = this.balls[value].get_pos().x;
-                let y = this.balls[value].get_pos().y;
-                let d = this.balls[value].get_diameter();
-                let target_d = window.innerHeight * 0.5;
-                let scale = 0.5 * target_d/d;
-                document.getElementById("container").style.left= window.innerWidth/2 -(x*scale) + "px";            
-                document.getElementById("container").style.transform="scale("+ scale +")";
-                document.getElementById("container").style.top= window.innerHeight/2 -(y*scale) + "px";
-                this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
-                this.balls[value].toggle_children();
-                this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
-                this.total_ball.color = "transparent";
+            //console.log(this.ballObjects)
+            if(this.active_tab != 'per sector'){
+                if(!(this.balls[value].children_visible)) {
+                    this.zoom_in(value);
+                }
             }
         },
-        getData() {
+        zoom_out() {
+            this.zoomed_in = false;
+            this.running = true;
+            this.$store.commit('RESET_ACTIVE_SPECIFIC')
+            this.balls[this.zoomed_ball_index].toggle_children();
+            document.getElementById("container").style.left = "0px";            
+            document.getElementById("container").style.transform ="scale(1)";
+            document.getElementById("container").style.top = "0px";
+            this.balls.forEach(ball => { ball.set_color("black"); })
+            this.total_ball.color = "#FFC833";
+        },
+        zoom_in(index) {
+            this.zoomed_in = true;
+            this.zoomed_ball_index = index;
+            this.running = false;
+            this.$store.state.app.activeSpecific = this.balls[index].name;
+            let x = this.balls[index].get_pos().x;
+            let y = this.balls[index].get_pos().y;
+            let d = this.balls[index].get_diameter();
+            let target_d = window.innerHeight * 0.5;
+            let scale = 0.5 * target_d/d;
+            document.getElementById("container").style.left= window.innerWidth/2 -(x*scale) + "px";            
+            document.getElementById("container").style.transform="scale("+ scale +")";
+            document.getElementById("container").style.top= window.innerHeight/2 -(y*scale) + "px";
+            this.balls.forEach(ball => { if(ball.children_visible) ball.toggle_children(); })
+            this.balls[index].toggle_children();
+            this.balls.forEach(ball => { if(!ball.children_visible) ball.set_color("transparent"); })
+            this.total_ball.color = "transparent";
+        },
+        getData(current_balls) {
             let tmp_countries = [];
             let tmp_sectors = [];
-            this.balls.forEach(ball => {
+            current_balls.forEach(ball => {
                 tmp_countries.push(ball.get_json());
-                if(ball.children_visible)
+                if(ball.children_visible && ball.has_children())
                 {
                     let children = ball.get_children_json();
                     children.forEach(child => tmp_sectors.push(child));
@@ -112,34 +124,62 @@ export default {
 
             
             this.balls = this.json_to_balls(this.dummy_data, this.$store.state.data.population, this.scale);
+            this.sector_balls = this.json_to_sector_balls(this.dummy_data, this.scale);
             
             
         },
         run() {
             let engine = Matter.Engine.create();
+            let sector_engine = Matter.Engine.create();
             let runner = Matter.Runner.create();
-            let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls);
+            let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls.concat(this.sector_balls));
 
             Matter.Runner.start(runner, engine);
+            Matter.Runner.start(runner, sector_engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
+            this.sector_balls.forEach(ball => ball.add_to_world(sector_engine.world));
             engine.world.gravity.scale = 0; 
+            sector_engine.world.gravity.scale = 0; 
+
+            this.prev_tab = this.active_tab;
+
             
             setInterval(() => {
-                switch (this.$store.state.app.activeTab.toLowerCase()){
+                if(this.$store.state.app.activeSpecific == '' && this.zoomed_in) {
+                    this.zoom_out();
+                }
+                
+                if(this.active_tab != this.prev_tab) {
+                    if(this.active_tab == 'per sector') {
+                        
+                        Matter.Runner.start(runner, sector_engine);
+                        //Matter.Runner.stop(runner, engine);
+                        this.sector_balls.forEach(ball => ball.reset_size());
+                        console.log('meemlool')
+                    }
+                    else if(this.prev_tab == 'per sector') {
+                        Matter.Runner.start(runner, engine);
+                        Matter.Runner.stop(runner, sector_engine);
+                        this.balls.forEach(ball => ball.reset_size());
+                    }
+                }
+                
+                switch (this.active_tab){
                     case 'per country':
                         this.global_tab(engine, runner, attractor, false);
                         break;
                     case 'per sector':
+                        this.sector_tab(sector_engine, runner, attractor);
                         break;
                     case 'per person':
                         this.global_tab(engine, runner, attractor, true);
                         break;
                     default:
-                        this.global_tab(engine, runner, attractor, false);
+                        this.global_tab(engine, runner, attractor, this.balls, false);
                         break;
                 }
-                this.getData();
                 this.prev_running = this.running;
+                this.prev_tab = this.active_tab;
             }, 33) 
         },
         
@@ -185,6 +225,43 @@ export default {
                 this.$emit('probabilities_changed', new_probablities);
             }
             this.emissions_changed = false;
+            this.getData(this.balls);
+        },
+
+        sector_tab(engine, runner, attractor) {
+            let prev_total = 0;
+            this.sector_balls.forEach(ball => prev_total += ball.body.target_size);
+
+            let prev_sectors = this.balls[0].emissions_toggles;
+
+            let current_sectors = this.$store.state.sectors
+
+            if(prev_sectors[0] != current_sectors.Energy || prev_sectors[1] != current_sectors.Traffic || prev_sectors[2] != current_sectors.Agriculture || prev_sectors[3] != current_sectors.Others) {
+                this.emissions_changed = true;
+            }
+            
+            //Matter.Runner.run(runner, engine);
+            
+            attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+            attractor.attract();
+            
+
+            this.sector_balls.forEach(ball => {
+                ball.set_categories([this.$store.state.sectors.Energy, 
+                                     this.$store.state.sectors.Traffic, 
+                                     this.$store.state.sectors.Agriculture, 
+                                     this.$store.state.sectors.Others])
+                ball.update();
+            });
+
+            if(this.emissions_changed) {
+                let new_emissions = 0;
+                this.sector_balls.forEach(ball => new_emissions += ball.body.target_size);
+                let new_probablities = this.co2_to_probabilities((new_emissions /  1000) * 80);
+                this.$emit('probabilities_changed', new_probablities);
+            }
+            this.emissions_changed = false;
+            this.getData(this.sector_balls);
         },
 
         co2_to_probabilities(co2) {
@@ -239,6 +316,34 @@ export default {
                 }
             }
             //placing the balls in a grid pattern
+            //let max_size = countries[0].co2_emissions[0];
+            //let dist = 4 * Math.sqrt(scale * max_size / Math.PI);
+
+            //let grid_columns = parseInt(Math.sqrt(countries.length));
+            //if(countries.length < 5) grid_columns = countries.length;
+            //let grid_rows = parseInt(countries.length / 5) + 1;
+
+            let w0 = window.innerWidth / 2;
+            let h0 = window.innerHeight / 2;
+
+
+            let tmp_balls = [];
+
+            for(let i = 0; i < countries.length - 1; i++) {
+                tmp_balls.push(new CO2Ball(w0 - 50 + Math.random() * 100, 
+                                           h0 - 50 + Math.random() * 100,
+                                           countries[i].name,
+                                           countries[i].iso,
+                                           countries[i].total_emissions,
+                                           ['Energy', 'Traffic', 'Agriculture', 'Others'],
+                                           countries[i].co2_emissions,
+                                           population[i].population,
+                                           scale));
+            }
+            return tmp_balls;
+        },
+        json_to_sector_balls(countries, scale){
+            //placing the balls in a grid pattern
             let max_size = countries[0].co2_emissions[0];
             let dist = 4 * Math.sqrt(scale * max_size / Math.PI);
 
@@ -249,18 +354,30 @@ export default {
             let w0 = window.innerWidth / 2;
             let h0 = window.innerHeight / 2;
 
-
             let tmp_balls = [];
 
-            for(let i = 0; i < countries.length - 1; i++) {
+            let sectors = ['Energy', 'Traffic', 'Agriculture', 'Others'];
+
+            let sector_emissions = [0, 0, 0, 0];
+
+            for(let i = 0; i < countries.length; i++) {
+                for(let j = 0; j < countries[i].co2_emissions.length; j++) {
+                    sector_emissions[j] += countries[i].co2_emissions[j];
+                }
+            }
+
+            for(let i = 0; i < 4; i++) {
+                let current_sector_emissions = [0, 0, 0, 0];
+                current_sector_emissions[i] = sector_emissions[i]
+                
                 tmp_balls.push(new CO2Ball(w0 + dist * (i % grid_columns) - (dist * grid_columns) / 2, 
                                            h0 + dist * parseInt(i / grid_columns) - (dist * grid_rows) / 2,
-                                           countries[i].name,
-                                           countries[i].iso,
-                                           countries[i].total_emissions,
-                                           ['Traffic', 'Energy', 'Agriculture', 'Others'],
-                                           countries[i].co2_emissions,
-                                           population[i].population,
+                                           sectors[i],
+                                           sectors[i],
+                                           sector_emissions[i],
+                                           sectors,
+                                           current_sector_emissions,
+                                           0,
                                            scale));
             }
             return tmp_balls;
@@ -271,6 +388,7 @@ export default {
         return {
             ballObjects: [],
             balls: [],
+            sector_balls: [],
             scale: 4,
             country_data: [],
             total_ball: {
@@ -283,8 +401,13 @@ export default {
             },
             total_emissions: 0,
             running: true,
+            prev_sectors: [],
             prev_running: true,
-            emissions_changed: true
+            prev_tab: '',
+            emissions_changed: true,
+            zoomed_in: false,
+            zoomed_ball_index: 0,
+            scale_increment: 10000
         }
         
     }
