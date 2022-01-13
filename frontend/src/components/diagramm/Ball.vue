@@ -1,5 +1,5 @@
 <template>
-  <div class="ball" :class="(zoomIn) ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
+  <div class="ball" :class="(zoomIn && tab === 'Per Country') ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)">{{ iso }}</p>
       <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )">{{ name }}</p>
       <div class="only-for-big-circles" v-if="(emissions) > 1000 || zoomed" >
@@ -7,7 +7,7 @@
         <div v-if="legend" class="legend" :style="{'border-color': color}">
             <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
         </div>
-        <Icon v-if="!legend && emissions > 3000 && zoomIn" icon="hover" :activated="true"/>
+        <Icon v-if="!legend && emissions > 3000 && zoomIn && tab === 'Per Country'" icon="hover" :activated="true"/>
       </div>
   </div>
 </template>
@@ -116,6 +116,7 @@ export default {
         opacity: 0.7;
         border-radius: 50%;
         transition: background-color 1s;
+        user-select: none;
 
         &.no-zoom:hover {
             background-color: #535353 !important;
