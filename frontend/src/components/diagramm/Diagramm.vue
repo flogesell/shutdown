@@ -241,7 +241,14 @@ export default {
                 this.emissions_changed = true;
             }
             
-            //Matter.Runner.run(runner, engine);
+            if(this.prev_running != this.running) {
+                if(this.running) {
+                    Matter.Runner.run(runner, engine);
+                }
+                else {
+                    Matter.Runner.stop(runner);
+                }
+            }
             
             attractor.pos = {x: window.innerWidth / 2, y: window.innerHeight / 2};
             attractor.attract();
