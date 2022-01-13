@@ -2,7 +2,7 @@
     <div id="container" @clicked="zoom_out">
         <Ball :legend="true" :x="this.total_ball.x" :y="this.total_ball.y" :name="this.total_ball.name" :size="this.total_ball.size" :color="this.total_ball.color" :emissions="total_ball.emissions"/>
         <Scale :x="this.center.x" :y="this.center.y" :increment="this.scale_increment" :scale="this.scale" :nb_of_rings="7" :color="'grey'"/>
-        <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions"/>
+        <Ball @clicked="onClickChild" v-for="(item, index) in ballObjects" :key="'item' + index" :index="index" :x="item.xv" :y="item.yv" :size="item.size" :name="item.name" :iso="item.iso" :color="item.color" :emissions="item.emissions" :zoom_factor="zoom_factor"/>
     </div>
 </template>
 
@@ -59,6 +59,7 @@ export default {
         },
         zoom_out() {
             this.zoomed_in = false;
+            this.zoom_factor = 1;
             this.running = true;
             this.$store.commit('RESET_ACTIVE_SPECIFIC')
             this.balls[this.zoomed_ball_index].toggle_children();
@@ -78,6 +79,7 @@ export default {
             let d = this.balls[index].get_diameter();
             let target_d = window.innerHeight * 0.5;
             let scale = 0.5 * target_d/d;
+            this.zoom_factor = scale;
             document.getElementById("container").style.left= window.innerWidth/2 -(x*scale) + "px";            
             document.getElementById("container").style.transform="scale("+ scale +")";
             document.getElementById("container").style.top= window.innerHeight/2 -(y*scale) + "px";
@@ -155,7 +157,6 @@ export default {
                         Matter.Runner.start(runner, sector_engine);
                         //Matter.Runner.stop(runner, engine);
                         this.sector_balls.forEach(ball => ball.reset_size());
-                        console.log('meemlool')
                     }
                     else if(this.prev_tab == 'per sector') {
                         Matter.Runner.start(runner, engine);
@@ -407,6 +408,7 @@ export default {
             emissions_changed: true,
             zoomed_in: false,
             zoomed_ball_index: 0,
+            zoom_factor: 1,
             scale_increment: 10000
         }
         

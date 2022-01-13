@@ -1,9 +1,9 @@
 <template>
   <div class="ball" :class="(zoomIn && tab === 'Per Country') ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
-      <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)">{{ iso }}</p>
-      <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )">{{ name }}</p>
-      <div class="only-for-big-circles" v-if="(emissions) > 1000 || zoomed" >
-        <p class="amount" v-if="!legend" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
+      <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
+      <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )" :style="{'font-size' : this.font_size}">{{ name }}</p>
+      <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0" >
+        <p class="amount" v-if="!legend" :style="{'font-size' : this.font_size}" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
         <div v-if="legend" class="legend" :style="{'border-color': color}">
             <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
         </div>
@@ -55,10 +55,19 @@ export default {
             type: Boolean,
             default: false
         },
+        zoom_factor: {
+            type: Number,
+            default: 1
+        }
     },
     data() {
         return {
-            hover: false
+            hover: false,
+            styleObject: {
+                left: this.x,
+                top:  this.y,
+            },
+            fontcolor: this.getFontColor() 
         }
     },
     methods: {
@@ -81,6 +90,12 @@ export default {
         }
     },
     computed: {
+        font_size: function () {
+            return (1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size / this.zoom_factor))) + "em";
+        },
+        show_emissions: function() {
+            return ((1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size * this.zoom_factor))) > 0.8)
+        },
         zoomed() {
             return this.$store.state.app.activeSpecific.length > 0 && this.$store.state.app.activeSpecific === this.name;
         },
@@ -90,15 +105,6 @@ export default {
         tab() {
             return this.$store.state.app.activeTab;
         },
-    },
-    data(){
-        return {
-            styleObject: {
-                left: this.x,
-                top:  this.y,
-            },
-            fontcolor: this.getFontColor() 
-        }
     }
 }
 </script>
@@ -135,7 +141,7 @@ export default {
         }
 
         .amount {
-            font-weight: 200;
+            font-weight: 250;
             text-align: center;
         }
 
@@ -148,16 +154,16 @@ export default {
             left: 50%;
             border-bottom: 2px solid;
 
-        .test {
-            text-align: right;
-            font-weight: 500;
-            height: 25px;
-            display: flex;
-            flex-direction: column-reverse;
-            margin-top: -25px;
-            font-size: 1.4em;
+            .test {
+                text-align: right;
+                font-weight: 500;
+                height: 25px;
+                display: flex;
+                flex-direction: column-reverse;
+                margin-top: -25px;
+                font-size: 1.4em;
+            }
         }
-    }
     }
     
 </style>
