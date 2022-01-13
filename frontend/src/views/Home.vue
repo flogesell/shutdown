@@ -245,6 +245,7 @@ body {
   grid-gap: 15px 0;
   //grid-gap: 1.2em;
 
+
   #probability-headline {
     grid-column: span 2;
   }
@@ -254,6 +255,7 @@ body {
     max-height: 130px;
     width: 70%;
     align-self: center;
+    margin-left: -7px;
     //place-self: center; 
   }
 
