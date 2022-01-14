@@ -1,11 +1,31 @@
 
 <template>
   <div class="effects">
-    <div class="logo-wrapper">Your <Logo id="logo" :checked=false :dark=false /> scenario</div>
-    <div class="text">
-      <p>Your personal effects of your shutdown scenario will be displayed here later.</p>
+    <div class="starttext"><div>
+       <p>Your</p> <Logo id="logo" :checked=false :dark=true /> <p> scenario will mostlikely cause a global warming of 1.5° celsius</p> 
+      
+       </div>
+        <li v-for="(paragraph, index) in text" :key="index" class="flex_centered typer">
+      <p><vue-typer :text="paragraph" :erase-on-complete='false' :repeat='0'/></p>
+       </li>
+      </div>
+      
+      <DegreeDisplay :data="data" :state="state" class="circle" :animated="animated" />
+      <DegreeNumber :data="data" :state="state"  />
+      <!---<p>{{scrollamount}}</p>-->
+
+      <div class="sidenav">
+        <p v-if="state!=0" @click="state=0" class="two">1.5°</p>
+        <p v-if="state!=1" @click="state=1" class="two">2°</p>
+        <p v-if="state!=2" @click="state=2" class="two">3°</p>
       </div>
     <Button :text='"Try</br>again!"' id="probButton" @click="tryAgain" />
+
+    <img v-if="state==0" src="../assets/imgs/1_1.png" alt="" class="first">
+    <img v-if="state==0" src="../assets/imgs/1_2.png" alt="" class="first2">
+    <img v-if="state==1" src="../assets/imgs/2_1.png" alt="" class="second">
+    <img v-if="state==1" src="../assets/imgs/2_2.png" alt="" class="second2"> 
+  
   </div>
   
 </template>
@@ -13,15 +33,38 @@
 <script>
 import Logo from '@/components/Logo.vue'
 import Button from '@/components/buttons/Button.vue'
+import DegreeDisplay from '@/components/degreeDisplay.vue'
+import DegreeNumber from '@/components/degreeNumber.vue'
+import { VueTyper } from 'vue-typer'
 
 export default {
   name: 'Info',
   components: {
     Button,
-    Logo
+    Logo,
+    DegreeDisplay,
+    DegreeNumber,
+    VueTyper
+  },
+  created() {
+    window.addEventListener('scroll', this.scrolled);
+    
+   
+  },
+  mounted(){
+    setTimeout(() => { window.addEventListener('click', this.startanimation);}, 1000);
+  },
+  beforeDestroy(){
+    console.log("unmound")
+    window.removeEventListener('click', this.startanimation);
   },
   data() {
     return {
+      data: this.$store.state.results.degrees,
+      scrollamount: 0,
+      state: 0,
+      text: ["click to see how such a world would look like",],
+      animated: false,
     }
   },
   methods: {
@@ -29,31 +72,122 @@ export default {
       this.$router.push('/')
       this.$store.commit('RESET')
     },
+    scrolled(){
+      this.scrollamount = window.pageYOffset;
+      this.state = Math.round(window.pageYOffset/1300);
+      console.log(this.state);
+    },
+    startanimation(){
+      document.getElementsByClassName("circle")[0].style.transform="translate(-50%, -50%) scale(1)"
+      document.getElementsByClassName("starttext")[0].style.opacity="0"
+      var elements = document.body.getElementsByTagName('img');
+      setTimeout(() => {
+      for (var i = 0; i < elements.length; i++) {
+          elements[i].style.opacity = "0.7";
+      }
+      }, 700);
+      console.log("clicked");
+      setTimeout(() => { this.animated = true; }, 2000);
+      setTimeout(() => {document.getElementsByClassName("circle2")[0].style.transform="translate(calc(-50% + 338px ), -50%) scale(1)"}, 700);
+      //setTimeout(() => {document.getElementsByClassName("circle")[0].style.transform="translate(-50%, -50%) scale(1)"}, 4000);
+    }
   },
 }
 </script>
 
 
 <style lang="scss" scoped>
+
+  
+
+  //imgs
+  img{
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 1s ease-in;
+  }
+
+  .first{
+    height: 30vh;
+    min-height: 270px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+  }
+
+  .first2{
+    height: 60vh;
+    min-height: 470px;
+    position: absolute;
+    right: 0px;
+    top: 200px;
+  }
+
+  .second{
+    height: 50vh;
+    min-height: 370px;
+    max-height: 750px;
+    position: absolute;
+    left: -80px;
+    top: 200px;
+  }
+
+  .second2{
+    height: 60vh;
+    min-height: 270px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+  }
+
+  .sidenav{
+    position: fixed;
+    left: 50px;
+    top: 50px;
+    p{
+      cursor: pointer;
+      margin-bottom: 10px;
+      padding: ;
+    }
+  }
+
   .effects {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    .logo-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 50px;
+    
+    
+   //height: 2500px;
+    .starttext {
+      position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% , -50%) ;
+        color: white;
+        z-index: 3;
+        width: 100vw;
+        transition: opacity 0.5s ease-out;
+        cursor: pointer;
+        white-space: nowrap;
+        
+        div{
+          display: flex;
+          justify-content: center;
+
+        }
+
+        p{
+          white-space: nowrap;
+          float: left;
+          font-size: 26px;
+          margin: 0px
+        }
     }
   }
   #logo {
-    width: 100%;
-    max-width: 340px;
-    margin: 0 25px;
+    width: 170px;
+    
+    margin: 0 5px;
+    float: left;
   } 
-
+ 
   .text {
     margin: 50px 0;
     text-align: center;
@@ -62,7 +196,58 @@ export default {
     }
   }
 
+  .typer{
+    margin-top: 20px;
+  span{
+      font-size: 20px;
+    }
+  
+  }
+
   button {
     max-width: 130px;
+    z-index: 2;
   }
+
+  #probButton{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+  }
+
+  .circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(5);
+    transition: transform 1s ease-in;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+   .circle2 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50% + 338px ), -50%) scale(0);
+    transition: transform 0.5s ease-in;
+    margin-top: -250px;
+    margin-right: -200px;
+    z-index: 1;
+  }
+
+</style>
+
+<style lang="scss">
+  .typer{
+    margin-top: 20px;
+    color: white;
+  span{
+      font-size: 18px;
+       color: white;
+    }
+     .custom.char.typed{ color: #FFF !important; 
+     opacity: 0.4;}
+  }
+ 
 </style>
