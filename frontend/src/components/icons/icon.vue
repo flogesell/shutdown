@@ -68,8 +68,7 @@ export default {
         return {
             resetIcon,
             globalIcon,
-            infoIcon1,
-            infoIcon2,
+            infoIcon,
             personIcon,
             sectorIcon
         }
