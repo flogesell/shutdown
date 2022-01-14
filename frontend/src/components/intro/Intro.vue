@@ -108,12 +108,10 @@ export default {
     width: 100%;
     height: 100vh;
     z-index: 9999;
-    padding: 1.2em;
     align-items: stretch !important;
 
     >div{
       width: 100%;
-      border-radius: 1.2em;
       display: flex;
       flex-flow: column nowrap;
       background: rgba($color: $background, $alpha: .8);
