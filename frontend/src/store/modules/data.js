@@ -15,7 +15,7 @@ const state = {
         { name: "Japan",         iso: "JPN",   total_emissions:  1154.72, co2_emissions: [ 561.86,  204.56,   21.56,  366.74] },
         { name: "Iran",          iso: "IRN",   total_emissions:   828.34, co2_emissions: [ 201.29,  139.23,   32.74,  455.08] },
         { name: "Germany",       iso: "GER",   total_emissions:   776.61, co2_emissions: [ 310.35,  158.30,   58.30,  249.66] },
-        { name: "Others",        iso: "OTHER", total_emissions: 20555.84, co2_emissions: [6577.74, 4827.08, 5146.13, 4004.89] }
+        { name: "Others",        iso: "Others", total_emissions: 20555.84, co2_emissions: [6577.74, 4827.08, 5146.13, 4004.89] }
     ],
     population: [
         { name: "China",         population: 1433.784 },

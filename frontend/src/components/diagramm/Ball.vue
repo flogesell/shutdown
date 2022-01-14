@@ -1,16 +1,24 @@
 <template>
-  <div class="ball" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
-      <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)">{{ iso }}</p>
-      <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )">{{ name }}</p>
-      <p class="amount" v-if="!legend" >{{ (emissions / 1000).toFixed(2)  }} Gt</p>
-    <div v-if="legend" class="legend" :style="{'border-color': color}">
-        <div class="test" :style="{'color': color}"> {{ (emissions / 1000).toFixed(2)  }} Gt CO2</div>
-    </div>
+  <div class="ball" :class="(zoomIn && tab !== 'Per Sector' && !legend) ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
+      <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
+      <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )" :style="{'font-size' : this.font_size}">{{ name }}</p>
+      <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0 || zoomed" >
+        <p class="amount" v-if="!legend" :style="{'font-size' : this.font_size}" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
+        <div v-if=" legend " class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : ''}">
+            <div class="test" :style="{'color': color, 'font-size' : (!legend) ? this.font_size : ''}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
+        </div>
+        <Icon v-if="!legend && emissions > 3000 && zoomIn && tab !== 'Per Sector'" icon="hover" :activated="true"/>
+      </div>
   </div>
 </template>
 
 <script>
+import Icon from '@/components/icons/icon.vue'
+
 export default {
+    components: {
+        Icon,
+    },
     props: {
         x: {
             type: Number,
@@ -47,6 +55,20 @@ export default {
             type: Boolean,
             default: false
         },
+        zoom_factor: {
+            type: Number,
+            default: 1
+        }
+    },
+    data() {
+        return {
+            hover: false,
+            styleObject: {
+                left: this.x,
+                top:  this.y,
+            },
+            fontcolor: this.getFontColor() 
+        }
     },
     methods: {
         diameter() {
@@ -67,14 +89,22 @@ export default {
             }
         }
     },
-    data(){
-        return {
-            styleObject: {
-                left: this.x,
-                top:  this.y,
-            },
-            fontcolor: this.getFontColor() 
-        }
+    computed: {
+        font_size: function () {
+            return (1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size / this.zoom_factor))) + "em";
+        },
+        show_emissions: function() {
+            return ((1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size * this.zoom_factor))) > 0.8)
+        },
+        zoomed() {
+            return this.$store.state.app.activeSpecific.length > 0 && this.$store.state.app.activeSpecific === this.name && this.iso.length > 0;
+        },
+        zoomIn() {
+            return this.$store.state.app.activeSpecific.length === 0;
+        },
+        tab() {
+            return this.$store.state.app.activeTab;
+        },
     }
 }
 </script>
@@ -92,7 +122,18 @@ export default {
         opacity: 0.7;
         border-radius: 50%;
         transition: background-color 1s;
+        user-select: none;
+
+        &.no-zoom:hover {
+            background-color: #535353 !important;
+            border: 2px solid black;
+            cursor: pointer;
+        }
         
+        .icon {
+            width: 100%;
+            position: absolute;
+        }
         p {
             display: flex;
             justify-content: center;
@@ -101,28 +142,34 @@ export default {
         }
 
         .amount {
-            font-weight: 200;
+            font-weight: 250;
+            text-align: center;
         }
 
         .legend {
-        position: absolute;
-        top: 0px;
-        width: 20vw;
-        min-width: 400px;
-        height: 1px;
-        left: 50%;
-        border-bottom: 2px solid;
+            position: absolute;
+            top: 0px;
+            width: 20vw;
+            min-width: 400px;
+            height: 1px;
+            left: 50%;
+            border-bottom: 2px solid;
 
-        .test {
-            text-align: right;
-            font-weight: 500;
-            height: 25px;
-            display: flex;
-            flex-direction: column-reverse;
-            margin-top: -25px;
-            font-size: 1.4em;
+        &.zoomed {
+            min-width: 0px;
+            border-bottom: 1px solid;
         }
-    }
+
+            .test {
+                text-align: right;
+                font-weight: 500;
+                height: 25px;
+                display: flex;
+                flex-direction: column-reverse;
+                margin-top: -25px;
+                font-size: 1.4em;
+            }
+        }
     }
     
 </style>

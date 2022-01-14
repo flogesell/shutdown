@@ -3,13 +3,13 @@
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
     <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
-    <div class="position" @click="resetZoom"> <h1>{{(getPosition.back) ? '🠔 ' : ''}}{{getPosition.tab}}</h1></div>
+    <div class="position" @click="resetZoom"> <h1 :class="(getPosition.back)?'back':''"><Icon v-if="getPosition.back" icon="backwards" :activated="true"/>{{getPosition.tab}}</h1></div>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
         <h2 class="flexrow-1">Global Emission Sectors</h2>
       </div>
-      <div id="sectors-container">
+      <div id="sectors-container" :class="getPosition.tab.replace(' ','-').toLowerCase()">
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
         <div class="reset-button" @click="reset">
           <span id="reset-text">Reset</span>
@@ -135,6 +135,14 @@ export default {
 
 
 <style lang="scss" scoped>
+@import '@/assets/styles/_config.scss';
+
+html, body {
+  height: 100%;
+} 
+body {
+  overflow-y: hidden;
+}
 .home {
   display: flex;
   justify-content: space-between;
@@ -149,6 +157,16 @@ export default {
   text-align: center;
   padding-top: 30px;
   z-index: 6;
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    &.back {
+      cursor: pointer;
+    }
+    
+  }
 }
 #container-left {
   padding: 30px 0 30px 100px;
@@ -197,6 +215,9 @@ export default {
 #infobox {
   z-index: 101;
 }
+.per-sector .export {
+  display: none;
+}
 #sectors-container {
   width: 100%;
   display: flex;
@@ -207,7 +228,10 @@ export default {
     width: 10%;
   }
   .sector-switch.export {
-    margin-top: 15px;
+    border-top: 2px solid;
+    border-image: linear-gradient(90deg, #A3A3A3 50%, transparent 50%) 1;
+    padding-top: 7.5px;
+    margin-top: 7.5px;
   }
 }
 .sector-switch {
@@ -231,6 +255,11 @@ export default {
   grid-gap: 15px 0;
   //grid-gap: 1.2em;
 
+   .probBox:nth-child(3), #probButton {
+      margin-left: -50px !important;
+    }
+
+
   #probability-headline {
     grid-column: span 2;
   }
@@ -240,6 +269,7 @@ export default {
     max-height: 130px;
     width: 70%;
     align-self: center;
+    margin-left: -7px;
     //place-self: center; 
   }
 
