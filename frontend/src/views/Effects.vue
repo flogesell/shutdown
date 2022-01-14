@@ -1,7 +1,7 @@
 
 <template>
   <div class="effects">
-    <div class="starttext"><div>
+    <div  class="starttext"><div>
        <p>Your</p> <Logo id="logo" :checked=false :dark=true /> <p> scenario will mostlikely cause a global warming of 1.5° celsius</p> 
       
        </div>
@@ -14,17 +14,25 @@
       <DegreeNumber :data="data" :state="state"  />
       <!---<p>{{scrollamount}}</p>-->
 
-      <div class="sidenav">
+      <div v-if="animated" class="sidenav">
         <p v-if="state!=0" @click="state=0" class="two">1.5°</p>
         <p v-if="state!=1" @click="state=1" class="two">2°</p>
         <p v-if="state!=2" @click="state=2" class="two">3°</p>
       </div>
     <Button :text='"Try</br>again!"' id="probButton" @click="tryAgain" />
-
+    <transition name="fade">
     <img v-if="state==0" src="../assets/imgs/1_1.png" alt="" class="first">
+    </transition>
+    <transition name="fade">
     <img v-if="state==0" src="../assets/imgs/1_2.png" alt="" class="first2">
+    </transition>
+    <transition name="fade">
     <img v-if="state==1" src="../assets/imgs/2_1.png" alt="" class="second">
+    </transition>
+    <transition name="fade">
     <img v-if="state==1" src="../assets/imgs/2_2.png" alt="" class="second2"> 
+    </transition>
+    
   
   </div>
   
@@ -79,7 +87,9 @@ export default {
     },
     startanimation(){
       document.getElementsByClassName("circle")[0].style.transform="translate(-50%, -50%) scale(1)"
+      document.getElementsByClassName("circle")[0].style.cursor="default"
       document.getElementsByClassName("starttext")[0].style.opacity="0"
+      document.getElementsByClassName("starttext")[0].style.cursor="default"
       var elements = document.body.getElementsByTagName('img');
       setTimeout(() => {
       for (var i = 0; i < elements.length; i++) {
@@ -98,7 +108,12 @@ export default {
 
 <style lang="scss" scoped>
 
-  
+  .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 
   //imgs
   img{
@@ -147,7 +162,13 @@ export default {
     p{
       cursor: pointer;
       margin-bottom: 10px;
-      padding: ;
+      padding: 10px;
+      background-color: lightgrey;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: white;
+      font-weight: 700;
     }
   }
 
