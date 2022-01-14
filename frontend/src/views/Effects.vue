@@ -147,7 +147,7 @@ export default {
     p{
       cursor: pointer;
       margin-bottom: 10px;
-      padding: ;
+      padding: 0;
     }
   }
 
