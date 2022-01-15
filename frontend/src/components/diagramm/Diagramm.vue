@@ -151,7 +151,7 @@ export default {
                     this.zoom_out();
                 }
                 
-                if(this.active_tab != this.prev_tab) {
+                if((this.active_tab != this.prev_tab) && this.running) {
                     if(this.active_tab == 'per sector') {
                         
                         Matter.Runner.start(runner, sector_engine);
@@ -337,7 +337,11 @@ export default {
 
             let tmp_balls = [];
 
-            for(let i = 0; i < countries.length - 1; i++) {
+            console.log(countries[0].export_emissions)
+
+            for(let i = 0; i < countries.length - 0; i++) {
+                //console.log(countries[i].name + ": " + countries[i].export_emissions)
+                console.log(countries[i])
                 tmp_balls.push(new CO2Ball(w0 - 50 + Math.random() * 100, 
                                            h0 - 50 + Math.random() * 100,
                                            countries[i].name,
@@ -346,6 +350,7 @@ export default {
                                            ['Energy', 'Traffic', 'Agriculture', 'Others'],
                                            countries[i].co2_emissions,
                                            population[i].population,
+                                           //countries[i].export_emissions,
                                            scale));
             }
             return tmp_balls;
