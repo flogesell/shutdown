@@ -27,7 +27,7 @@ export default {
         var contentText = "";
         var allContent = [];
 
-        allContent[0] = "Around 888 million tonnes of carbon dioxide were emitted in the EU in 2018 from the road transport fuel combustion. Passenger cars and motorcycles accounted for the largest share of emissions (62%). Heavy duty trucks and buses accounted for 26% and light duty trucks for a further 13%.";
+        allContent[0] = "The emissions transportation sector are due to fossil fuel combustion in transportation vehicles. Passenger vehicles accounted for the largest share of emissions (45%). Trucks and fossil powered rail traffic account for around 29,5%. 11.&% of the traffic emissions come from aviation and an other 10.6% from shipping. The emissions by planes are around 2.5% of the worldwide produced CO2.";
         allContent[1] = "Energy-related greenhouse gas emissions account for the majority of all anthropogenic emissions – about 80% in the USA and the European Union, for example. Just 20% of final energy consumption is in the form of electricity, but the generation of electricity is responsible for over 40% of all energy-related emissions."
         allContent[2] = "Due to performance enhancement, emissions per animal are increasing. For example there was often an increase of the overall emissions of dairy cows despite decreasing numbers of dairy cows. This is caused by the continuous increase of milk yield. However, from a product-related point of view, the increasing milk yield leads to a decrease of emissions per kg milk. This is due to the fact that the energy requirements for maintenance of a dairy cow are independent of milk yield and hence do not increase along with increasing milk yield."
         allContent[3] = "The CO2 emissions, reported by every single country, give an insight in how much the country is emitting. An export adjusted view on the data otherwise gives an insight in which of these countrys have outsourced their production to other countries, where these emissions are made then."
@@ -59,11 +59,11 @@ export default {
     height: 120vh;
     right: 0;
     top: -10vh;
-    padding: calc(10vh + 50px) 50px;
+    padding: calc(10vh + 30px) 30px;
 
     background: #F2F2F2;
-    border-left: 5px solid #FFDC7C;
     filter: drop-shadow(-2px 0 10px #000);
+    font-size: 18px;
 }
 .infobox #headline {
     margin-bottom: 15px;

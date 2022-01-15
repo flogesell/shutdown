@@ -13,12 +13,12 @@
       <p>We get our data from the CAIT (Climate Analysis Indicators Tool) on global climate change developed by the World Resources Institute from 2018, due to the variety and accuracy of the data.This Data is processed with a model, to be found in the IPCC-report from 2021, that can be used to convert the amount of CO2 emissions into a probability spectrum for global warming.<br>
       Since the global climate is very complex and can't be completely narrowed down into numbers to calculate future change, the model from the IPCC-report just gives a spectrum from 17% up to 83%. There is never a 100% certainty that the prognoses by scientists are to become true.<br>
       For visualization, understandability and usability purposes we calculated a zero point to this model.<br>
-      Sources to be found below.
+      Sources are to be found below.
       </p>
     </div>
     <div id="impressum">
       <div id="impressum-text">
-        <h2>Diensteanbieter gemäß § 5 Abs. 1 TMG und § 55 Abs. 1 RStV</h2>
+        <h2>Service provider according to § 5 para. 1 german telemedia act and § 55 para. 1 german broadcasting treaty</h2>
         <p>
         University of applied sciences Augsburg<br>
         An der Hochschule 1<br>
