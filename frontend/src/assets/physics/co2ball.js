@@ -72,7 +72,7 @@ class Ball
         let ease = 0.92;
 
         let factor = ease + (1 - ease) * ((this.target_size / this.current_size));
-        if(factor < 1) factor = 1 + (factor - 1) * 2;
+        factor = 1 + (factor - 1) * 2;
         if(factor - 1 > 1) factor = 2;
         let correction_term = 1 + ((this.current_size / (this.body.area / this.scale) - 1) / 2);
 
@@ -110,7 +110,7 @@ class Ball
 }
 class CO2Ball
 {
-    constructor(x, y, name, iso, total_emissions, sector_names, emissions_by_category, population, scale)
+    constructor(x, y, name, iso, total_emissions, sector_names, emissions_by_category, population, export_emissions, scale)
     {
         this.name = name;
         this.iso = iso;
@@ -138,6 +138,9 @@ class CO2Ball
         this.world_population = 7673.0;
         this.per_person = false;
         this.global_emissions = 0;
+        this.export_emissions = export_emissions;
+        this.export = false;
+        console.log(this.body.body.vertices)
     }
 
     set_scale(val)
@@ -184,6 +187,11 @@ class CO2Ball
                 this.children[i].set_size(this.emissions_by_category[i]);
             }
         }
+    }
+
+    set_export(val)
+    {
+        this.export = val;
     }
 
     add_to_world(world)
@@ -285,6 +293,12 @@ class CO2Ball
             //world_population / 15 is provisional, should be global emissions / number of countries
             this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
         }
+        
+        if(this.export)
+        {
+            this.body.target_size += (this.body.target_size * this.export_emissions) / 100;
+        }
+        
 
         this.body.update();
 

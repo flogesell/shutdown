@@ -192,7 +192,11 @@ export default {
 
             let current_sectors = this.$store.state.sectors
 
-            if(prev_sectors[0] != current_sectors.Energy || prev_sectors[1] != current_sectors.Traffic || prev_sectors[2] != current_sectors.Agriculture || prev_sectors[3] != current_sectors.Others) {
+            if(prev_sectors[0] != current_sectors.Energy || 
+               prev_sectors[1] != current_sectors.Traffic || 
+               prev_sectors[2] != current_sectors.Agriculture || 
+               prev_sectors[3] != current_sectors.Others || 
+               prev_sectors[4] != current_sectors.Export) {
                 this.emissions_changed = true;
             }
             
@@ -216,6 +220,7 @@ export default {
                                      this.$store.state.sectors.Traffic, 
                                      this.$store.state.sectors.Agriculture, 
                                      this.$store.state.sectors.Others])
+                ball.set_export(this.$store.state.sectors.Export);
                 ball.update();
             });
 
@@ -337,11 +342,11 @@ export default {
 
             let tmp_balls = [];
 
-            console.log(countries[0].export_emissions)
+            //console.log(countries[0].export_emissions)
 
             for(let i = 0; i < countries.length - 0; i++) {
-                //console.log(countries[i].name + ": " + countries[i].export_emissions)
-                console.log(countries[i])
+                console.log(countries[i].name + ": " + countries[i].export_emissions)
+                //console.log(countries[i])
                 tmp_balls.push(new CO2Ball(w0 - 50 + Math.random() * 100, 
                                            h0 - 50 + Math.random() * 100,
                                            countries[i].name,
@@ -350,7 +355,7 @@ export default {
                                            ['Energy', 'Traffic', 'Agriculture', 'Others'],
                                            countries[i].co2_emissions,
                                            population[i].population,
-                                           //countries[i].export_emissions,
+                                           countries[i].export_emissions,
                                            scale));
             }
             return tmp_balls;
@@ -390,6 +395,7 @@ export default {
                                            sector_emissions[i],
                                            sectors,
                                            current_sector_emissions,
+                                           0,
                                            0,
                                            scale));
             }
