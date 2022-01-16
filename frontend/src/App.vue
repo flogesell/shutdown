@@ -33,13 +33,7 @@ export default {
     this.fetchData();
     window.addEventListener("resize", this.setWidth);
     this.width = window.innerWidth;
-    if(this.currentRouteName == "Home") {
-      document.body.style.height = "100%";
-      document.body.style.overflowY = "hidden";
-    } else if(this.currentRouteName == "info") {
-      document.body.style.height = "auto";
-      document.body.style.overflowY = "auto";
-    }
+    
   },
   destroyed() {
     window.removeEventListener("resize", this.setWidth);
@@ -50,6 +44,12 @@ export default {
     currentRouteName() {
         return this.$route.name;
     },
+    home() {
+      if(this.currentRouteName == "Home") {
+      return true
+    }
+    return false
+    }
   },
   methods: {
     ...mapActions(['fetchData']),
@@ -62,6 +62,14 @@ export default {
 
 <style lang="scss">
 @import '@/assets/styles/_config.scss';
+
+html, body {
+  height: 100%;
+}
+
+#app:not(.scroll) {
+  //overflow-y: none;
+}
 
 #app {
   font-family: Roboto, Helvetica, Arial, sans-serif;
