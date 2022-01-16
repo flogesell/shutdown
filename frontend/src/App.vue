@@ -65,12 +65,11 @@ export default {
 
 html, body {
   height: 100%;
-} 
+}
 
 #app:not(.scroll) {
   //overflow-y: none;
 }
-
 
 #app {
   font-family: Roboto, Helvetica, Arial, sans-serif;
