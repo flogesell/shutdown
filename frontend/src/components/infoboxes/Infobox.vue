@@ -5,7 +5,7 @@
             <CloseButton />
         </div>
         <h1 id="headline">{{ headline }}</h1>
-        <p>{{ content }}</p>
+        <p v-html="content">{{ content }}</p>
     </div>
     </transition>
 </template>
@@ -27,11 +27,11 @@ export default {
         var contentText = "";
         var allContent = [];
 
-        allContent[0] = "The emissions transportation sector are due to fossil fuel combustion in transportation vehicles. Passenger vehicles accounted for the largest share of emissions (45%). Trucks and fossil powered rail traffic account for around 29,5%. 11.&% of the traffic emissions come from aviation and an other 10.6% from shipping. The emissions by planes are around 2.5% of the worldwide produced CO2.";
-        allContent[1] = "Energy-related greenhouse gas emissions account for the majority of all anthropogenic emissions – about 80% in the USA and the European Union, for example. Just 20% of final energy consumption is in the form of electricity, but the generation of electricity is responsible for over 40% of all energy-related emissions."
-        allContent[2] = "Due to performance enhancement, emissions per animal are increasing. For example there was often an increase of the overall emissions of dairy cows despite decreasing numbers of dairy cows. This is caused by the continuous increase of milk yield. However, from a product-related point of view, the increasing milk yield leads to a decrease of emissions per kg milk. This is due to the fact that the energy requirements for maintenance of a dairy cow are independent of milk yield and hence do not increase along with increasing milk yield."
-        allContent[3] = "The CO2 emissions, reported by every single country, give an insight in how much the country is emitting. An export adjusted view on the data otherwise gives an insight in which of these countrys have outsourced their production to other countries, where these emissions are made then."
-        allContent[4] = "A large number of emissions can not be traced back to speciffic sectors. Those emissions are put together in this catefory."
+        allContent[0] = "The emissions transportation sector are due to fossil fuel combustion in transportation vehicles. Passenger vehicles accounted for the largest share of emissions (45%). Trucks and fossil powered rail traffic account for around 29,5%. 11.6% of the traffic emissions come from aviation and an other 10.6% from shipping. The emissions by planes are around 2.5% of the worldwide produced CO2. <sub style='font-weight: bold'>1</sub>";
+        allContent[1] = "The CO2 Emissions in energy production can be narrowed down to three main sources: natural gasses, oil and coal. These sources of high energy density have gotten their power from millions of years of compression under ground. From digging up these combustibles, humans bring the stored Carbon dioxide from underground into the atmosphere. The European debate from 2022 about making nuclear power a renewable source of energy, due to its low CO2 emissions, was highly controversially discussed. Lower emission rates stand against the disposal issue with radioactive waste. <sub style='font-weight: bold'>2</sub>"
+        allContent[2] = "Due to performance enhancement, emissions per animal are increasing. For example there was often an increase of the overall emissions of dairy cows despite decreasing numbers of dairy cows. This is caused by the continuous increase of milk yield. However, from a product-related point of view, the increasing milk yield leads to a decrease of emissions per kg milk. This is due to the fact that the energy requirements for maintenance of a dairy cow are independent of milk yield and hence do not increase along with increasing milk yield. <sub style='font-weight: bold'>3</sub>"
+        allContent[3] = "The CO2 emissions, reported by every single country, give an insight in how much the country is emitting. An export adjusted view on the data otherwise gives an insight in which of these countrys have outsourced their production to other countries, where these emissions are made then. <sub style='font-weight: bold'>5</sub>"
+        allContent[4] = "A large number of emissions can not be traced back to speciffic sectors. Those emissions are put together in this catefory. <sub style='font-weight: bold'>4</sub>"
 
         if (this.headline == "Traffic") {
             contentText = allContent[0];

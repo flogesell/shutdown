@@ -34,8 +34,11 @@ export default {
     window.addEventListener("resize", this.setWidth);
     this.width = window.innerWidth;
     if(this.currentRouteName == "Home") {
-      document.body.style.height = "100%"
+      document.body.style.height = "100%";
       document.body.style.overflowY = "hidden";
+    } else if(this.currentRouteName == "info") {
+      document.body.style.height = "auto";
+      document.body.style.overflowY = "auto";
     }
   },
   destroyed() {

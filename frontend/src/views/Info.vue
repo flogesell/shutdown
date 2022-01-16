@@ -15,6 +15,9 @@
       For visualization, understandability and usability purposes we calculated a zero point to this model.<br>
       Sources are to be found below.
       </p>
+      <h3>Sources</h3>
+      <p><sub>1</sub> ourworldindata.org</p>
+      <p><sub>1</sub> HIER DEN IPPC BERICHT REFFERENZIEREN!!!!</p>
     </div>
     <div id="impressum">
       <div id="impressum-text">
