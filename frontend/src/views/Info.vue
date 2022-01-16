@@ -110,6 +110,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/_config.scss';
+
   .info {
     display: flex;
     flex-direction: column;

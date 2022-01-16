@@ -137,12 +137,6 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/_config.scss';
 
-html, body {
-  height: 100%;
-} 
-body {
-  overflow-y: hidden;
-}
 .home {
   display: flex;
   justify-content: space-between;
@@ -201,9 +195,10 @@ body {
 #container-center {
   flex-grow: 1;
   left: 0px;
-  position: absolute;
   z-index: 1;
-  margin: 30px 0;
+  padding: 30px 0;
+  display: flex;
+  flex-grow: 1;
 }
 /* Left Container */
 #sectors-lable-container {
