@@ -17,7 +17,9 @@
       </p>
       <h3>Sources</h3>
       <p><sub>1</sub> ourworldindata.org</p>
-      <p><sub>1</sub> HIER DEN IPPC BERICHT REFFERENZIEREN!!!!</p>
+      <p><sub>2</sub> HIER DEN IPPC BERICHT REFFERENZIEREN!!!!</p>
+      <p><sub>3</sub> ourworldindata.org</p>
+      <p><sub>4</sub> ifeu.de</p>
     </div>
     <div id="impressum">
       <div id="impressum-text">
