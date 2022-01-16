@@ -39,7 +39,6 @@ export default {
   methods: {
     skip_intro(){
       this.visible = false;
-      localStorage.setItem('intro', true)
     },
 
     updateIndicator(){
@@ -68,7 +67,6 @@ export default {
         this.button = 'start app'
       }
     },
-
     updateSlide(num){
       let slider = this.$refs.slider
       let active = Math.round(slider.scrollLeft / slider.clientWidth)
@@ -82,7 +80,8 @@ export default {
       if(active < points.length){
         slider.scrollLeft = slider.clientWidth * active
       } else{
-        this.visible = false
+        this.visible = false;
+        this.$store.commit('CHANGE_INTRO')
       }
     },
   },

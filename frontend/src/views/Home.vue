@@ -122,7 +122,7 @@ export default {
       return tabs;
     },
     introAlreadySeen() {
-      return localStorage.getItem('intro')
+      return this.$store.state.app.intro;
     },
     getPosition() {
       if(this.$store.state.app.activeTab && this.$store.state.app.activeSpecific.length === 0) {

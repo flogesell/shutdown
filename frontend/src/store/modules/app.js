@@ -11,6 +11,7 @@ const state = {
     activeSpecific: '',
     tabs: ['Per Country', 'Per Sector', 'Per person'],
     info: false,
+    intro: false,
     loader: true,
     error: false,
     logoSwitch: false
@@ -19,6 +20,9 @@ const state = {
 const mutations =  {
     CHANGE_ACTIVE_TAB: (state, tab) => {
         state.activeTab = tab;
+    },
+    CHANGE_INTRO: (state) => {
+        state.intro = !state.intro;
     },
     CHANGE_LOGO_SWITCH: (state) => {
         state.logoSwitch = !state.logoSwitch;
