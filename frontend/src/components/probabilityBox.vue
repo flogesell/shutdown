@@ -6,7 +6,7 @@
         </svg>
         <div class="deg-perc-wrapper">
             <h3 class="degrees" :id="'number' + deg">{{deg.replace('.',',')+'°C'}}</h3>
-            <h3 class="probability" :id="'number' + deg">{{ parseInt(percentage) + "%" }} likely</h3>
+            <h3 class="probability" :id="'number' + deg">{{ parseInt(percentage) + "%" }}</h3>
         </div>
     </div>
 </template>
@@ -29,7 +29,7 @@ export default {
         displayPerc() {
            let nbr = document.getElementById('number' + this.deg);
            let prc = this.$props.percentage;
-           nbr.innerHTML = prc + "%<br>likely";
+           nbr.innerHTML = prc + "%";
         },
         displayDeg() {
            let nbr = document.getElementById('number' + this.deg);
@@ -80,14 +80,14 @@ export default {
         text-align: center;
     }
     .degrees {
-        margin: 0 auto;
+        margin: 8px 0px 0px 0px;
         font-weight: bold;
-        font-size: 1.5em;
+        font-size: 1.6rem;
     }
     .probability {
-        font-style: italic;
+        font-style: normal;
         font-weight: 400;
-        font-size: 1em;
+        font-size: 1.2rem;
         width: 100%;
     }
     @keyframes draw {
@@ -109,7 +109,7 @@ export default {
     //----- Media Screen small desktop -----//@at-root
     @media screen and (max-height: 720px) {
         .degrees {
-            font-size: 1em;
+            font-size: 1.0em;
         }
         .probability {
             font-size: .7em;
