@@ -39,10 +39,10 @@ export default {
       cursor: pointer;
       position: relative;
       appearance: none; outline: none;
-      width: 60px; height: 32px;
-      border-radius: 60px; box-shadow: inset -20px 0 0 0 #ffffff;
+      width: 50px; height: 27px;
+      border-radius: 50px; box-shadow: inset -20px 0 0 0 #ffffff;
       transition-duration: 500ms;
-      border: 6px $secondary solid ;
+      border: 5px $secondary solid ;
       margin: 5px 0;
   }
 
@@ -51,9 +51,9 @@ export default {
       content: "";
       position: absolute;
       top: -6px; left: -6px;
-      width: 20px; height: 20px;
+      width: 18px; height: 18px;
       background-color: $background;
-      border: 6px $primary solid;
+      border: 5px $primary solid;
       border-radius: 50%; 
   }
 
@@ -71,7 +71,7 @@ export default {
   }
 
   input.shutdown-switch:checked:after {
-      left: 22px;
+      left: 18px;
   }
   input.shutdown-switch:hover:after {
     transform: scale(1.2);
