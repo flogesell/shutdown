@@ -171,7 +171,7 @@ export default {
   z-index: 100;
   min-width: 370px;
   #logo {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     width: 100%;
     max-width: 225px;
   }
@@ -247,7 +247,7 @@ export default {
   height: auto;
   grid-template-columns: 50% 50%;
   margin-top: auto;
-  grid-gap: 15px 0;
+  grid-gap: 10px 0;
   //grid-gap: 1.2em;
 
    .probBox:nth-child(3), #probButton {
@@ -282,7 +282,7 @@ export default {
 
 .reset-button {
   display: flex;
-  font-size: 1.1em;
+  font-size: 1.2em;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -306,7 +306,7 @@ export default {
     gap: 10px;
     span {
         font-family: Roboto;
-        font-size: 1.4em;
+        font-size: 1.2em;
     }
     
     &.active {
