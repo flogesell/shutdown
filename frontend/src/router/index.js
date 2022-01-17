@@ -24,7 +24,7 @@ const router = new VueRouter({
       component: Imprint,
     },
     {
-      path: "/effects",
+      path: "/effects/:prob1/:prob2/:prob3",
       name: "Effects",
       component: Effects,
     },

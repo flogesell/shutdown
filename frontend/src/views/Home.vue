@@ -22,7 +22,7 @@
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
         <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
-        <Button @click="$router.push('/effects')" :text='"Show</br>Effects"' id="probButton" />
+        <Button @click="$router.push(`/effects/${probabilities[0]}/${probabilities[1]}/${probabilities[2]}`)" :text='"Show</br>Effects"' id="probButton" />
       </div>
       
     </div>

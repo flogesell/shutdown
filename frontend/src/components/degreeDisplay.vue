@@ -3,13 +3,10 @@
       <div class="circle">
           <div v-if="animated">
            <li  v-for="(paragraph, index) in data[state].text" :key="index" class="flex_centered">
-      <p ><vue-typer :text="paragraph" :erase-on-complete='false' :repeat='0'/></p>
+      <p><vue-typer :text="paragraph" :type-delay='50' :erase-on-complete='false' :repeat='0'/></p>
     </li>
          </div>
       </div>
-      
-      <div class="img1"></div>
-      <div class="img2"></div>
     </div>
 </template>
 
@@ -28,6 +25,11 @@ export default {
         },
         animated: {
             type: Boolean
+        }
+    },
+    data(){
+        return{
+            text: 0,
         }
     }
 }

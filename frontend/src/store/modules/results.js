@@ -38,8 +38,20 @@ const state = {
             'due to extreme heat and drought',
             
         ], img1src: "2_1", img2src: "2_2"},
-        { heating: 3, text: "example", img1src: "3_1", img2src: "3_2"},
-        { heating: 4, text: "example", img1src: "4_1", img2src: "4_2"},
+        { heating: 3, text: [
+            'With a global warming of 3°C, the climate is',
+            'warmer than ever before in human history. The',
+            'West Antarctic ice sheet will not be able to with-',
+            'stand these temperatures. Sea levels will rise by',
+            'more than half a meter by the end of the cen-',
+            'tury. Around one billion people are likely to be',
+            'directly affected, including the inhabitants of the',
+            'metropolises of New York, Mumbai, Shanghai',
+            'and Hamburg.',
+            'regions would be drastically reduced. Much of',
+            'the worlds wildlife would be wiped out and the',
+            'Amazon rainforest would collapse completely.',
+        ], img1src: "3_1", img2src: "3_2"},
     ]
 }
 
