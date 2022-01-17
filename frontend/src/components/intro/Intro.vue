@@ -28,7 +28,7 @@ export default {
       text: ['Since 2015 the climate conference in Paris defined the goal to limit the global rise of temperature of 1.5°C compared to preindustrial levels.',
              'This temperature goal was defined by climate scientists coming to the conclusion that a rise of temperature of 2°C would cause irreversible damage to the global ecosystem.',
              'All the validated scientific research comes to the conclusion that so called "Greenhouse Gases", emitted by humankind, are the cause of the current rise in temperature.',
-             'What would happen if the countries with the highest greenhouse gas emissions would shut down all emitting sectors?',
+             'Would we reach the 1.5°C goal if the largest emitters stopped their greenhouse gas emissions immediately?',
              'This application gives you an overview over the amount of emissions of these countries, helps you to understand the probabilities of reaching our climate goals and gives you insights into the consequences that we will face, if we do not reach these goals.'
             ],
       button: 'next',
