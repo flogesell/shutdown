@@ -7,7 +7,7 @@
         <div v-if=" legend " class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : ''}">
             <div class="test" :style="{'color': color, 'font-size' : (!legend) ? this.font_size : ''}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
         </div>
-        <Icon v-if="!legend && emissions > 3000 && zoomIn && tab !== 'Per Sector'" icon="hover" :activated="true"/>
+        <Icon v-if="!legend && emissions > 3000 && zoomIn && tab !== 'Per Sector'" icon="hover2" :activated="true"/>
       </div>
   </div>
 </template>
@@ -123,6 +123,7 @@ export default {
         border-radius: 50%;
         transition: background-color 1s;
         user-select: none;
+        font-weight: bold;
 
         &.no-zoom:hover {
             background-color: #535353 !important;
@@ -142,7 +143,7 @@ export default {
         }
 
         .amount {
-            font-weight: 250;
+            font-weight: 400;
             text-align: center;
         }
 

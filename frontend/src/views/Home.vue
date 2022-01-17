@@ -2,7 +2,7 @@
 <template>
   <div class="home">
     <Intro v-if="!introAlreadySeen"/>
-    <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
+    
     <div class="position" @click="resetZoom"> <h1 :class="(getPosition.back)?'back':''"><Icon v-if="getPosition.back" icon="backwards" :activated="true"/>{{getPosition.tab}}</h1></div>
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
@@ -29,7 +29,6 @@
     <div class="flex-container" id="container-center">
       <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" @probabilities_changed="handleProbabilities" />
     </div>
- 
     <div class="flex-container" id="container-right">
       <div id="info-container" class="icon-container">
         <iconButton @info="$router.push('info')" action="info" icon="info" :activated="true"/>
@@ -39,6 +38,7 @@
       </div>
       
     </div>
+    <Infobox id="infobox" :headline="infoboxHeadline" :open="infoboxOpen" v-on:toggleInfobox="infoboxOpen = false"/>
   </div>
   
 </template>
@@ -163,7 +163,7 @@ export default {
   }
 }
 #container-left {
-  padding: 30px 0 30px 100px;
+  padding: 30px 0 30px 60px;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -171,7 +171,7 @@ export default {
   z-index: 100;
   min-width: 370px;
   #logo {
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     width: 100%;
     max-width: 225px;
   }
@@ -183,7 +183,7 @@ export default {
 
 }
 #container-right {
-  padding: 30px 100px 30px 0;
+  padding: 30px 60px 30px 0;
   width: 15%;
   display: flex;
   flex-direction: column;

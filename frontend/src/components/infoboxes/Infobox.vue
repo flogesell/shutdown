@@ -55,15 +55,14 @@ export default {
 
 .infobox {
     position: absolute;
-    width: 25%;
-    height: 120vh;
+    width: 30%;
+    height: 100vh;
     right: 0;
-    top: -10vh;
-    padding: calc(10vh + 30px) 30px;
-
-    background: #F2F2F2;
-    filter: drop-shadow(-2px 0 10px #000);
+    padding: 50px;
+    background: $primary;
+    //filter: drop-shadow(-2px 0 10px #000);
     font-size: 18px;
+    color: white;
 }
 .infobox #headline {
     margin-bottom: 15px;
@@ -81,5 +80,6 @@ export default {
 
 #close-btn {
     text-align: right;
+    cursor: pointer;
 }
 </style>

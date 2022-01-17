@@ -52,6 +52,9 @@ export default {
     span {
         font-family: Roboto;
         font-size: 1.4em;
+        &:hover {
+        font-weight: bold;
+      }
     }
     
     &.active {

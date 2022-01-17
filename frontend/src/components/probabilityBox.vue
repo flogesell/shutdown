@@ -86,7 +86,7 @@ export default {
     }
     .probability {
         font-style: italic;
-        font-weight: 200;
+        font-weight: 400;
         font-size: 1em;
         width: 100%;
     }

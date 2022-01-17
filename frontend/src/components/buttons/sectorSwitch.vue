@@ -57,7 +57,7 @@ export default {
     align-items: center;
     p {
       user-select: none;
-        margin-left: 20px;
+      margin-left: 20px;
     }
 }
 .sector-info {
