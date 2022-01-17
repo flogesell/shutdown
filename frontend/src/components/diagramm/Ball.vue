@@ -5,7 +5,7 @@
       <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0 || zoomed" >
         <p class="amount" v-if="!legend" :style="{'font-size' : this.font_size}" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
         <div v-if=" legend " class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : ''}">
-            <div class="test" :style="{'color': color, 'font-size' : (!legend) ? this.font_size : ''}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
+            <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
         </div>
         <Icon v-if="!legend && emissions > 3000 && zoomIn && tab !== 'Per Sector'" icon="hover2" :activated="true"/>
       </div>
@@ -135,6 +135,7 @@ export default {
             width: 100%;
             position: absolute;
         }
+
         p {
             display: flex;
             justify-content: center;
@@ -155,6 +156,7 @@ export default {
             height: 1px;
             left: 50%;
             border-bottom: 2px solid;
+            font-size: 1.6rem;
 
         &.zoomed {
             min-width: 0px;
@@ -168,7 +170,6 @@ export default {
                 display: flex;
                 flex-direction: column-reverse;
                 margin-top: -25px;
-                font-size: 1.4em;
             }
         }
     }

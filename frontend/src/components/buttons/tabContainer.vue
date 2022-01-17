@@ -43,7 +43,7 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/styles/_config.scss';
 .icon-wrapper {
-  margin: 5px;
+    margin: 0px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -51,7 +51,7 @@ export default {
     gap: 10px;
     span {
         font-family: Roboto;
-        font-size: 1.4em;
+        font-size: 1.2em;
         &:hover {
         font-weight: bold;
       }

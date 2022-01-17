@@ -96,6 +96,7 @@ export default {
             display: flex;
             flex-direction: column-reverse;
             margin-top: -25px;
+            font-size: 1.2rem;
         }
     }
     
