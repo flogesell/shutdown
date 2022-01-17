@@ -1,12 +1,18 @@
 
 <template>
   <div class="effects">
-    <div  class="starttext"><div>
-       <p>Your</p> <Logo id="logo" :checked=false :dark=true /> <p> scenario will mostlikely cause a global warming of 1.5° celsius</p> 
+    <div  class="starttext">
       
-       </div>
-        <li v-for="(paragraph, index) in text" :key="index" class="flex_centered typer">
-      <p><vue-typer :text="paragraph" :erase-on-complete='false' :repeat='0'/></p>
+      <div>
+        <p v-if="nextText == false" id="text2">but even with a complete shutdown, reaching the 1.5° goal isnt insured</p>
+        <div id="text1"> 
+          <p v-if="nextText" >Your</p> <Logo id="logo" v-if="nextText" :checked=false :dark=true /> 
+          <p v-if="state!=0 && nextText"> scenario will most likely cause a global warming of {{ state + 1 }}° celsius</p> 
+          <p v-if="state==0 && nextText"> scenario will most likely cause a global warming of 1.5° celsius </p>
+        </div>
+      </div>
+      <li v-for="(paragraph, index) in text" :key="index" class="flex_centered typer">
+      <!---<p><vue-typer :text="paragraph" :erase-on-complete='false' :repeat='0'/></p>--->
        </li>
       </div>
       
@@ -14,11 +20,20 @@
       <DegreeNumber :data="data" :state="state"  />
       <!---<p>{{scrollamount}}</p>-->
 
-      <div v-if="animated" class="sidenav">
-        <p v-if="state!=0" @click="state=0" class="two">1.5°</p>
-        <p v-if="state!=1" @click="state=1" class="two">2°</p>
-        <p v-if="state!=2" @click="state=2" class="two">3°</p>
+      
+
+      <div v-if="animated" id="probability-container"> 
+        <div v-if="state!=0" @click="state=0">
+          <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
+        </div>
+        <div v-if="state!=1" @click="state=1">
+          <ProbabilityBox v-if="state!=1" @click="state=1" :percentage="probabilities[1]" deg="2.0" class="probBox" />
+        </div>
+        <div v-if="state!=2" @click="state=2">
+          <ProbabilityBox v-if="state!=2" @click="state=2" :percentage="probabilities[2]" deg="2.5" class="probBox" />
+        </div>
       </div>
+
     <Button :text='"Try</br>again!"' id="probButton" @click="tryAgain" />
     <transition name="fade">
     <img v-if="state==0" src="../assets/imgs/1_1.png" alt="" class="first">
@@ -32,6 +47,12 @@
     <transition name="fade">
     <img v-if="state==1" src="../assets/imgs/2_2.png" alt="" class="second2"> 
     </transition>
+    <transition name="fade">
+    <img v-if="state==2" src="../assets/imgs/3_1.png" alt="" class="third">
+    </transition>
+    <transition name="fade">
+    <img v-if="state==2" src="../assets/imgs/3_2.png" alt="" class="third2"> 
+    </transition>
     
   
   </div>
@@ -43,7 +64,8 @@ import Logo from '@/components/Logo.vue'
 import Button from '@/components/buttons/Button.vue'
 import DegreeDisplay from '@/components/degreeDisplay.vue'
 import DegreeNumber from '@/components/degreeNumber.vue'
-import { VueTyper } from 'vue-typer'
+import ProbabilityBox from '@/components/probabilityBox.vue'
+//import { VueTyper } from 'vue-typer'
 
 export default {
   name: 'Info',
@@ -52,18 +74,26 @@ export default {
     Logo,
     DegreeDisplay,
     DegreeNumber,
-    VueTyper
+    //VueTyper,
+    ProbabilityBox
   },
   created() {
     window.addEventListener('scroll', this.scrolled);
-    
+    this.setState();
    
   },
   mounted(){
-    setTimeout(() => { window.addEventListener('click', this.startanimation);}, 1000);
+    setTimeout(() => { window.addEventListener('click', this.startanimation);}, 0);
+    setTimeout(() => { this.startanimation()}, 10000);
+    setTimeout(() => { document.getElementById("text1").style.opacity="0"}, 4000);
+    setTimeout(() => {  this.nextText = false;}, 5000);
+    setTimeout(() => {  document.getElementById("text2").style.opacity="1"}, 5700);
+    
+    this.probabilities[0] = this.$route.params.prob1,
+    this.probabilities[1] = this.$route.params.prob2
+    this.probabilities[2] = this.$route.params.prob3
   },
   beforeDestroy(){
-    console.log("unmound")
     window.removeEventListener('click', this.startanimation);
   },
   data() {
@@ -73,9 +103,25 @@ export default {
       state: 0,
       text: ["click to see how such a world would look like",],
       animated: false,
+      probabilities2: 0,
+      probabilities: [],
+      nextText: true,
     }
   },
   methods: {
+    setState(){
+      let n = this.$route.params.prob1;
+      let m = 0;
+      if(this.$route.params.prob2 > n){
+        n = this.$route.params.prob2
+        m = 1
+      }
+      if(this.$route.params.prob3 > n){
+        n = this.$route.params.prob3
+        m = 2
+      }
+      this.state = m;
+    },
     tryAgain() {
       this.$router.push('/')
       this.$store.commit('RESET')
@@ -96,7 +142,7 @@ export default {
           elements[i].style.opacity = "0.7";
       }
       }, 700);
-      console.log("clicked");
+      console.log(this.state);
       setTimeout(() => { this.animated = true; }, 2000);
       setTimeout(() => {document.getElementsByClassName("circle2")[0].style.transform="translate(calc(-50% + 338px ), -50%) scale(1)"}, 700);
       //setTimeout(() => {document.getElementsByClassName("circle")[0].style.transform="translate(-50%, -50%) scale(1)"}, 4000);
@@ -107,6 +153,7 @@ export default {
 
 
 <style lang="scss" scoped>
+@import '@/assets/styles/_config.scss';
 
   .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
@@ -152,6 +199,23 @@ export default {
     position: absolute;
     right: 0px;
     bottom: 0px;
+  }
+
+  .third{
+    height: 50vh;
+    min-height: 370px;
+    max-height: 750px;
+    position: absolute;
+    left: -80px;
+    top: 200px;
+  }
+
+  .third2{
+    height: 35vh;
+    min-height: 270px;
+    position: absolute;
+    right: 0px;
+    bottom: 100px;
   }
 
   .sidenav{
@@ -203,10 +267,18 @@ export default {
   }
   #logo {
     width: 170px;
-    
     margin: 0 5px;
     float: left;
   } 
+
+  #text1{
+    transition: 1s;
+  }
+
+  #text2{
+    transition: 1s;
+    opacity: 0;
+  }
  
   .text {
     margin: 50px 0;
@@ -254,6 +326,37 @@ export default {
     margin-top: -250px;
     margin-right: -200px;
     z-index: 1;
+    color: #444;
+  }
+
+  #probability-container {
+
+  position: fixed;
+  left: 50px;
+  top: 50px;
+
+  //grid-gap: 1.2em;
+
+  
+  text-align: left;
+  width: 100px;
+  z-index: 100;
+
+  div{
+    cursor: pointer;
+  }
+
+  #probability-headline {
+    grid-column: span 2;
+  }
+
+  .probBox, #probButton {
+    max-width: 130px;
+    max-height: 130px;
+    margin-bottom: 20px;
+    align-self: center;
+    //place-self: center; 
+  }
   }
 
 </style>
