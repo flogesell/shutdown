@@ -31,9 +31,6 @@ export default {
         },
         dummy_data() {
             return this.$store.state.data.CAIT;
-        },
-        center: function() {
-            return {x: window.innerWidth/2, y: window.innerHeight/2}
         }
     },
     async mounted() {
@@ -179,6 +176,7 @@ export default {
                         this.global_tab(engine, runner, attractor, this.balls, false);
                         break;
                 }
+                this.center = {x: window.innerWidth/2, y: window.innerHeight/2}
                 this.prev_running = this.running;
                 this.prev_tab = this.active_tab;
             }, 33) 
@@ -418,6 +416,7 @@ export default {
                 emissions: 0,
                 color: '#FFC833'
             },
+            center: {x: 0, y: 0},
             total_emissions: 0,
             running: true,
             prev_sectors: [],
