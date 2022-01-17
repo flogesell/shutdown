@@ -282,7 +282,7 @@ export default {
 
 .reset-button {
   display: flex;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -306,7 +306,7 @@ export default {
     gap: 10px;
     span {
         font-family: Roboto;
-        font-size: 1.2em;
+        font-size: 1.2rem;
     }
     
     &.active {

@@ -51,7 +51,7 @@ export default {
     gap: 10px;
     span {
         font-family: Roboto;
-        font-size: 1.2em;
+        font-size: 1.2rem;
         &:hover {
         font-weight: bold;
       }

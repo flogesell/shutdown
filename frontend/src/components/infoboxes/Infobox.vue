@@ -61,7 +61,7 @@ export default {
     padding: 50px;
     background: $primary;
     //filter: drop-shadow(-2px 0 10px #000);
-    font-size: 1.2em;
+    font-size: 1.2rem;
     color: white;
     line-height: 24px;
 }
