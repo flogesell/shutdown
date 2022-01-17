@@ -4,11 +4,23 @@
     <div  class="starttext">
       
       <div>
-        <p v-if="nextText == false" id="text2">but even with a complete shutdown, reaching the 1.5° goal isnt insured</p>
+        <!--<p v-if="nextText == false" id="text2">but even with a complete shutdown, reaching the 1.5° goal isnt insured</p>-->
+        <p v-if="nextText == false" id="text2"><vue-typer :text="[text2,[text15]]" :erase-on-complete='false' :repeat='0' :type-delay='speed' :erase-delay='250' erase-style='select-all'/></p>
         <div id="text1"> 
-          <p v-if="nextText" >Your</p> <Logo id="logo" v-if="nextText" :checked=false :dark=true /> 
-          <p v-if="state!=0 && nextText"> scenario will most likely cause a global warming of {{ state + 1 }}° celsius</p> 
-          <p v-if="state==0 && nextText"> scenario will most likely cause a global warming of 1.5° celsius </p>
+          <p class="text1p" v-if="nextText && state==2">
+            <vue-typer 
+            :text="[pretexts[state],text2]" 
+            :erase-on-complete='false' 
+            :repeat='0' 
+            :type-delay='speed' 
+            :pre-erase-delay='2000' 
+            :shuffle='false'
+            initial-action='typing'
+            :pre-type-delay='1000'
+            :erase-delay='500'
+            erase-style='select-all'
+            caret-animation='phase'/>
+        </p>
         </div>
       </div>
       <li v-for="(paragraph, index) in text" :key="index" class="flex_centered typer">
@@ -60,21 +72,21 @@
 </template>
 
 <script>
-import Logo from '@/components/Logo.vue'
+//import Logo from '@/components/Logo.vue'
 import Button from '@/components/buttons/Button.vue'
 import DegreeDisplay from '@/components/degreeDisplay.vue'
 import DegreeNumber from '@/components/degreeNumber.vue'
 import ProbabilityBox from '@/components/probabilityBox.vue'
-//import { VueTyper } from 'vue-typer'
+import { VueTyper } from 'vue-typer'
 
 export default {
   name: 'Info',
   components: {
     Button,
-    Logo,
+    //Logo,
     DegreeDisplay,
     DegreeNumber,
-    //VueTyper,
+    VueTyper,
     ProbabilityBox
   },
   created() {
@@ -84,10 +96,10 @@ export default {
   },
   mounted(){
     setTimeout(() => { window.addEventListener('click', this.startanimation);}, 0);
-    setTimeout(() => { this.startanimation()}, 10000);
-    setTimeout(() => { document.getElementById("text1").style.opacity="0"}, 4000);
-    setTimeout(() => {  this.nextText = false;}, 5000);
-    setTimeout(() => {  document.getElementById("text2").style.opacity="1"}, 5700);
+    setTimeout(() => { this.startanimation()}, 15000);
+    //setTimeout(() => { document.getElementById("text1").style.opacity="0"}, 4000);
+    //setTimeout(() => {  this.nextText = false;}, 10000);
+    //setTimeout(() => {  document.getElementById("text2").style.opacity="1"}, 5700);
     
     this.probabilities[0] = this.$route.params.prob1,
     this.probabilities[1] = this.$route.params.prob2
@@ -101,11 +113,14 @@ export default {
       data: this.$store.state.results.degrees,
       scrollamount: 0,
       state: 0,
-      text: ["click to see how such a world would look like",],
+      text: ["click to skip",],
       animated: false,
       probabilities2: 0,
       probabilities: [],
       nextText: true,
+      text2: "but even with a complete shutdown, reaching the 1.5° goal isnt insured.",
+      pretexts: ["Your shutdown scenario will most likely cause a global warming of 1.5° celsius","Your shutdown scenario will most likely cause a global warming of 2° celsius","Your shutdown scenario will most likely cause a global warming of 2.5° celsius"],
+      speed: 60,
     }
   },
   methods: {
@@ -273,11 +288,15 @@ export default {
 
   #text1{
     transition: 1s;
+    text-align: left;
+    
+    display: inline-block;
+    width: 916px
   }
 
   #text2{
     transition: 1s;
-    opacity: 0;
+    opacity: 1;
   }
  
   .text {
@@ -372,5 +391,19 @@ export default {
      .custom.char.typed{ color: #FFF !important; 
      opacity: 0.4;}
   }
- 
+   .starttext{
+
+    .vue-typer .custom.char {
+      color: white;
+      //background-color: #1E1E1E;
+    }
+    .vue-typer .custom.char.selected {
+      background-color: #264F78;
+    }
+
+    .vue-typer .custom.caret {
+      width: 10px;
+      background-color: white;
+    }
+  }
 </style>
