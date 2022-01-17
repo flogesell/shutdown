@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const state = {
     Traffic: true,
     Energy: true,
-    Agriculture: true,
+    Agrar: true,
     Others: true,
     Export: true
 }
@@ -18,14 +18,14 @@ const mutations =  {
     RESET: (state) => {
         state.Traffic = true;
         state.Energy = true;
-        state.Agriculture = true;
+        state.Agrar = true;
         state.Export = true;
         state.Others = true;
     },
     NULL_SECTORS: (state) => {
         state.Traffic = false;
         state.Energy = false;
-        state.Agriculture = false;
+        state.Agrar = false;
         state.Export = true;
         state.Others = false;
     }

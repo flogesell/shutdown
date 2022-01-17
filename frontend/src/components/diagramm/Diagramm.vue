@@ -192,7 +192,7 @@ export default {
 
             if(prev_sectors[0] != current_sectors.Energy || 
                prev_sectors[1] != current_sectors.Traffic || 
-               prev_sectors[2] != current_sectors.Agriculture || 
+               prev_sectors[2] != current_sectors.Agrar || 
                prev_sectors[3] != current_sectors.Others || 
                prev_sectors[4] != current_sectors.Export) {
                 this.emissions_changed = true;
@@ -216,7 +216,7 @@ export default {
                 ball.set_per_person(per_person, prev_total)
                 ball.set_categories([this.$store.state.sectors.Energy, 
                                      this.$store.state.sectors.Traffic, 
-                                     this.$store.state.sectors.Agriculture, 
+                                     this.$store.state.sectors.Agrar, 
                                      this.$store.state.sectors.Others])
                 ball.set_export(this.$store.state.sectors.Export);
                 ball.update();
@@ -240,7 +240,7 @@ export default {
 
             let current_sectors = this.$store.state.sectors
 
-            if(prev_sectors[0] != current_sectors.Energy || prev_sectors[1] != current_sectors.Traffic || prev_sectors[2] != current_sectors.Agriculture || prev_sectors[3] != current_sectors.Others) {
+            if(prev_sectors[0] != current_sectors.Energy || prev_sectors[1] != current_sectors.Traffic || prev_sectors[2] != current_sectors.Agrar || prev_sectors[3] != current_sectors.Others) {
                 this.emissions_changed = true;
             }
             
@@ -260,7 +260,7 @@ export default {
             this.sector_balls.forEach(ball => {
                 ball.set_categories([this.$store.state.sectors.Energy, 
                                      this.$store.state.sectors.Traffic, 
-                                     this.$store.state.sectors.Agriculture, 
+                                     this.$store.state.sectors.Agrar, 
                                      this.$store.state.sectors.Others])
                 ball.update();
             });
@@ -350,7 +350,7 @@ export default {
                                            countries[i].name,
                                            countries[i].iso,
                                            countries[i].total_emissions,
-                                           ['Energy', 'Traffic', 'Agriculture', 'Others'],
+                                           ['Energy', 'Traffic', 'Agrar', 'Others'],
                                            countries[i].co2_emissions,
                                            population[i].population,
                                            countries[i].export_emissions,
@@ -372,7 +372,7 @@ export default {
 
             let tmp_balls = [];
 
-            let sectors = ['Energy', 'Traffic', 'Agriculture', 'Others'];
+            let sectors = ['Energy', 'Traffic', 'Agrar', 'Others'];
 
             let sector_emissions = [0, 0, 0, 0];
 
