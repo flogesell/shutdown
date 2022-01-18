@@ -3,9 +3,9 @@
       <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
       <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )" :style="{'font-size' : this.font_size}">{{ name }}</p>
       <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0 || zoomed" >
-        <p class="amount" v-if="!legend" :style="{'font-size' : this.font_size}" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }} </p>
+        <p class="amount" v-if="!legend" :style="{'font-size' : this.font_size}" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'): (emissions / 1000).toFixed(2) + ' Gt' }} </p>
         <div v-if=" legend " class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : ''}">
-            <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions>1000) ? (emissions / 1000).toFixed(2) + ' Gt' : (emissions).toFixed(2) + ' Mt') }}</div>
+            <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions / 1000).toFixed(2) + ' Gt') }}</div>
         </div>
         <Icon v-if="!legend && emissions > 3000 && zoomIn && tab !== 'Per Sector'" icon="hover2" :activated="true"/>
       </div>
