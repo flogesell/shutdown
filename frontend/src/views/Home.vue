@@ -275,9 +275,13 @@ export default {
 #sector-container {
   margin-top: auto;
 }
-.sector-btn:hover {
+.sector-btn:not(.disabled):hover {
   font-weight: bold;
   cursor: pointer;
+}
+
+.sector-btn.disabled  {
+  color: gray;
 }
 
 .reset-button {

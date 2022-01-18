@@ -1,8 +1,8 @@
 
 <template>
-  <div class="sector-switch" :class="name.toLowerCase()">
-      <Checkbox v-if="smallSwitch > 720" :status="status" :small="false" @status="toggle" />
-      <Checkbox v-if="smallSwitch <= 720" :status="status" :small="true" @status="toggle" />
+  <div class="sector-switch" :class="[name.toLowerCase(), (isExport && sectorIsFalse) ? 'disabled' : '']">
+      <Checkbox v-if="smallSwitch > 720" :status="status" :small="false" @status="toggle" :disabled="isExport && sectorIsFalse" />
+      <Checkbox v-if="smallSwitch <= 720" :status="status" :small="true" @status="toggle" :disabled="isExport && sectorIsFalse"/>
       <div class="sector-btn" v-on:click="$emit('toggleInfobox'); $emit('makeInfoboxHeadline')">
         <p>{{ name }}</p>
         <Icon class="sector-info" icon="info" :activated="true" />
@@ -36,6 +36,13 @@ export default {
     }
   },
   computed: {
+    isExport() {
+      return this.name === 'Export'
+    },
+    sectorIsFalse() {
+      const store = this.$store.state.sectors;
+      return !store.Traffic || !store.Energy || !store.Agrar || !store.Others;
+    },
     smallSwitch() {
       const height = window.innerHeight;
       return height;

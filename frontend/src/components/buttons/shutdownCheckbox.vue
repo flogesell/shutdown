@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input class="shutdown-switch" :id="[ small ? 'small' : 'large' ]" type="checkbox" v-model="buttonStatus" @change="emitStatus">
+    <input :class="(disabled) ? 'disabled' : '' " :disabled="disabled" class="shutdown-switch" :id="[ small ? 'small' : 'large' ]" type="checkbox" v-model="buttonStatus" @change="emitStatus">
   </div>
 </template>
 
@@ -9,7 +9,8 @@ export default {
   name: 'shutdownCheckbox',
   props: {
     status: Boolean,
-    small: Boolean
+    small: Boolean,
+    disabled: Boolean
   },
   mounted() {
     this.buttonStatus = this.status;
@@ -73,7 +74,7 @@ export default {
   input.shutdown-switch:checked:after {
       left: 18px;
   }
-  input.shutdown-switch:hover:after {
+  input.shutdown-switch:not(.disabled):hover:after {
     transform: scale(1.2);
   }
 
