@@ -41,6 +41,7 @@ export default {
     },
     sectorIsFalse() {
       const store = this.$store.state.sectors;
+      if(!store.Traffic || !store.Energy || !store.Agrar || !store.Others) this.$store.commit('CHANGE_SECTOR_STATE', { name: 'Export', status: false})
       return !store.Traffic || !store.Energy || !store.Agrar || !store.Others;
     },
     smallSwitch() {
