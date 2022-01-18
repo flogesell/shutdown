@@ -2,9 +2,10 @@
     <transition name="slideIn">
     <div class="infobox" v-if="open">
         <div id="close-btn" v-on:click="$emit('toggleInfobox')">
-            <CloseButton />
+            <h1 id="headline">{{ headline }}</h1>
+            <CloseButton style="margin-left: auto;" />
         </div>
-        <h1 id="headline">{{ headline }}</h1>
+        
         <p v-html="content">{{ content }}</p>
     </div>
     </transition>
@@ -58,7 +59,7 @@ export default {
     width: 30%;
     height: 100vh;
     right: 0;
-    padding: 50px;
+    padding: 30px 60px;
     background: $primary;
     //filter: drop-shadow(-2px 0 10px #000);
     font-size: 1.2rem;
@@ -66,8 +67,6 @@ export default {
     line-height: 24px;
 }
 .infobox #headline {
-    margin-bottom: 30px;
-    margin-top: 50px;
 }
 
 .slideIn {
@@ -83,5 +82,8 @@ export default {
 #close-btn {
     text-align: right;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
 }
 </style>
