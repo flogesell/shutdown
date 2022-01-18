@@ -8,7 +8,7 @@ const state = {
     Energy: true,
     Agrar: true,
     Others: true,
-    Export: true
+    Export: false
 }
 
 const mutations =  {
@@ -19,14 +19,14 @@ const mutations =  {
         state.Traffic = true;
         state.Energy = true;
         state.Agrar = true;
-        state.Export = true;
+        state.Export = false;
         state.Others = true;
     },
     NULL_SECTORS: (state) => {
         state.Traffic = false;
         state.Energy = false;
         state.Agrar = false;
-        state.Export = true;
+        state.Export = false;
         state.Others = false;
     }
 }
