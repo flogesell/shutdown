@@ -3,7 +3,7 @@
     <div class="infobox" v-if="open">
         <div id="close-btn" v-on:click="$emit('toggleInfobox')">
             <h1 id="headline">{{ headline }}</h1>
-            <CloseButton style="margin-left: auto;" />
+            <CloseButton class="icon" style="margin-left: auto;" />
         </div>
         
         <p v-html="content">{{ content }}</p>
@@ -61,12 +61,10 @@ export default {
     right: 0;
     padding: 30px 60px;
     background: $primary;
-    //filter: drop-shadow(-2px 0 10px #000);
+    user-select: none;
     font-size: 1.2rem;
     color: white;
     line-height: 24px;
-}
-.infobox #headline {
 }
 
 .slideIn {
@@ -81,9 +79,11 @@ export default {
 
 #close-btn {
     text-align: right;
-    cursor: pointer;
     display: flex;
     align-items: center;
     margin-bottom: 25px;
+    & .icon {
+        cursor: pointer;
+    } 
 }
 </style>
