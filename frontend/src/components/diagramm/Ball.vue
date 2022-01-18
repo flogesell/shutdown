@@ -1,5 +1,5 @@
 <template>
-  <div class="ball" :class="(zoomIn && tab !== 'Per Sector' && !legend) ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
+  <div :title="name" class="ball" :class="(zoomIn && tab !== 'Per Sector' && !legend) ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
       <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )" :style="{'font-size' : this.font_size}">{{ name }}</p>
       <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0 || zoomed" >
