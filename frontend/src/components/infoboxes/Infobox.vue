@@ -61,11 +61,13 @@ export default {
     padding: 50px;
     background: $primary;
     //filter: drop-shadow(-2px 0 10px #000);
-    font-size: 18px;
+    font-size: 1.2rem;
     color: white;
+    line-height: 24px;
 }
 .infobox #headline {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+    margin-top: 50px;
 }
 
 .slideIn {
