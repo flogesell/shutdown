@@ -4,7 +4,7 @@
       <p class="name" v-if="((!legend) && ((iso === 'no iso') || (iso.length === 0)))" :style="{'font-size' : this.font_size}">{{ name }}</p>
       <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0 || zoomed" >
         <p class="amount" v-if="!legend && ( activeCountry !== name)" :style="{'font-size' : this.font_size}" >{{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'): (emissions / 1000).toFixed(2) + ' Gt' }} </p>
-        <div v-if="(legend || (activeCountry === name) )&& iso.length !== 0" class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : 'test', 'min-width' : (!legend) ? '0px' : '400px','border-width' : (!legend && emissions < 1000) ? '1px' : '2px' }">
+        <div v-if="(legend || (activeCountry === name) )&& iso.length !== 0" class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : 'test', 'min-width' : (!legend) ? '0px' : '400px','border-width' : (!legend && emissions < 3000) ? '1px' : '2px' }">
             <div class="test" :style="{'color': color, 'font-size' : (!legend) ? this.legend_fontSize : ''}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions / 1000).toFixed(2) + ' Gt') }}</div>
         </div>
         
