@@ -4,7 +4,7 @@
     <div id="close-btn" @click="skip_intro()">
       <CloseButton class="icon" />
     </div>
-    <ol ref="slider">
+    <ol ref="slider" :style="{ backgroundImage: 'url(' + require('@/assets/imgs/' + getRandomImage() +'.png')}">
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
       <div class="circle flex_centered"/>
       <transition name="fade">
@@ -92,6 +92,11 @@ export default {
         this.$store.commit('CHANGE_INTRO')
       }
     },
+    getRandomImage(){
+      var index = Math.round(Math.random() * 2 + 1) + '_' + Math.round(Math.random() + 1)
+      console.log(index)
+      return index
+    }
   },
   mounted(){
     // set active point on mounting the Intro component
@@ -128,8 +133,11 @@ export default {
 
     ol{
       list-style: none;
-      width: 100%;
       flex: 1;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 100%;
 
       display: flex;
       flex-flow: row nowrap;
@@ -153,6 +161,7 @@ export default {
           position: fixed;
           width: 600px;
           height: 600px;
+          opacity: .96;
           background: $primary;
           box-shadow: 6px 6px 12px rgba($color: #000000, $alpha: .4);
           text-align: center;
