@@ -14,12 +14,24 @@ const state = {
     intro: false,
     loader: true,
     error: false,
-    logoSwitch: false
+    logoSwitch: false,
+    infoboxHeadline: '',
+    infoboxOpen: false
 }
 
 const mutations =  {
     CHANGE_ACTIVE_TAB: (state, tab) => {
         state.activeTab = tab;
+    },
+    CHANGE_INFOBOX_HEADLINE: (state, headline) => {
+        state.infoboxHeadline = headline;
+    },
+    TOGGLE_INFOBOX: (state) => {
+        state.infoboxOpen = !state.infoboxOpen;
+    },
+    OPEN_INFOBOX: (state) => {
+        state.infoboxOpen = false;
+        setTimeout(() => { state.infoboxOpen = true; }, 500);      
     },
     CHANGE_INTRO: (state) => {
         state.intro = !state.intro;

@@ -1,5 +1,5 @@
 <template>
-  <div :title="name" class="ball" :class="(zoomIn && tab !== 'Per Sector' && !legend) ? 'no-zoom' : ''" @click="startZoom(index)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
+  <div :title="name" class="ball" :class="(zoomIn && !legend) ? 'no-zoom' : ''" @click="(iso.length>0 && tab !== 'Per Sector') ? startZoom(index) : toggleSectorInfobox(name)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="iso" v-if="(!legend) && (iso !== 'no iso') && (iso.length > 0)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
       <p class="name" v-if="(!legend) && ((iso === 'no iso')|| (iso.length === 0) )" :style="{'font-size' : this.font_size}">{{ name }}</p>
       <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0 || zoomed" >
@@ -7,8 +7,9 @@
         <div v-if=" legend " class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : ''}">
             <div class="test" :style="{'color': color}"> {{ (tab==='Per person')?((emissions/1000).toFixed(2) + ' t'):((emissions / 1000).toFixed(2) + ' Gt') }}</div>
         </div>
-        <Icon v-if="!legend && emissions > 3000 && zoomIn && tab !== 'Per Sector'" icon="hover2" :activated="true"/>
+        
       </div>
+      <Icon v-if="!legend && zoomIn" icon="hover2" :activated="true"/>
   </div>
 </template>
 
@@ -87,6 +88,15 @@ export default {
             else{
                 return "transparent";
             }
+        },
+        toggleSectorInfobox(name) {
+            console.log("NOW")
+            this.$store.commit('CHANGE_INFOBOX_HEADLINE', name)
+            if(this.$store.state.app.infoboxOpen == false) {
+                this.$store.commit('TOGGLE_INFOBOX')
+            } else {
+                this.$store.commit('OPEN_INFOBOX')
+            }
         }
     },
     computed: {
@@ -133,7 +143,8 @@ export default {
         
         .icon {
             width: 100%;
-            position: absolute;
+            margin-top: -4px;
+            height: 25px;
         }
 
         p {

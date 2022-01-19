@@ -1,7 +1,7 @@
 <template>
     <transition name="slideIn">
-    <div class="infobox" v-if="open">
-        <div id="close-btn" v-on:click="$emit('toggleInfobox')">
+    <div class="infobox" v-if="$store.state.app.infoboxOpen">
+        <div id="close-btn" v-on:click="$store.commit('TOGGLE_INFOBOX')">
             <h1 id="headline">{{ headline }}</h1>
             <CloseButton class="icon" style="margin-left: auto;" />
         </div>
@@ -17,13 +17,14 @@ import CloseButton from '@/components/icons/crossIcon.vue'
 export default {
     name: 'Infobox',
     props: {
-        open: Boolean,
-        headline: String,
     },
     components: {
         CloseButton,
     },
     computed: {
+        headline() {
+            return this.$store.state.app.infoboxHeadline;
+        },
         content() {
         var contentText = "";
         var allContent = [];
@@ -38,7 +39,7 @@ export default {
             contentText = allContent[0];
         } else if (this.headline == "Energy") {
             contentText = allContent[1];
-        } else if (this.headline == "Agriculture") {
+        } else if (this.headline == "Agrar") {
             contentText = allContent[2];
         } else if (this.headline == "Export") {
             contentText = allContent[3];

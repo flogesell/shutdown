@@ -103,16 +103,14 @@ export default {
       this.probabilities = e;
     },
     makeHeadline(sector) {
-      this.infoboxHeadline = sector;
+      this.$store.commit('CHANGE_INFOBOX_HEADLINE', sector)
     },
     toggleSectorInfobox(sector) {
-      if(this.oldSector == sector || this.infoboxOpen == false) {
-         this.infoboxOpen =! this.infoboxOpen;
+      if(this.$store.state.app.infoboxOpen === false) {
+        this.$store.commit('TOGGLE_INFOBOX')
       } else {
-        this.infoboxOpen = false;
-        setTimeout(() => { this.infoboxOpen = true }, 500);
+        this.$store.commit('OPEN_INFOBOX')
       }
-      this.oldSector = sector;
     }
   },
   computed: {
