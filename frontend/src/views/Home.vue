@@ -107,6 +107,7 @@ export default {
     },
     toggleSectorInfobox(sector) {
       if(this.$store.state.app.infoboxOpen === false) {
+        console.log(sector)
         this.$store.commit('TOGGLE_INFOBOX')
       } else {
         this.$store.commit('OPEN_INFOBOX')

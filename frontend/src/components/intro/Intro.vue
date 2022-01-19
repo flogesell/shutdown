@@ -6,14 +6,19 @@
     </div>
     <ol ref="slider">
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
-      <h3 v-if="index == active"><vue-typer :text="paragraph" :erase-on-complete='false' :repeat='0'/></h3>
+      <div class="circle flex_centered"/>
+      <transition name="fade">
+          <h3 v-if="index == active">{{ paragraph }}</h3>
+      </transition>
     </li>
     <div @click="updateSlide()">
       <Button :text="button" id="next"/>
     </div>
     </ol>
     <div ref="indicator" class="indicator flex_centered">
-    <div v-for="(paragraph, index) in text" :key="index" @click="updateSlide(index)"></div>
+    <div id="indicator">
+      <div class="dot" v-for="(paragraph, index) in text" :key="index" :style=" index === active ? 'opacity: 1' : ''" @click="updateSlide(index)"></div>
+    </div>
     </div>
     </div>
   </div>
@@ -21,11 +26,10 @@
 
 <script>
 import Button from '../buttons/Button.vue'
-import { VueTyper } from 'vue-typer'
 
 export default {
   name: 'Intro',
-  components: { Button, VueTyper },
+  components: { Button },
   data: () => {
     return {
       text: ['Since 2015 the climate conference in Paris defined the goal to limit the global rise of temperature of 1.5°C compared to preindustrial levels.',
@@ -47,22 +51,17 @@ export default {
 
     updateIndicator(){
       let slider = this.$refs.slider
-      this.active = Math.round(slider.scrollLeft / slider.clientWidth)
-      let points = slider.parentElement.querySelector('.indicator').children
+      let active = Math.round(slider.scrollLeft / slider.clientWidth)
 
-      if(slider.scrollLeft % slider.clientWidth < 100){
-        this.active = Math.round(slider.scrollLeft / slider.clientWidth)
-        for(let el of points){
-          el.style.background = 'none'
-        }
+      if(this.active != active){
+        this.active = active
       }
-      points[this.active].style.background = '#A3A3A3'
 
       this.updateButtonText()
     },
 
     updateButtonText(){
-      let sliderLength = this.$refs.slider.parentElement.querySelector('.indicator').children.length
+      let sliderLength = this.$refs.slider.parentElement.querySelectorAll('.dot').length
       let active = this.active
 
       if(active < sliderLength - 1){
@@ -74,7 +73,7 @@ export default {
     updateSlide(num){
       let slider = this.$refs.slider
       let active = Math.round(slider.scrollLeft / slider.clientWidth)
-      let points = slider.parentElement.querySelector('.indicator').children
+      let points = slider.parentElement.querySelectorAll('.dot')
       //set active slide to param
       if(!num && num!=0){
         num = active+1;
@@ -83,7 +82,8 @@ export default {
       //scroll to active slide
       if(active < points.length){
         slider.scrollLeft = slider.clientWidth * active
-      } else{
+      } 
+      else{
         this.visible = false;
         this.$store.commit('CHANGE_INTRO')
       }
@@ -133,6 +133,7 @@ export default {
       scroll-snap-type: x mandatory;
       -ms-overflow-style: none;  /* IE and Edge */
       scrollbar-width: none;
+      scroll-behavior: smooth;
 
       &::-webkit-scrollbar{
         display: none;
@@ -144,8 +145,22 @@ export default {
         height: 100%;
         padding: 1.2em;
 
+        .circle{
+          position: fixed;
+          width: 600px;
+          height: 600px;
+          background: $primary;
+          box-shadow: 6px 6px 12px rgba($color: #000000, $alpha: .4);
+          text-align: center;
+          border-radius: 50%;
+        }
+
         h3{
+          position: relative;
+          color: white;
           max-width: 600px;
+          padding: 1.2em;
+          text-align: center;
         }
       }
     }
@@ -179,20 +194,24 @@ export default {
       }
     }
 
-    .indicator{
-            
-      div{
+    .indicator{   
+      margin-bottom: 2.4em;     
+
+    .dot{
+        pointer-events: auto;
         cursor: pointer;
-        transition: background .5s;
-        width: 12px;
-        height: 12px;
-        margin: 1.2em 6px;
+        transition: .5s;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
-        border: 1px rgba($color: $secondary, $alpha: 1.0) solid;
+        margin: 0 6px;
+        opacity: .4;
+        background: $secondary;
 
         &:hover{
+          opacity: 1;
           transform: scale(1.2);
-          background: $color !important;
         }
       }
     }
@@ -203,6 +222,13 @@ export default {
         right: 1.2em;
         max-width: 120px;
     }
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 3s .2s ease;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 
 </style>
