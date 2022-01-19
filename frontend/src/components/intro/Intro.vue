@@ -1,8 +1,8 @@
 <template>
   <div v-if="visible" class="intro flex_centered">
     <div>
-    <div class="logo flex_centered">
-      <button id="close" @click="skip_intro()"><h2>&#x2715;</h2></button>
+    <div id="close-btn" @click="skip_intro()">
+      <CloseButton class="icon" />
     </div>
     <ol ref="slider">
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
@@ -26,10 +26,14 @@
 
 <script>
 import Button from '../buttons/Button.vue'
+import CloseButton from '@/components/icons/crossIcon.vue'
 
 export default {
   name: 'Intro',
-  components: { Button },
+  components: { 
+    Button,
+    CloseButton 
+  },
   data: () => {
     return {
       text: ['Since 2015 the climate conference in Paris defined the goal to limit the global rise of temperature of 1.5°C compared to preindustrial levels.',
@@ -163,6 +167,27 @@ export default {
           text-align: center;
         }
       }
+    }
+
+    #close-btn {
+      position: absolute;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      width: 35px;
+      height: 35px;
+      right: 60px;
+      top: 30px;
+      transition: all 0.5s;
+
+      & .icon {
+        transition: all 0.5s;
+      }
+
+      &:hover .icon {
+        scale: 1.2;
+          cursor: pointer;
+      } 
     }
 
     .logo{
