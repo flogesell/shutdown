@@ -2,7 +2,7 @@
     <div>
         <div class="ring" v-for="(ring, index) in rings" :key="ring.x" :style="{'left': ring.x + 'px', 'top': ring.y + 'px', 'height': ring.diameter + 'px', 'width': ring.diameter + 'px', 'border-color': current_color, 'display': (!(index % 2)) ? '' : 'none'}">
             <div v-if="!(index % 2)" class="legend" :style="{'border-color': current_color}">
-                <div class="test" :style="{'color': current_color}">{{ (tab==='Per person') ? (ring.co2 + ' t CO2') : (ring.co2 + ' Gt CO2') }} </div>
+                <div class="test" :style="{'color': current_color}">{{ (tab==='Per Person') ? (ring.co2 + ' t CO2') : (ring.co2 + ' Gt CO2') }} </div>
             </div>
         </div>
     </div>

@@ -30,7 +30,7 @@ export default {
           return "global"
         case "Per Sector":
           return "sectors"
-        case "Per person":
+        case "Per Person":
           return "person"
         default:
           return "none"

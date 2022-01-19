@@ -16,12 +16,12 @@
       </div>
       <div id="sectors-container" :class="getPosition.tab.replace(' ','-').toLowerCase()">
         <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :test="'flex-order: ' + index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
-        <h2 class="export-headline">Export-adjusted Data</h2>
+        <h2 class="export-headline">Export-Adjusted Data</h2>
         
       </div>
       
       <div id="probability-container">
-        <h2 id="probability-headline">Probabilities for reaching climate goals</h2>
+        <h2 id="probability-headline">Probabilities for Reaching Climate Goals</h2>
         <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
         <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
