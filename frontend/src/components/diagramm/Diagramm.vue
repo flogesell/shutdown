@@ -47,7 +47,6 @@ export default {
 
     methods: {
         onClickChild(value) {
-            //console.log(this.ballObjects)
             if(this.active_tab != 'per sector'){
                 if(!(this.balls[value].children_visible)) {
                     this.zoom_in(value);
@@ -340,11 +339,7 @@ export default {
 
             let tmp_balls = [];
 
-            //console.log(countries[0].export_emissions)
-
             for(let i = 0; i < countries.length - 0; i++) {
-                console.log(countries[i].name + ": " + countries[i].export_emissions)
-                //console.log(countries[i])
                 tmp_balls.push(new CO2Ball(w0 - 50 + Math.random() * 100, 
                                            h0 - 50 + Math.random() * 100,
                                            countries[i].name,

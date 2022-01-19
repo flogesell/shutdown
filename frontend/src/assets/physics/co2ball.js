@@ -140,7 +140,6 @@ class CO2Ball
         this.global_emissions = 0;
         this.export_emissions = export_emissions;
         this.export = false;
-        console.log(this.body.body.vertices)
     }
 
     set_scale(val)
@@ -289,7 +288,6 @@ class CO2Ball
 
         if(this.per_person)
         {
-            //console.log(this.global_emissions)
             //world_population / 15 is provisional, should be global emissions / number of countries
             this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
         }

@@ -144,7 +144,6 @@ export default {
     scrolled(){
       this.scrollamount = window.pageYOffset;
       this.state = Math.round(window.pageYOffset/1300);
-      console.log(this.state);
     },
     startanimation(){
       document.getElementsByClassName("circle")[0].style.transform="translate(-50%, -50%) scale(1)"
@@ -157,7 +156,6 @@ export default {
           elements[i].style.opacity = "0.7";
       }
       }, 700);
-      console.log(this.state);
       setTimeout(() => { this.animated = true; }, 2000);
       setTimeout(() => {document.getElementsByClassName("circle2")[0].style.transform="translate(calc(-50% + 338px ), -50%) scale(1)"}, 700);
       //setTimeout(() => {document.getElementsByClassName("circle")[0].style.transform="translate(-50%, -50%) scale(1)"}, 4000);

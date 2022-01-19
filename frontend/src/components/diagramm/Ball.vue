@@ -90,7 +90,6 @@ export default {
             }
         },
         toggleSectorInfobox(name) {
-            console.log("NOW")
             this.$store.commit('CHANGE_INFOBOX_HEADLINE', name)
             if(this.$store.state.app.infoboxOpen == false) {
                 this.$store.commit('TOGGLE_INFOBOX')
