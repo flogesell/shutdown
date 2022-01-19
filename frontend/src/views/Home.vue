@@ -10,7 +10,6 @@
         <div class="sector-headline-container"> 
           <h2 class="flexrow-1">Global Emission Sectors</h2>
           <div class="reset-button" @click="reset">
-            <span id="reset-text">Reset</span>
             <Icon icon="reset" :activated="true"/>
           </div>
         </div>
@@ -182,7 +181,6 @@ export default {
   .flexrow-1 {
     position: relative;
     flex: 40%;
-    margin-bottom: 15px;
   }
 
 }
@@ -233,7 +231,16 @@ export default {
   .sector-switch.export {
     order: 2;
   }
+  
 }
+
+.sector-headline-container {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 .sector-switch {
   display: flex;
   width: 100%;
