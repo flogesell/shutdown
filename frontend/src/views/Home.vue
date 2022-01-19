@@ -7,14 +7,18 @@
     <div class="flex-container" id="container-left">
       <Logo id="logo" :checked=false :dark=false />
       <div id="sectors-lable-container">
-        <h2 class="flexrow-1">Global Emission Sectors</h2>
+        <div class="sector-headline-container"> 
+          <h2 class="flexrow-1">Global Emission Sectors</h2>
+          <div class="reset-button" @click="reset">
+            <span id="reset-text">Reset</span>
+            <Icon icon="reset" :activated="true"/>
+          </div>
+        </div>
       </div>
       <div id="sectors-container" :class="getPosition.tab.replace(' ','-').toLowerCase()">
-        <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
-        <div class="reset-button" @click="reset">
-          <span id="reset-text">Reset</span>
-          <Icon icon="reset" :activated="true"/>
-        </div>
+        <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :test="'flex-order: ' + index" :status="sectors[index]" v-on:toggleInfobox="toggleSectorInfobox(index)/*infoboxOpen =! infoboxOpen*/" v-on:makeInfoboxHeadline="makeHeadline(index)" />
+        <h2 class="export-headline">Export-adjusted Data</h2>
+        
       </div>
       
       <div id="probability-container">
@@ -210,7 +214,7 @@ export default {
 #infobox {
   z-index: 101;
 }
-.per-sector .export {
+.per-sector .export, .per-sector .export-headline {
   display: none;
 }
 #sectors-container {
@@ -222,11 +226,12 @@ export default {
     margin-left: 5px;
     width: 10%;
   }
+  .export-headline {
+    margin: 15px 0;
+    order: 1;
+  }
   .sector-switch.export {
-    border-top: 2px solid;
-    border-image: linear-gradient(90deg, #A3A3A3 50%, transparent 50%) 1;
-    padding-top: 7.5px;
-    margin-top: 7.5px;
+    order: 2;
   }
 }
 .sector-switch {
