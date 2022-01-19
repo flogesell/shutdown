@@ -1,6 +1,9 @@
 <template>
   <div v-if="visible" class="intro flex_centered">
     <div>
+    <div class="logo flex_centered">
+      <button id="close" @click="skip_intro()"><h2>&#x2715;</h2></button>
+    </div>
     <ol ref="slider">
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
       <h3 v-if="index == active"><vue-typer :text="paragraph" :erase-on-complete='false' :repeat='0'/></h3>
@@ -38,6 +41,7 @@ export default {
   },
   methods: {
     skip_intro(){
+      this.$store.commit('CHANGE_INTRO')
       this.visible = false;
     },
 
@@ -150,23 +154,24 @@ export default {
       position: relative;
       padding: 1.2em;
 
-      // #close{
-      //   transition: .5s;
-      //   padding: 1.2em;
-      //   cursor: pointer;
-      //   height: 2.4em;
-      //   position: absolute;
-      //   top: 0;
-      //   left: 0;
-      //   border: none;
-      //   background: none;
-      //   color: $secondary;;
+      #close{
+        transition: .5s;
+        padding: 1.2em;
+        cursor: pointer;
+        height: 2.4em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: none;
+        background: none;
+        color: $secondary;;
 
-      //   &:hover{
-      //     transform: scale(1.2);
-      //     color: $primary;
-      //   }
-      // }
+        &:hover{
+          transform: scale(1.2);
+          top: -0.2%;
+          color: $primary;
+        }
+      }
 
       img{
         height: 2.4em;
