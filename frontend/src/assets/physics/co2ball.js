@@ -289,7 +289,7 @@ class CO2Ball
         if(this.per_person)
         {
             //world_population / 15 is provisional, should be global emissions / number of countries
-            this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
+            this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 13.8645);
         }
         
         if(this.export)
