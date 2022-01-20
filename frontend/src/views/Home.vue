@@ -105,7 +105,7 @@ export default {
     makeHeadline(sector) {
       this.$store.commit('CHANGE_INFOBOX_HEADLINE', sector)
     },
-    toggleSectorInfobox(sector) {
+    toggleSectorInfobox() {
       if(this.$store.state.app.infoboxOpen === false) {
         this.$store.commit('TOGGLE_INFOBOX')
       } else {
