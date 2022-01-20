@@ -5,7 +5,7 @@
       <Checkbox v-if="smallSwitch <= 720" :status="status" :small="true" @status="toggle" />
       <div class="sector-btn" v-on:click="$emit('toggleInfobox'); $emit('makeInfoboxHeadline')">
         <p>{{ name }}</p>
-        <Icon class="sector-info" icon="info" :activated="true" />
+        <Icon v-if="icon" class="sector-info" icon="info" :activated="true" />
       </div>
     </div>
 </template>
@@ -22,7 +22,11 @@ export default {
   },
   props: {
       name: String,
-      status: Boolean
+      status: Boolean,
+      icon:{
+        type: Boolean,
+        default: true,
+      },
   },
   data() {
     return {
@@ -32,6 +36,7 @@ export default {
   methods: {
     toggle(e) {
       this.$store.commit('CHANGE_SECTOR_STATE', { name: this.name, status: e })
+      this.$emit('update');
       //this.traffic = e;
     }
   },
