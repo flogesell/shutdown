@@ -99,13 +99,13 @@ export default {
             this.ballObjects = tmp_countries.concat(tmp_sectors);
 
             this.total_size = 0;
-            let total_emissions = 0;
+            //let total_emissions = 0;
             tmp_countries.forEach(country => {
                 this.total_size += country.size;
-                total_emissions += country.emissions;
+                //total_emissions += country.emissions;
             });
             this.total_ball.size = this.total_size;
-            this.total_ball.emissions = total_emissions;
+            this.total_ball.emissions = this.total_size / this.scale;
             this.total_ball.x = (window.innerWidth / 2) - Math.sqrt(this.total_ball.size / Math.PI);
             this.total_ball.y = (window.innerHeight / 2) - Math.sqrt(this.total_ball.size / Math.PI);
         },

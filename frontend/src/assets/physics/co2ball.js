@@ -311,13 +311,25 @@ class CO2Ball
 
     get_json()
     {
-        return this.body.get_json();
+        let json = this.body.get_json();
+        
+        if(this.per_person)
+        {
+            json.emissions *= 1.97;
+        }
+        
+        return json;
     }
 
     get_children_json()
     {
         let json = [];
-        this.children.forEach(child => json.push(child.get_json()));
+        this.children.forEach(child => 
+        {
+            let tmp = child.get_json();
+            if(this.per_person) tmp.emissions *= 1.9;
+            json.push(tmp)
+        });
         return json;
     }
 }
