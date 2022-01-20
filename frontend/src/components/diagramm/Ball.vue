@@ -1,11 +1,11 @@
 <template>
   <div :title="name" class="ball" :class="(zoomIn && !legend) ? 'no-zoom' : ''" @click="(iso.length>0 && tab !== 'Per Sector') ? startZoom(index) : toggleSectorInfobox(name)" :style="{'left': x + 'px', 'top': y + 'px', 'height': diameter(), 'width': diameter(), 'background-color': color, 'color':getFontColor()}">
       <p class="iso" v-if="((!legend) && (iso !== 'no iso') && (iso.length > 0)) && !( activeCountry === name)" :style="{'font-size' : this.font_size}">{{ iso }}</p>
-      <p class="name" v-if="((!legend) && ((iso === 'no iso') || (iso.length === 0)))" :style="{'font-size' : this.font_size}">{{ name }}</p>
+      <p class="name" v-if="((!legend) && ((iso === 'no iso') || (iso.length === 0)))" :style="{'font-size' : this.font_size}">{{ (this.short_text) ? (name.substring(0, 3) + '.') : (name) }}</p>
       <div class="only-for-big-circles" v-if="(emissions) > 1000 || iso.length === 0 || zoomed" >
         <p class="amount" v-if="!legend && ( activeCountry !== name)" :style="{'font-size' : this.font_size}" >{{ (tab==='Per Person')?((emissions/1000).toFixed(2) + ' t'): (emissions / 1000).toFixed(2) + ' Gt' }} </p>
         <div v-if="(legend || (activeCountry === name) )&& iso.length !== 0" class="legend" :style="{'border-color': color, 'width' : (!legend) ? this.legend_width : 'test', 'min-width' : (!legend) ? '0px' : '400px','border-width' : (!legend && emissions < 3000) ? '1px' : '2px' }">
-            <div class="test" :style="{'color': color, 'font-size' : (!legend) ? this.legend_fontSize : ''}"> {{ (tab==='Per Person')?((emissions/1000).toFixed(2) + ' t'):((emissions / 1000).toFixed(2) + ' Gt') }}</div>
+            <div class="test" :style="{'color': color, 'font-size' : (!legend) ? this.legend_fontSize : ''}"> {{ ((emissions / 1000).toFixed(2) + ' Gt') }}</div>
         </div>
         
       </div>
@@ -99,7 +99,7 @@ export default {
         }
     },
     computed: {
-        font_size: function () {
+        font_size: function() {
             return (1.2 * 0.1 * Math.sqrt(Math.sqrt(this.size / this.zoom_factor))) + "em";
         },
         show_emissions: function() {
@@ -122,6 +122,10 @@ export default {
         },
         activeCountry() {
             return this.$store.state.app.activeSpecific;
+        },
+        short_text: function() {
+            //console.log((parseInt(this.diameter().substring(0, this.diameter().length - 3)) < 70) && this.name.length > 7)
+            return ((parseInt(this.diameter().substring(0, this.diameter().length - 3)) < 60) && (this.name.length > 7));
         }
     }
 }

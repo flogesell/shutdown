@@ -289,7 +289,7 @@ class CO2Ball
         if(this.per_person)
         {
             //world_population / 15 is provisional, should be global emissions / number of countries
-            this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 15);
+            this.body.target_size = (this.body.target_size / this.population) * (this.world_population / 13.8645);
         }
         
         if(this.export)
@@ -311,13 +311,25 @@ class CO2Ball
 
     get_json()
     {
-        return this.body.get_json();
+        let json = this.body.get_json();
+        
+        if(this.per_person)
+        {
+            json.emissions *= 1.97;
+        }
+        
+        return json;
     }
 
     get_children_json()
     {
         let json = [];
-        this.children.forEach(child => json.push(child.get_json()));
+        this.children.forEach(child => 
+        {
+            let tmp = child.get_json();
+            if(this.per_person) tmp.emissions *= 1.9;
+            json.push(tmp)
+        });
         return json;
     }
 }
