@@ -1,14 +1,14 @@
 <template>
-  <div v-if="visible" class="intro flex_centered">
+  <div v-if="visible === true" class="intro flex_centered">
     <div>
     <div id="close-btn" @click="skip_intro()">
       <CloseButton class="icon" />
     </div>
-    <ol ref="slider" :style="{ backgroundImage: 'url(' + require('@/assets/imgs/' + getRandomImage() +'.png')}">
+    <ol ref="slider" :style="{ backgroundImage: 'url(' + require('@/assets/imgs/' + this.bgImage +'.png')}">
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
       <div class="circle flex_centered"/>
       <transition name="fade">
-          <h3 v-if="index == active">{{ paragraph }}</h3>
+          <h3 class="flex_centered" v-if="index == active">{{ paragraph }}</h3>
       </transition>
     </li>
     <div @click="updateSlide()">
@@ -44,13 +44,15 @@ export default {
             ],
       button: 'next',
       active: 0,
-      visible: true
+      visible: true,
+      bgImage: "1_1"
     }
   },
   methods: {
     skip_intro(){
       this.$store.commit('CHANGE_INTRO')
       this.visible = false;
+      this.$cookies.set('visible', this.visible, '7d')
     },
 
     updateIndicator(){
@@ -72,6 +74,7 @@ export default {
         this.button = 'next'
       } else {
         this.button = 'start app'
+        this.$cookies.set('visible', this.visible, '7d')
       }
     },
     updateSlide(num){
@@ -94,11 +97,16 @@ export default {
     },
     getRandomImage(){
       var index = Math.round(Math.random() * 2 + 1) + '_' + Math.round(Math.random() + 1)
-      console.log(index)
       return index
     }
   },
   mounted(){
+    this.bgImage = this.getRandomImage()
+
+    if(this.$cookies.isKey('visible')){
+      let visibility = this.$cookies.get('visible')
+      this.visible = visibility
+    }
     // set active point on mounting the Intro component
     this.updateIndicator()
 
@@ -169,6 +177,7 @@ export default {
         }
 
         h3{
+          height: 100%;
           position: relative;
           color: white;
           max-width: 600px;
