@@ -2,19 +2,17 @@
     <div>
       <div class="circle">
           <div v-if="animated">
-           <li  v-for="(paragraph, index) in data[state].text" :key="index" class="flex_centered">
-      <p><vue-typer :text="paragraph" :type-delay='50' :erase-on-complete='false' :repeat='0'/></p>
-    </li>
+            <p id="text">{{data[state].text}}</p>
          </div>
       </div>
     </div>
 </template>
 
 <script>
-import { VueTyper } from 'vue-typer'
+
 export default {
     components: {
-        VueTyper,
+
     },
     props: {
         data: {
@@ -31,7 +29,13 @@ export default {
         return{
             text: 0,
         }
-    }
+    },
+    methods: {
+        appear(){
+            document.getElementById("text").style.opacity="1";
+            console.log("trigered")
+        }
+    },
 }
 </script>
 
@@ -51,7 +55,8 @@ export default {
     p{
         width: 400px;
         text-align: center;
-        opacity: 1;
+        transition: opacity 1s;
+        opacity: 0;
     }
 
 </style>

@@ -1,52 +1,19 @@
 
 <template>
   <div class="effects">
+
     <div  class="starttext">
+      <p  v-if="!nextText" class="text1">{{pretexts[state]}}</p>
+      <p v-if="nextText" class="text2">{{text2}}</p>
+    </div>
       
-      <div>
-        <!--<p v-if="nextText == false" id="text2">but even with a complete shutdown, reaching the 1.5° goal isnt insured</p>-->
-        <p v-if="nextText == false" id="text2"><vue-typer :text="[text2,[text15]]" :erase-on-complete='false' :repeat='0' :type-delay='speed' :erase-delay='250' erase-style='select-all'/></p>
-        <div id="text1"> 
-          <p class="text1p" v-if="nextText && state==2">
-            <vue-typer 
-            :text="[pretexts[state],text2]" 
-            :erase-on-complete='false' 
-            :repeat='0' 
-            :type-delay='speed' 
-            :pre-erase-delay='2000' 
-            :shuffle='false'
-            initial-action='typing'
-            :pre-type-delay='1000'
-            :erase-delay='500'
-            erase-style='select-all'
-            caret-animation='phase'/>
-        </p>
-        </div>
-      </div>
-      <li v-for="(paragraph, index) in text" :key="index" class="flex_centered typer">
-      <!---<p><vue-typer :text="paragraph" :erase-on-complete='false' :repeat='0'/></p>--->
-       </li>
-      </div>
-      
-      <DegreeDisplay :data="data" :state="state" class="circle" :animated="animated" />
-      <DegreeNumber :data="data" :state="state"  />
-      <!---<p>{{scrollamount}}</p>-->
-
-      
-
-      <div v-if="animated" id="probability-container"> 
-        <div v-if="state!=0" @click="state=0">
-          <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
-        </div>
-        <div v-if="state!=1" @click="state=1">
-          <ProbabilityBox v-if="state!=1" @click="state=1" :percentage="probabilities[1]" deg="2.0" class="probBox" />
-        </div>
-        <div v-if="state!=2" @click="state=2">
-          <ProbabilityBox v-if="state!=2" @click="state=2" :percentage="probabilities[2]" deg="2.5" class="probBox" />
-        </div>
-      </div>
+    <DegreeDisplay ref="displayText" :data="data" :state="state" class="circle" :animated="animated" />
+    <DegreeNumber :data="data" :state="state"  />
+   
+    
 
     <Button :text='"Try</br>again!"' id="probButton" @click="tryAgain" />
+
     <transition name="fade">
     <img v-if="state==0" src="../assets/imgs/1_1.png" alt="" class="first">
     </transition>
@@ -65,42 +32,58 @@
     <transition name="fade">
     <img v-if="state==2" src="../assets/imgs/3_2.png" alt="" class="third2"> 
     </transition>
-    
-  
+
+    <div class="flex-container" id="container-left">
+
+      <div id="sectors-container">
+          <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" :icon="false" v-on:update="updateProbs"/>
+      </div>
+
+      <div v-if="animated" id="probability-container"> 
+        <div v-if="state!=0" @click="state=0">
+          <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
+        </div>
+        <div v-if="state!=1" @click="state=1">
+          <ProbabilityBox v-if="state!=1" @click="state=1" :percentage="probabilities[1]" deg="2.0" class="probBox" />
+        </div>
+        <div v-if="state!=2" @click="state=2">
+          <ProbabilityBox v-if="state!=2" @click="state=2" :percentage="probabilities[2]" deg="2.5" class="probBox" />
+        </div>
+      </div>
+    </div>
+
   </div>
   
 </template>
 
 <script>
-//import Logo from '@/components/Logo.vue'
+
 import Button from '@/components/buttons/Button.vue'
+import SectorSwitch from '@/components/buttons/sectorSwitch.vue'
 import DegreeDisplay from '@/components/degreeDisplay.vue'
 import DegreeNumber from '@/components/degreeNumber.vue'
 import ProbabilityBox from '@/components/probabilityBox.vue'
-import { VueTyper } from 'vue-typer'
 
 export default {
   name: 'Info',
   components: {
     Button,
-    //Logo,
     DegreeDisplay,
     DegreeNumber,
-    VueTyper,
-    ProbabilityBox
+    ProbabilityBox,
+    SectorSwitch
   },
   created() {
     window.addEventListener('scroll', this.scrolled);
     this.setState();
-   
   },
   mounted(){
     setTimeout(() => { window.addEventListener('click', this.startanimation);}, 0);
-    setTimeout(() => { this.startanimation()}, 15000);
-    //setTimeout(() => { document.getElementById("text1").style.opacity="0"}, 4000);
-    //setTimeout(() => {  this.nextText = false;}, 10000);
-    //setTimeout(() => {  document.getElementById("text2").style.opacity="1"}, 5700);
-    
+    setTimeout(() => { this.startanimation()}, 10500);
+    setTimeout(() => {  document.getElementsByClassName("text1")[0].style.opacity="1";}, 700);
+    setTimeout(() => {  document.getElementsByClassName("text1")[0].style.opacity="0";}, 4000);
+    setTimeout(() => {  this.nextText=true;}, 6000);
+    setTimeout(() => {  document.getElementsByClassName("text2")[0].style.opacity="1";}, 6000);
     this.probabilities[0] = this.$route.params.prob1,
     this.probabilities[1] = this.$route.params.prob2
     this.probabilities[2] = this.$route.params.prob3
@@ -117,13 +100,38 @@ export default {
       animated: false,
       probabilities2: 0,
       probabilities: [],
-      nextText: true,
+      nextText: false,
       text2: "but even with a complete shutdown, reaching the 1.5° goal isnt insured.",
       pretexts: ["Your shutdown scenario will most likely cause a global warming of 1.5° celsius","Your shutdown scenario will most likely cause a global warming of 2° celsius","Your shutdown scenario will most likely cause a global warming of 2.5° celsius"],
       speed: 60,
+      totalEmissions: 49350,
+      sectorEmissions: [8920,17390,7830,15210],
     }
   },
+  computed: {
+    sectors() {
+      const sectors = this.$store.state.sectors;
+      delete sectors.Export;
+      return sectors;
+    },
+  },
   methods: {
+    updateProbs(){    
+      let n=0;
+      let t = this.totalEmissions;
+      console.log("t" + t)
+      for (const [key, value] of Object.entries(this.sectors)) {
+        console.log(`${key}: ${value}`);
+        if(value == false)
+        t-=this.sectorEmissions[n];
+        n++;
+      }
+      this.co2_to_probabilities((t /  1000) * 80)
+      this.setState2();
+    },
+     handleProbabilities(e) {
+      this.probabilities = e;
+    },
     setState(){
       let n = this.$route.params.prob1;
       let m = 0;
@@ -133,6 +141,19 @@ export default {
       }
       if(this.$route.params.prob3 > n){
         n = this.$route.params.prob3
+        m = 2
+      }
+      this.state = m;
+    },
+    setState2(){
+      let n = this.probabilities[0];
+      let m = 0;
+      if(this.probabilities[1] > n){
+        n = this.probabilities[1]
+        m = 1
+      }
+      if(this.probabilities[2] > n){
+        n = this.probabilities[2]
         m = 2
       }
       this.state = m;
@@ -158,8 +179,43 @@ export default {
       }, 700);
       setTimeout(() => { this.animated = true; }, 2000);
       setTimeout(() => {document.getElementsByClassName("circle2")[0].style.transform="translate(calc(-50% + 338px ), -50%) scale(1)"}, 700);
+       setTimeout(() => {this.$refs.displayText.appear();}, 2100);
       //setTimeout(() => {document.getElementsByClassName("circle")[0].style.transform="translate(-50%, -50%) scale(1)"}, 4000);
-    }
+    },
+     co2_to_probabilities(co2) {
+            let probability_table = [0, 17, 33, 50, 67, 83];
+            let co2_table = [[1350,  900,  650,  500,  400,  300],
+                             [4000, 2300, 1700, 1350, 1150,  900],
+                             [5000, 3300, 2500, 2050, 1700, 1400]];
+
+            let indices = [-1, -1, -1];
+
+            for(let i = 0; i < co2_table[0].length; i++)
+            {
+                for(let j = 0; j < co2_table.length; j++)
+                {
+                    if(co2_table[j][i] > co2)
+                    {
+                        indices[j] = i;
+                    }
+                }
+            }
+
+            let probabilities = [0, 0, 0];
+
+            for(let i = 0; i < co2_table.length; i++) {
+                if(indices[i] == co2_table[0].length - 1) {
+                    probabilities[i] = probability_table[indices[i]].toFixed(1);
+                }
+                else if(indices[i] == -1) {
+                    probabilities[i] = probability_table[0].toFixed(1);
+                }
+                else {
+                    probabilities[i] = ((co2_table[i][indices[i]] - co2) / (co2_table[i][indices[i]] - co2_table[i][indices[i] + 1]) * (probability_table[indices[i] + 1] - probability_table[indices[i]]) + probability_table[indices[i]]).toFixed(1);
+                }
+            }
+            this.probabilities = probabilities
+        },
   },
 }
 </script>
@@ -167,6 +223,15 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/_config.scss';
+
+#container-left {
+ position: fixed;
+ left: 50px;
+ top: 50px;
+}
+ 
+
+
 
   .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
@@ -259,20 +324,12 @@ export default {
         transform: translate(-50% , -50%) ;
         color: white;
         z-index: 3;
-        width: 100vw;
         transition: opacity 0.5s ease-out;
         cursor: pointer;
         white-space: nowrap;
         
-        div{
-          display: flex;
-          justify-content: center;
-
-        }
-
         p{
           white-space: nowrap;
-          float: left;
           font-size: 26px;
           margin: 0px
         }
@@ -284,17 +341,14 @@ export default {
     float: left;
   } 
 
-  #text1{
-    transition: 1s;
-    text-align: left;
-    
-    display: inline-block;
-    width: 916px
+  .text1{
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
   }
 
-  #text2{
-    transition: 1s;
-    opacity: 1;
+  .text2{
+    transition: opacity 1s;
+    opacity: 0;
   }
  
   .text {
@@ -348,16 +402,17 @@ export default {
 
   #probability-container {
 
-  position: fixed;
-  left: 50px;
-  top: 50px;
+  
 
   //grid-gap: 1.2em;
 
   
   text-align: left;
-  width: 100px;
+  width: 300px;
   z-index: 100;
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
 
   div{
     cursor: pointer;
@@ -368,10 +423,12 @@ export default {
   }
 
   .probBox, #probButton {
-    max-width: 130px;
-    max-height: 130px;
-    margin-bottom: 20px;
+    width: 100px;
+    height: 100px;
+    float: left;
     align-self: center;
+    margin-left: -5px;
+    margin-right: 15px;
     //place-self: center; 
   }
   }
