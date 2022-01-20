@@ -30,7 +30,7 @@
       
     </div>
     <div class="flex-container" id="container-center">
-      <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agrar="agrar" @probabilities_changed="handleProbabilities" />
+      <Diagramm class="diagramm" :traffic="traffic" :energy="energy" :agriculture="agriculture" @probabilities_changed="handleProbabilities" />
     </div>
     <div class="flex-container" id="container-right">
       <div id="info-container" class="icon-container">
@@ -82,7 +82,7 @@ export default {
       publicPath: process.env.BASE_URL,
       traffic: true,
       energy: true,
-      agrar: true,
+      agriculture: true,
       probabilities: new Array(),
       infoboxOpen: false,
       infoboxHeadline: "Traffic",
