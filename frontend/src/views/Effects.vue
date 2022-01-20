@@ -33,13 +33,13 @@
     <img v-if="state==2" src="../assets/imgs/3_2.png" alt="" class="third2"> 
     </transition>
 
-    <div class="flex-container" id="container-left">
+    <div v-if="animated" class="flex-container" id="container-left">
 
       <div id="sectors-container">
           <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" :icon="false" v-on:update="updateProbs"/>
       </div>
 
-      <div v-if="animated" id="probability-container"> 
+      <div  id="probability-container"> 
         <div v-if="state!=0" @click="state=0">
           <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         </div>
