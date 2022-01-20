@@ -7,6 +7,12 @@
     <ol ref="slider" :style="{ backgroundImage: 'url(' + require('@/assets/imgs/' + this.bgImage +'.png')}">
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
       <div class="circle flex_centered"/>
+      <div class="audio" v-if="index === active">
+      <!-- <iframe src="https://olafwempe.com/mp3/silence/silence.mp3" type=”audio/mp3″ allow=”autoplay” id=”audio” style=”display:none”></iframe> -->
+      <audio autoplay>
+        <source :src='"../../assets/audio/intro/" + active + ".mp3"' type="audio/mp3">
+      </audio>
+      </div>
       <transition name="fade">
           <h3 class="flex_centered" v-if="index == active">{{ paragraph }}</h3>
       </transition>
@@ -45,7 +51,8 @@ export default {
       button: 'next',
       active: 0,
       visible: true,
-      bgImage: "1_1"
+      bgImage: "1_1",
+      audio: false
     }
   },
   methods: {
@@ -174,6 +181,11 @@ export default {
           box-shadow: 6px 6px 12px rgba($color: #000000, $alpha: .4);
           text-align: center;
           border-radius: 50%;
+        }
+
+        .audio{
+          position: absolute;
+          z-index: 2;
         }
 
         h3{
