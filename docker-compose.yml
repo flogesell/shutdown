@@ -19,15 +19,3 @@ services:
       - ./frontend:/data
       - /data/node_modules
     tty: true
-    
-
-  backend:
-    container_name: shutdown_backend
-    build: ./backend
-    environment:
-      SECRET: '1r3jTQUSuKOQEUuT2eiusYpKLLde4kdA'
-    ports:
-      - 4000:4000
-    volumes:
-      - ./backend:/data
-      - /data/node_modules
