@@ -33,13 +33,13 @@
     <img v-if="state==2" src="../assets/imgs/3_2.png" alt="" class="third2"> 
     </transition>
 
-    <div class="flex-container" id="container-left">
+    <div v-if="animated" class="flex-container" id="container-left">
 
       <div id="sectors-container">
           <SectorSwitch class="sector-btn" v-for="(sector, index) in sectors" :key="index" :name="index" :status="sectors[index]" :icon="false" v-on:update="updateProbs"/>
       </div>
 
-      <div v-if="animated" id="probability-container"> 
+      <div  id="probability-container"> 
         <div v-if="state!=0" @click="state=0">
           <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
         </div>
@@ -119,12 +119,12 @@ export default {
     updateProbs(){    
       let n=0;
       let t = this.totalEmissions;
-      console.log("t" + t)
+      
       for (const [key, value] of Object.entries(this.sectors)) {
-        console.log(`${key}: ${value}`);
         if(value == false)
         t-=this.sectorEmissions[n];
         n++;
+        console.log(key)
       }
       this.co2_to_probabilities((t /  1000) * 80)
       this.setState2();
@@ -148,14 +148,27 @@ export default {
     setState2(){
       let n = this.probabilities[0];
       let m = 0;
+      let o = this.probabilities[2];
+      if(o == 18.3){
+        o = 18.3
+      }
+      if(o == 16.8){
+        o = 16.8
+      }
+  
       if(this.probabilities[1] > n){
         n = this.probabilities[1]
         m = 1
       }
-      if(this.probabilities[2] > n){
+       console.log(this.probabilities[2] + " props")
+       console.log(n + " n")
+       console.log(this.probabilities[2] + " > " + n)
+       console.log(18.3 > 7.7)
+      if(o > n){
         n = this.probabilities[2]
         m = 2
       }
+      console.log(m + " m");
       this.state = m;
     },
     tryAgain() {
