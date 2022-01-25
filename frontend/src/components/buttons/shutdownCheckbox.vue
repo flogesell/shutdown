@@ -45,6 +45,9 @@ export default {
       transition-duration: 500ms;
       border: 5px $secondary solid ;
       margin: 5px 0;
+      &.disabled {
+        cursor: not-allowed;
+      }
   }
 
   input.shutdown-switch:after {
