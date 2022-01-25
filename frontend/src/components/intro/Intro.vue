@@ -9,7 +9,7 @@
       <div class="circle flex_centered"/>
       <div class="audio" v-if="index === active">
       <!-- <iframe src="https://olafwempe.com/mp3/silence/silence.mp3" type=”audio/mp3″ allow=”autoplay” id=”audio” style=”display:none”></iframe> -->
-      <audio autoplay>
+      <audio autoplay id="audio_intro">
         <source :src='"../../assets/audio/intro/" + active + ".mp3"' type="audio/mp3">
       </audio>
       </div>

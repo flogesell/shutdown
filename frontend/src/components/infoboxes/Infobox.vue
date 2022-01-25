@@ -3,23 +3,18 @@
     <div class="infobox" v-if="$store.state.app.infoboxOpen">
         <div id="close-btn" v-on:click="$store.commit('TOGGLE_INFOBOX')">
             <h1 id="headline">{{ headline }}</h1>
-            <CloseButton class="icon" style="margin-left: auto;" />
+            <img id="icon" src="../../assets/icons/Icons-Shutdown_close.svg" />
         </div>
-        
         <p v-html="content">{{ content }}</p>
+        <div class="infoImage" :style="{backgroundImage:'url('+ require(`../../assets/imgs/${contentImg}`) + ')'}"></div>
     </div>
     </transition>
 </template>
 
 <script>
-import CloseButton from '@/components/icons/crossIcon.vue'
-
 export default {
     name: 'Infobox',
     props: {
-    },
-    components: {
-        CloseButton,
     },
     computed: {
         headline() {
@@ -39,7 +34,7 @@ export default {
             contentText = allContent[0];
         } else if (this.headline == "Energy") {
             contentText = allContent[1];
-        } else if (this.headline == "Agrar") {
+        } else if (this.headline == "Agriculture") {
             contentText = allContent[2];
         } else if (this.headline == "Export") {
             contentText = allContent[3];
@@ -47,6 +42,23 @@ export default {
             contentText = allContent[4];
         }
         return contentText;
+        },
+        contentImg() {
+            var contentImage = "";
+            if (this.headline == "Traffic") {
+                contentImage = "traffic_image.jpg"
+            } else if (this.headline == "Energy") {
+                contentImage = "energy_image.jpg"
+            } else if (this.headline == "Agriculture" || this.headline == "Agr.") {
+                contentImage = "agriculture_image.jpg"
+            } else if (this.headline == "Export") {
+                contentImage = "export_image.jpg"
+            } else if (this.headline == "Others") {
+                contentImage = "garbage_image.jpg"
+            }
+            console.log(contentImage);
+            console.log(this.headline);
+            return contentImage;
         }
     }
 }
@@ -83,8 +95,30 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 25px;
-    & .icon {
+    & #icon {
         cursor: pointer;
+        width: 50px;
+        right: 50px;
+        position: absolute;
+        transition: transform .7s ease-in-out;
     } 
+    & #icon:hover {
+        transform: rotate(180deg);
+    }
+}
+
+.infoImage {
+    width: 100%;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+}
+
+//----- Media Screen small desktop -----//@at-root
+@media screen and (max-height: 720px) {
+  .infobox p {
+    font-size: 17px;
+    line-height: 19px
+  }
 }
 </style>
