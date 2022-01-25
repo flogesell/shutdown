@@ -10,7 +10,7 @@
       <h3>Motivation</h3>
       <p>We do life in a time of misinformation and heated debates. Creating this application, our goal was always to give users the ability to get in contact with data regarding climate change. Our vision is it to make people think about the facts we prepared visually and make them draw their own conclusions from the scientific facts.</p>
       <h3>Data processing</h3>
-      <p>We get our data from the CAIT (Climate Analysis Indicators Tool) on global climate change developed by the World Resources Institute from 2018, due to the variety and accuracy of the data.This Data is processed with a model, to be found in the IPCC-report from 2021, that can be used to convert the amount of CO2 emissions into a probability spectrum for global warming.<br>
+      <p>We get our data from the CAIT (Climate Analysis Indicators Tool) on global climate change developed by the World Resources Institute from 2018, due to the variety and accuracy of the data.This Data is processed with a model, to be found in the IPCC-report from 2021, that can be used to convert the amount of CO₂ emissions into a probability spectrum for global warming.<br>
       Since the global climate is very complex and can't be completely narrowed down into numbers to calculate future change, the model from the IPCC-report just gives a spectrum from 17% up to 83%. There is never a 100% certainty that the prognoses by scientists are to become true.<br>
       For visualization, understandability and usability purposes we calculated a zero point to this model.<br>
       Sources are to be found below.

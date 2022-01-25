@@ -101,7 +101,7 @@ export default {
       probabilities2: 0,
       probabilities: [],
       nextText: false,
-      text2: "but even with a complete shutdown, reaching the 1.5° goal isnt insured.",
+      text2: "but even with a complete shutdown, reaching the 1.5° goal is not ensured.",
       pretexts: ["Your shutdown scenario will most likely cause a global warming of 1.5° celsius","Your shutdown scenario will most likely cause a global warming of 2° celsius","Your shutdown scenario will most likely cause a global warming of 2.5° celsius"],
       speed: 60,
       totalEmissions: 49350,
