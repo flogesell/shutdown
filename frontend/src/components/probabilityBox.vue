@@ -5,7 +5,7 @@
             <path id="arc" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="1.5" :style="'--from-width:'+Number(oldVal)+'px; --to-width:'+Number(percentage)+'px;'" :key="percentage"/>
         </svg>
         <div class="deg-perc-wrapper">
-            <h3 class="degrees" :id="'number' + deg">{{deg.replace('.',',')+'°C'}}</h3>
+            <h3 class="degrees" :id="'number' + deg">{{deg+'°C'}}</h3>
             <h3 class="probability" :id="'number' + deg">{{ parseInt(percentage) + "%" }}</h3>
         </div>
     </div>
