@@ -6,7 +6,7 @@
         </svg>
         <div class="deg-perc-wrapper">
             <h3 class="degrees" :id="'number' + deg">{{deg+'°C'}}</h3>
-            <h3 class="probability" :id="'number' + deg">{{ parseInt(percentage) + "%" }}</h3>
+            <h3 class="probability" :id="'number' + deg">{{ parseInt(percentage) + " %" }}</h3>
         </div>
     </div>
 </template>
