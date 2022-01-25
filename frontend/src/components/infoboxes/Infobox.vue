@@ -39,7 +39,7 @@ export default {
             contentText = allContent[0];
         } else if (this.headline == "Energy") {
             contentText = allContent[1];
-        } else if (this.headline == "Agrar") {
+        } else if (this.headline == "Agriculture") {
             contentText = allContent[2];
         } else if (this.headline == "Export") {
             contentText = allContent[3];
