@@ -33,7 +33,6 @@ export default {
     methods: {
         appear(){
             document.getElementById("text").style.opacity="1";
-            console.log("trigered")
         }
     },
 }

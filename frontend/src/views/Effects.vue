@@ -124,7 +124,6 @@ export default {
         if(value == false)
         t-=this.sectorEmissions[n];
         n++;
-        console.log(key)
       }
       this.co2_to_probabilities((t /  1000) * 80)
       this.setState2();
@@ -160,15 +159,15 @@ export default {
         n = this.probabilities[1]
         m = 1
       }
-       console.log(this.probabilities[2] + " props")
-       console.log(n + " n")
-       console.log(this.probabilities[2] + " > " + n)
-       console.log(18.3 > 7.7)
+      //  console.log(this.probabilities[2] + " props")
+      //  console.log(n + " n")
+      //  console.log(this.probabilities[2] + " > " + n)
+      //  console.log(18.3 > 7.7)
       if(o > n){
         n = this.probabilities[2]
         m = 2
       }
-      console.log(m + " m");
+      // console.log(m + " m");
       this.state = m;
     },
     tryAgain() {
