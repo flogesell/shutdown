@@ -6,7 +6,7 @@
             <img id="icon" src="../../assets/icons/Icons-Shutdown_close.svg" />
         </div>
         <p v-html="content">{{ content }}</p>
-        <div v-if="this.headline !== 'Export'" class="infoImage" :style="{backgroundImage:'url('+ require(`../../assets/imgs/${contentImg}`) + ')'}"></div>
+        <div class="infoImage" :style="{backgroundImage:'url('+ require(`../../assets/imgs/${contentImg}`) + ')'}"></div>
     </div>
     </transition>
 </template>
@@ -56,8 +56,6 @@ export default {
             } else if (this.headline == "Others") {
                 contentImage = "garbage_image.jpg"
             }
-            console.log(contentImage);
-            console.log(this.headline);
             return contentImage;
         }
     }
