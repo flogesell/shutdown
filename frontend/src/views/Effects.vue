@@ -123,6 +123,7 @@ export default {
       for (const [key, value] of Object.entries(this.sectors)) {
         if(value == false)
         t-=this.sectorEmissions[n];
+        key;
         n++;
       }
       this.co2_to_probabilities((t /  1000) * 80)
