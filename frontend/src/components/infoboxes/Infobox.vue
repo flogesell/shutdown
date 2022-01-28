@@ -6,7 +6,7 @@
             <img id="icon" src="../../assets/icons/Icons-Shutdown_close.svg" />
         </div>
         <p v-html="content">{{ content }}</p>
-        <div class="infoImage" :style="{backgroundImage:'url('+ require(`../../assets/imgs/${contentImg}`) + ')'}"></div>
+        <div v-if="this.headline !== 'Export'" class="infoImage" :style="{backgroundImage:'url('+ require(`../../assets/imgs/${contentImg}`) + ')'}"></div>
     </div>
     </transition>
 </template>
