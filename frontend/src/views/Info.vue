@@ -18,7 +18,6 @@
       <h3>Sources</h3>
       <p><sub>1</sub> ourworldindata.org</p>
       <p><sub>2</sub> <a href="https://www.ipcc.ch/sr15/chapter/spm/">IPCC Report</a></p>
-      <p><sub>3</sub> ourworldindata.org</p>
       <p><sub>4</sub> ifeu.de</p>
       <p><sub>5</sub> <a href="https://www.klimafakten.de/meldung/neue-infografik-macht-ein-halbes-grad-weniger-erderwaermung-einen-unterschied">klimafakten.de</a>, <a href="https://www.ipcc.ch/sr15/chapter/spm/">IPCC Report</a></p>
       <p><sub>6</sub> The Facts are a summary of the chapter "2 Degrees more" from the Book <a href="https://www.rowohlt.de/buch/mark-lynas-6-grad-mehr-9783499004421">"6 Degrees more"</a> by Mark Lynas. This information was checked against <a href="https://www.klimafakten.de/meldung/neue-infografik-macht-ein-halbes-grad-weniger-erderwaermung-einen-unterschied">klimafakten.de</a> and the <a href="https://www.ipcc.ch/sr15/chapter/spm/">latest IPPC report</a>.</p>
