@@ -132,8 +132,8 @@ export default {
             let runner = Matter.Runner.create();
             let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls.concat(this.sector_balls));
 
-            Matter.Runner.start(runner, engine);
-            Matter.Runner.start(runner, sector_engine);
+            //Matter.Runner.start(runner, engine);
+            //Matter.Runner.start(runner, sector_engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             this.sector_balls.forEach(ball => ball.add_to_world(sector_engine.world));
             engine.world.gravity.scale = 0; 
@@ -141,6 +141,8 @@ export default {
 
             this.prev_tab = this.active_tab;
 
+
+            
             
             setInterval(() => {
                 if(this.$store.state.app.activeSpecific == '' && this.zoomed_in) {
@@ -150,16 +152,13 @@ export default {
                 if((this.active_tab != this.prev_tab) && this.running) {
                     if(this.active_tab == 'per sector') {
                         
-                        Matter.Runner.start(runner, sector_engine);
-                        //Matter.Runner.stop(runner, engine);
                         this.sector_balls.forEach(ball => ball.reset_size());
                     }
                     else if(this.prev_tab == 'per sector') {
-                        Matter.Runner.start(runner, engine);
-                        Matter.Runner.stop(runner, sector_engine);
                         this.balls.forEach(ball => ball.reset_size());
                     }
                 }
+                
                 
                 switch (this.active_tab){
                     case 'per country':
@@ -182,6 +181,7 @@ export default {
         },
         
         global_tab(engine, runner, attractor, per_person) {
+            Matter.Engine.update(engine, 33)
             let prev_total = 0;
             this.balls.forEach(ball => prev_total += ball.body.target_size);
 
@@ -232,6 +232,7 @@ export default {
         },
 
         sector_tab(engine, runner, attractor) {
+            Matter.Engine.update(engine, 33)
             let prev_total = 0;
             this.sector_balls.forEach(ball => prev_total += ball.body.target_size);
 
