@@ -84,9 +84,9 @@ export default {
     setTimeout(() => {  document.getElementsByClassName("text1")[0].style.opacity="0";}, 4000);
     setTimeout(() => {  this.nextText=true;}, 6000);
     setTimeout(() => {  document.getElementsByClassName("text2")[0].style.opacity="1";}, 6000);
-    this.probabilities[0] = this.$route.params.prob1,
-    this.probabilities[1] = this.$route.params.prob2
-    this.probabilities[2] = this.$route.params.prob3
+    this.probabilities[0] = parseFloat(this.$route.params.prob1),
+    this.probabilities[1] = parseFloat(this.$route.params.prob2)
+    this.probabilities[2] = parseFloat(this.$route.params.prob3)
   },
   beforeDestroy(){
     window.removeEventListener('click', this.startanimation);
@@ -133,42 +133,27 @@ export default {
       this.probabilities = e;
     },
     setState(){
-      let n = this.$route.params.prob1;
+      let n = parseFloat(this.$route.params.prob1);
       let m = 0;
-      if(this.$route.params.prob2 > n){
+      if(parseFloat(this.$route.params.prob2) > n){
         n = this.$route.params.prob2
         m = 1
       }
-      if(this.$route.params.prob3 > n){
+      if(parseFloat(this.$route.params.prob3) > n){
         n = this.$route.params.prob3
         m = 2
       }
       this.state = m;
     },
     setState2(){
-      let n = this.probabilities[0];
-      let m = 0;
-      let o = this.probabilities[2];
-      if(o == 18.3){
-        o = 18.3
+      let n = 0.0;
+      let m = 0.0;
+      for(let i = 0; i <= this.probabilities.length; i++) {
+        if(parseFloat(this.probabilities[i]) > n) {
+          n = parseFloat(this.probabilities[i]);
+          m = i;
+        }
       }
-      if(o == 16.8){
-        o = 16.8
-      }
-  
-      if(this.probabilities[1] > n){
-        n = this.probabilities[1]
-        m = 1
-      }
-       console.log(this.probabilities[2] + " props")
-       console.log(n + " n")
-       console.log(this.probabilities[2] + " > " + n)
-       console.log(18.3 > 7.7)
-      if(o > n){
-        n = this.probabilities[2]
-        m = 2
-      }
-      console.log(m + " m");
       this.state = m;
     },
     tryAgain() {
