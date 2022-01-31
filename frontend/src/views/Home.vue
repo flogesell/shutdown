@@ -19,13 +19,9 @@
         <h2 class="export-headline">Export-Adjusted Data</h2>
         
       </div>
-      
-      <div id="probability-container">
-        <h2 id="probability-headline">Probabilities for Reaching Climate Goals</h2>
-        <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
-        <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
-        <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
-        <Button @click="$router.push(`/effects/${probabilities[0]}/${probabilities[1]}/${probabilities[2]}`)" :text='"Show</br>Effects"' id="probButton" />
+
+      <div id="sector-container" class="icon-container" v-if="!getPosition.back">
+        <tabContainer v-for="tab in tabs" :key="tab" :tab="tab"/>
       </div>
       
     </div>
@@ -36,8 +32,13 @@
       <div id="info-container" class="icon-container">
         <iconButton @info="$router.push('info')" action="info" icon="info" :activated="true"/>
       </div>
-      <div id="sector-container" class="icon-container" v-if="!getPosition.back">
-        <tabContainer v-for="tab in tabs" :key="tab" :tab="tab"/>
+      
+      <div id="probability-container">
+        <h2 id="probability-headline">Probabilities for Reaching Climate Goals</h2>
+        <ProbabilityBox :percentage="probabilities[0]" deg="1.5" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[1]" deg="2.0" class="probBox" />
+        <ProbabilityBox :percentage="probabilities[2]" deg="2.5" class="probBox" />
+        <Button @click="$router.push(`/effects/${probabilities[0]}/${probabilities[1]}/${probabilities[2]}`)" :text='"Show</br>Effects"' id="probButton" />
       </div>
       
     </div>
@@ -180,16 +181,22 @@ export default {
     position: relative;
     flex: 40%;
   }
+  #sector-container .icon-wrapper {
+    flex-direction: row-reverse;
+  }
 
 }
 #container-right {
   padding: 30px 60px 30px 0;
-  width: 15%;
+  width: 13%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   z-index: 100;
-  min-width: 300px;
+  min-width: 240px;
+  #info-container {
+    margin-bottom: 50px;
+  }
 }
 
 #container-center {
@@ -252,30 +259,30 @@ export default {
   margin-top: auto;
 }
 #probability-container {
-  display: grid;
+  display: flex;
   width: 100%;
   height: auto;
   grid-template-columns: 50% 50%;
-  margin-top: auto;
+  //margin-top: auto;
   grid-gap: 10px 0;
+  flex-direction: column;
   //grid-gap: 1.2em;
 
    .probBox:nth-child(3), #probButton {
-      margin-left: -50px !important;
+      //margin-left: -50px !important;
     }
-
-
-  #probability-headline {
-    grid-column: span 2;
-  }
 
   .probBox, #probButton {
     max-width: 130px;
     max-height: 130px;
     width: 70%;
     align-self: center;
-    margin-left: -7px;
+    //margin-left: -7px;
     //place-self: center; 
+  }
+
+  #probability-headline {
+    text-align: center;
   }
 
 
