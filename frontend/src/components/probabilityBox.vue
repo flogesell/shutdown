@@ -63,7 +63,7 @@ export default {
     }
     #circle {
         //stroke: $secondary;
-        fill: #FFDC7C;
+        fill: $color;
     }
     #arc {
         stroke: $primary;

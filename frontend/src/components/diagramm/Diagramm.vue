@@ -63,7 +63,7 @@ export default {
             document.getElementById("container").style.transform ="scale(1)";
             document.getElementById("container").style.top = "0px";
             this.balls.forEach(ball => { ball.set_color("black"); })
-            this.total_ball.color = "#FFC833";
+            this.total_ball.color = "#FFBB00";
         },
         zoom_in(index) {
             this.zoomed_in = true;
