@@ -2,7 +2,7 @@
 <template>
   <div class="info">
     <div id="button-box">
-      <Button :text='"Back"' id="probButton" @click="$router.push('/')" />
+      <Button :text='"Back"' id="probButton" @click="$router.push('/')"/>
     </div>
     <Logo id="logo" :checked=false :dark=false />
     <div class="text">
