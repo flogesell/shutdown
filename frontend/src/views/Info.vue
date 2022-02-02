@@ -28,33 +28,33 @@
     </div>
     <div id="impressum">
       <div id="impressum-text">
-        <h2>Service provider according to § 5 para. 1 german telemedia act and § 55 para. 1 german broadcasting treaty</h2>
+        <h2>Diensteanbieter gemäß § 5 Abs. 1 TMG und § 55 Abs. 1 RStV</h2>
         <p>
-        University of applied sciences Augsburg<br>
+        Hochschule für angewandte Wissenschaften Augsburg<br>
         An der Hochschule 1<br>
         86161 Augsburg<br><br>
-        Phone: <a href= "tel:+4982155860">+49 (0)821-5586-0</a><br>
+        Telefon: <a href= "tel:+4982155860">+49 (0)821-5586-0</a><br>
         Fax: +49 (0)821-5586-3222<br><br>
-        email: <a href= "mailto:info@hs-augsburg.de">info@hs-augsburg.de</a><br><br>
-        authorised representative<br>
-        President Prof. Dr. Gordon Thomas Rohrmair according to Art. 21 para. 7 Bavarian University Law
+        E-Mail: <a href= "mailto:info@hs-augsburg.de">info@hs-augsburg.de</a><br><br>
+        Vertretungsberechtigte Person<br>
+        Präsident Prof. Dr. Gordon Thomas Rohrmair gem. Art. 21 Abs. 7 BayHSchG
         </p>
-        <h2>VAT ID</h2>
+        <h2>Ust-Idnr:</h2>
         <p>DE 811335517<br>
         (Staatsoberkasse Bayern, Landshut)
         </p>
-        <h2>Legal form</h2>
-        <p>The university of applied sciences Augsburg is a corporation under public law according to Art. 11 Para. 1 Sentence 1 Bavarian University Law and at the same time a state institution, Art. 11 Para. 1 Sentence 2 Bavarian University Law.It handles its own affairs as a corporation, state affairs as a state institution - Art. 12 Para. 1 Bavarian University Law.<br>
+        <h2>Rechtsform</h2>
+        <p>Die Hochschule Augsburg ist Körperschaft des öffentlichen Rechts gemäß Art. 11 Abs. 1 Satz 1 Bayerisches Hochschulgesetz und zugleich staatliche Einrichtung, Art. 11 Abs. 1 Satz 2 Bayerisches Hochschulgesetz. Sie nimmt eigene Angelegenheiten als Körperschaft (Körperschaftsangelegenheiten), staatliche Angelegenheiten als staatliche Einrichtung wahr – Art. 12 Abs. 1 Bayerisches Hochschulgesetz.<br>
         </p>
-        <h2>Competent supervisory authority</h2>
-        <p>Bavarian State Ministry<br>
-        for Economy and Art<br>
-        80327 Munich
+        <h2>Zuständige Aufsichtsbehörde</h2>
+        <p>Bayerisches Staatsministerium<br>
+        für Wissenschaft und Kunst<br>
+        80327 München
         </p>
         <h2>Copyright</h2>
-        <p>Copying and reuse of text and graphics requires the consent of Augsburg College.
+        <p>Kopie und Weiterverwendung von Text und Graphik erfordert die Zustimmung der Hochschule Augsburg.
         </p>
-        <h2>Photos | Image and copyrights held by:</h2>
+        <h2>Fotos | Bild- und Urheberrechte liegen bei:</h2>
         <p>University of applied sciences Augsburg<br>
         <!--Christina Bleier<br>
         Colourbox, <a href= "https://colourbox.de" target="_blank">www.colourbox.de</a><br>
@@ -66,30 +66,62 @@
         Marcus Reppich<br>
         Simeon Johnke/Regio Augsburg Wirtschaft GmbH<br>-->
         </p>
-        <h2>No warranty</h2>
-        <p>The right to make changes as a result of ministerial decisions taken in the meantime and in the context of general reforms in the education sector and in the personnel sector must be reserved.
+        <h2>Ohne Gewähr</h2>
+        <p>Änderungen infolge zwischenzeitlicher ministerieller Entscheidungen sowie im Rahmen der allgemeinen Reformen auf dem Bildungssektor und im Personalbereich müssen vorbehalten bleiben.
         </p>
-        <h2>Rules</h2>
-        <p>The presentation of Augsburg University also contains individually designed pages, which are the responsibility of the respective authors. These pages must not contain any content that damages the reputation of the university. The university management reserves the right to take measures in case of non-compliance with these rules.
+        <h2>Regeln</h2>
+        <p>Die Darstellung der Hochschule Augsburg enthält auch individuell gestaltete Seiten, die in der Verantwortung der jeweiligen Autoren stehen. Auf diesen Seiten dürfen keine Inhalte enthalten sein, die dem Ansehen der Hochschule schaden. Die Hochschulleitung behält sich vor, bei Nichtbeachten dieser Regeln Maßnahmen zu ergreifen.
         </p>
-        <h2>Data protection</h2>
-        <p>The responsible party within the meaning of the EU General Data Protection Regulation (hereinafter: DSGVO) and other national data protection laws of the member states as well as other data protection regulations is:<br><br>
-        University of applied sciences Augsburg,<br>
-        Corporation under public law pursuant to Art. 11 Para. 1 S. 1 Bavarian University Law,<br>
-        represented by its President Prof. Dr. Gordon T. Rohrmair<br><br>
+        <h2>Datenschutz</h2>
+        <p>Der Verantwortliche im Sinne der EU-Datenschutzgrundverordnung (im Folgenden: DSGVO) und anderer nationaler Datenschutzgesetze der Mitgliedsstaaten sowie sonstiger datenschutzrechtlicher Bestimmungen ist:<br>
+        Hochschule für angewandte Wissenschaften Augsburg,<br>
+        Körperschaft des öffentlichen Recht gemäß Art. 11 Abs. 1 S. 1 BayHSchG,<br>
+        vertreten durch ihren Präsidenten Prof. Dr. Gordon T. Rohrmair<br><br>
+
         An der Hochschule 1<br>
         86161 Augsburg<br><br>
-        Phone: <a href= "tel:+4982155860">+49 (0)821-5586-0</a><br>
-        Fax: +49 (0)821-5586-3222<br><br>
+
+        Telefon: <a href= "tel:+4982155860">+49 (0)821-5586-0</a><br>
+        Telefax: +49 (0)821-5586-3222<br>
+
         <a href= "mailto:info@hs-augsburg.de">info@hs-augsburg.de</a>
         </p>
-        <h3>Name and address of the data protection officer</h3>
-        <p>Internal contact persons for data protection: Anna Fichte and Christiane Schroth (Legal Office)<br><br>
-        External data protection officer at Augsburg University of Applied Sciences<br><br>
-        Attorney at law Dr. Karsten Kinast, LL.M.<br>
-        KINAST Law Firm Ltd.<br>
+        <h3>Protokollierung von Daten</h3>
+        <p>Wenn Sie diese Website besuchen, werden auf einem Server des Betreibers 
+        Daten für Sicherungszwecke gespeichert, die möglicherweise eine 
+        Identifizierung zulassen:<br>
+          – IP-Adresse des anfragenden Rechners<br>
+          – Datum und Uhrzeit des Zugriffs<br>
+          – Name und URL der abgerufenen Datei<br>
+          – Meldung, ob der Abruf erfolgreich war<br>
+          – Betriebssystem und Browser des anfragenden Rechners<br><br>
+
+        Die vorübergehende Speicherung der IP-Adresse durch das System ist 
+        notwendig, um eine Auslieferung der Website an den Rechner des Nutzers 
+        zu ermöglichen. Da diese Daten für den Betrieb der Website zwingend 
+        erforderlich sind, haben Sie als Nutzer keine Möglichkeit der 
+        Verarbeitung zu widersprechen.<br><br>
+
+        Diese Daten werden über einen Zeitraum von maximal zwei Tagen 
+        gespeichert. Die Speicherung erfolgt aus Gründen der Datensicherheit, um 
+        die Stabilität und die Betriebssicherheit des Systems zu gewährleisten. 
+        Es findet keine personenbezogene Verwertung statt. Die Daten werden 
+        nicht an Dritte weitergegeben. Es findet keine Übertragung 
+        personenbezogener Daten ins Ausland statt. Eine statistische Auswertung 
+        der Daten findet NICHT statt, auch nicht in anonymisierter Form.
+        </p>
+        <h3>Cookies</h3>
+        <p>Es werden keine Cookies verwendet oder gespeichert.
+        </p>
+        <h3>Name und Anschrift des Datenschutzbeauftragten</h3>
+        <p>Interne Ansprechpartnerinnen für den Datenschutz: <a href="https://www.hs-augsburg.de/Personal-und-Recht/Anna-Fichte.html">Anna Fichte</a> und <a href="https://www.hs-augsburg.de/Personal-und-Recht/Christiane-Schroth.html">Christiane Schroth</a> (Justiziariat)<br><br>
+        Externer Datenschutzbeauftragter der Hochschule für angewandte Wissenschaften Augsburg<br><br>
+        
+        Herr Rechtsanwalt Dr. Karsten Kinast, LL.M.<br>
+        KINAST Rechtsanwaltsgesellschaft mbH<br>
         Hohenzollernring 54<br>
-        D-50672 Cologne<br><br>
+        D-50672 Köln<br><br>
+
         Phone: <a href="tel:+492212221830">+49 221 222183-0</a><br><br>
         E-mail: <a href="mailto:mail@kinast.eu">mail@kinast.eu</a><br>
         Website: <a href="https://kinast.eu">www.kinast.eu</a>

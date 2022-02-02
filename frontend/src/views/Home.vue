@@ -173,7 +173,7 @@ export default {
   z-index: 100;
   min-width: 370px;
   #logo {
-    margin-bottom: 50px;
+    position: absolute;
     width: 100%;
     max-width: 225px;
   }
@@ -187,6 +187,7 @@ export default {
 
 }
 #container-right {
+  position: relative;
   padding: 30px 60px 30px 0;
   width: 13%;
   display: flex;
@@ -195,7 +196,7 @@ export default {
   z-index: 100;
   min-width: 240px;
   #info-container {
-    margin-bottom: 50px;
+    position: absolute;
   }
 }
 
@@ -210,6 +211,7 @@ export default {
 /* Left Container */
 #sectors-lable-container {
   display: flex;
+  margin-top: 100px;
   .flexrow-1 {
     margin-right: 15px;
   }
@@ -254,35 +256,31 @@ export default {
     margin-left: 20px;
   }
 }
-#probability-headline {
-  margin: 15px 0;
-  margin-top: auto;
-}
+
 #probability-container {
   display: flex;
+  margin-top: 100px;
   width: 100%;
-  height: auto;
   grid-template-columns: 50% 50%;
-  //margin-top: auto;
   grid-gap: 10px 0;
   flex-direction: column;
-  //grid-gap: 1.2em;
+  height: 100%;
 
-   .probBox:nth-child(3), #probButton {
-      //margin-left: -50px !important;
-    }
+  #probButton {
+    margin-top: auto;
+  }
 
   .probBox, #probButton {
     max-width: 130px;
     max-height: 130px;
     width: 70%;
-    align-self: center;
-    //margin-left: -7px;
-    //place-self: center; 
+    align-self: end;
   }
 
   #probability-headline {
-    text-align: center;
+    text-align: right;
+    //margin: 15px 0;
+    //margin-top: auto;
   }
 
 
