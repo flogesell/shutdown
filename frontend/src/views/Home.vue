@@ -187,6 +187,7 @@ export default {
 
 }
 #container-right {
+  position: relative;
   padding: 30px 60px 30px 0;
   width: 13%;
   display: flex;
