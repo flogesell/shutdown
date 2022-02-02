@@ -1,7 +1,7 @@
 
 <template>
   <div class="home">
-    <Intro v-if="!introAlreadySeen"/>
+    <Intro v-if="!introAlreadySeen" />
     
     <div class="position" @click="resetZoom"> <h1 :class="(getPosition.back)?'back':''"><Icon v-if="getPosition.back" icon="backwards" :activated="true"/>{{getPosition.tab}}</h1></div>
     <div class="flex-container" id="container-left">
