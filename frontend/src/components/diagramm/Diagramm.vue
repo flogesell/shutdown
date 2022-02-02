@@ -63,7 +63,7 @@ export default {
             document.getElementById("container").style.transform ="scale(1)";
             document.getElementById("container").style.top = "0px";
             this.balls.forEach(ball => { ball.set_color("black"); })
-            this.total_ball.color = "#FFBB00";
+            this.total_ball.color = "#FFC833";
         },
         zoom_in(index) {
             this.zoomed_in = true;
@@ -132,8 +132,6 @@ export default {
             let runner = Matter.Runner.create();
             let attractor = new Attractor(window.innerWidth / 2, window.innerHeight / 2, 1, this.balls.concat(this.sector_balls));
 
-            Matter.Runner.start(runner, engine);
-            Matter.Runner.start(runner, sector_engine);
             this.balls.forEach(ball => ball.add_to_world(engine.world));
             this.sector_balls.forEach(ball => ball.add_to_world(sector_engine.world));
             engine.world.gravity.scale = 0; 
@@ -146,17 +144,15 @@ export default {
                 if(this.$store.state.app.activeSpecific == '' && this.zoomed_in) {
                     this.zoom_out();
                 }
+
+                Matter.Engine.update(engine, 33);
+                Matter.Engine.update(sector_engine, 33);
                 
                 if((this.active_tab != this.prev_tab) && this.running) {
                     if(this.active_tab == 'per sector') {
-                        
-                        Matter.Runner.start(runner, sector_engine);
-                        //Matter.Runner.stop(runner, engine);
                         this.sector_balls.forEach(ball => ball.reset_size());
                     }
                     else if(this.prev_tab == 'per sector') {
-                        Matter.Runner.start(runner, engine);
-                        Matter.Runner.stop(runner, sector_engine);
                         this.balls.forEach(ball => ball.reset_size());
                     }
                 }
