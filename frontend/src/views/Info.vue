@@ -17,7 +17,7 @@
       </p>
       <h3 id="sources">Sources</h3>
       <p><sub>1</sub> ourworldindata.org</p>
-      <p><sub>2</sub> <a href="https://www.ipcc.ch/sr15/chapter/spm/">IPCC Report</a></p>
+      <p><sub>2</sub> <a href="https://www.ipcc.ch/sr15/chapter/spm/">IPCC Report (Page 1248)</a></p>
       <p><sub>3</sub> ourworldindata.org</p>
       <p><sub>4</sub> ifeu.de</p>
       <p><sub>5</sub> <a href="https://www.klimafakten.de/meldung/neue-infografik-macht-ein-halbes-grad-weniger-erderwaermung-einen-unterschied">klimafakten.de</a>, <a href="https://www.ipcc.ch/sr15/chapter/spm/">IPCC Report</a></p>
@@ -159,10 +159,10 @@ export default {
     justify-content: center;
     align-items: center;
     #button-box {
-      width: 100px;
+      width: 130px;
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 30px;
+      right: 45px;
     }
   }
   #logo {
