@@ -59,7 +59,7 @@ export default {
     skip_intro(){
       this.$store.commit('CHANGE_INTRO')
       this.visible = false;
-      this.$cookies.set('visible', this.visible, '7d')
+      this.$cookies.set('visible', this.visible, 0)
     },
 
     updateIndicator(){
