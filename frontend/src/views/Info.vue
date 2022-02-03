@@ -15,7 +15,7 @@
       For visualization, understandability and usability purposes we calculated a zero point to this model.<br>
       Sources are to be found below.
       </p>
-      <h3>Sources</h3>
+      <h3 id="sources">Sources</h3>
       <p><sub>1</sub> ourworldindata.org</p>
       <p><sub>2</sub> <a href="https://www.ipcc.ch/sr15/chapter/spm/">IPCC Report</a></p>
       <p><sub>3</sub> ourworldindata.org</p>

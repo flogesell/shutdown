@@ -120,4 +120,13 @@ p {
   }
 }
 
+    sub {
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    sub:hover {
+      transform: scale(1.2);
+    }
+
 </style>
