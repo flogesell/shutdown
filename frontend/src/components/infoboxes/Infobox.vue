@@ -5,8 +5,9 @@
             <h1 id="headline">{{ headline }}</h1>
             <img id="icon" src="../../assets/icons/Icons-Shutdown_close.svg" />
         </div>
-        <p v-html="content">{{ content }}</p>
         <div class="infoImage" :style="{backgroundImage:'url('+ require(`../../assets/imgs/${contentImg}`) + ')'}"></div>
+        <p v-html="content">{{ content }}</p>
+        
     </div>
     </transition>
 </template>
@@ -74,12 +75,16 @@ export default {
     width: 30%;
     height: 100vh;
     right: 0;
-    padding: 30px 60px;
+    padding: 33px 60px;
     background: $primary;
     user-select: none;
     font-size: 1.2rem;
     color: white;
     line-height: 24px;
+
+    p {
+        margin-top: 30px;
+    }
 }
 
 .slideIn {
