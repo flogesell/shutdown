@@ -111,7 +111,7 @@
         der Daten findet NICHT statt, auch nicht in anonymisierter Form.
         </p>
         <h3>Cookies</h3>
-        <p>Es werden keine Cookies verwendet oder gespeichert.
+        <p>Es wird ein technischer Cookie 'visible' verwendet, damit das Intro nicht mehrmals angezeigt wird. Dieser ist ein Session Cookie, welcher sich automatisch nach Schließen des Browsers löscht.
         </p>
         <h3>Name und Anschrift des Datenschutzbeauftragten</h3>
         <p>Interne Ansprechpartnerinnen für den Datenschutz: <a href="https://www.hs-augsburg.de/Personal-und-Recht/Anna-Fichte.html">Anna Fichte</a> und <a href="https://www.hs-augsburg.de/Personal-und-Recht/Christiane-Schroth.html">Christiane Schroth</a> (Justiziariat)<br><br>
