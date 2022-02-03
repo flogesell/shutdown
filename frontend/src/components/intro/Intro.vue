@@ -1,10 +1,34 @@
 <template>
-  <div v-if="visible === true" class="intro flex_centered">
+  <div v-if="visible == true " class="intro flex_centered">
     <div>
     <div id="close-btn" @click="skip_intro()">
       <CloseButton class="icon" />
     </div>
-    <ol ref="slider" :style="{ backgroundImage: 'url(' + require('@/assets/imgs/' + this.bgImage +'.png')}">
+    <ol ref="slider">
+
+    <transition name="fade">
+    <img v-if="active==0" src="../../assets/imgs/intro1.png" alt="" class="first">
+    </transition>
+    <transition name="fade">
+    <img v-if="active==1" src="../../assets/imgs/3_1.png" alt="" class="second">
+    </transition>
+      <transition name="fade">
+    <img v-if="active==1" src="../../assets/imgs/3_2.png" alt="" class="second2">
+    </transition>
+     <transition name="fade">
+    <img v-if="active==2" src="../../assets/imgs/intro2.png" alt="" class="third">
+    </transition>
+    <transition name="fade">
+    <img v-if="active==3" src="../../assets/imgs/intro4_1.png" alt="" class="fourth">
+    </transition>
+      <transition name="fade">
+    <img v-if="active==3" src="../../assets/imgs/intro4_2.png" alt="" class="fourth2">
+    </transition>
+     <transition name="fade">
+    <img v-if="active==3" src="../../assets/imgs/intro4_3.png" alt="" class="fourth3">
+    </transition>
+    
+
     <li v-for="(paragraph, index) in text" :key="index" class="flex_centered">
       <div class="circle flex_centered"/>
       <div class="audio" v-if="index === active">
@@ -33,7 +57,6 @@
 <script>
 import Button from '../buttons/Button.vue'
 import CloseButton from '@/components/icons/crossIcon.vue'
-
 export default {
   name: 'Intro',
   components: { 
@@ -52,7 +75,7 @@ export default {
       active: 0,
       visible: true,
       bgImage: "1_1",
-      audio: false
+      audio: false,
     }
   },
   methods: {
@@ -85,6 +108,7 @@ export default {
       }
     },
     updateSlide(num){
+      this.imgnmb = num
       let slider = this.$refs.slider
       let active = Math.round(slider.scrollLeft / slider.clientWidth)
       let points = slider.parentElement.querySelectorAll('.dot')
@@ -128,6 +152,76 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/styles/_config.scss';
 
+
+
+  img{
+    opacity: 0.7;
+    z-index: 0;
+    transition: opacity 1s ease-in;
+  }
+
+   .first{
+    width: 100%;
+    position: absolute;
+    left: 0px;
+   top: 55%;
+   transform: translate(0,-50%);
+  }
+
+  .second{
+    height: 50vh;
+    min-height: 370px;
+    max-height: 750px;
+    position: absolute;
+    left: -80px;
+    top: 200px;
+  }
+
+  .second2{
+    height: 35vh;
+    min-height: 270px;
+    position: absolute;
+    right: 0px;
+    bottom: 100px;
+  }
+
+  .third{
+    width: 100%;
+    position: absolute;
+    bottom: 84px;
+  }
+
+  .third2{
+    height: 35vh;
+    min-height: 270px;
+    position: absolute;
+    right: 0px;
+    bottom: 100px;
+  }
+
+  .fourth{
+     width: 35vw;
+   
+    position: absolute;
+    left: 100px;
+    bottom: 100px;
+  }
+
+  .fourth2{
+     width: 20vw;
+   
+    position: absolute;
+    right: 40%;
+    top: 100px;
+  }
+  .fourth3{
+    width: 35vw;
+   
+    position: absolute;
+    right: 100px;
+    bottom: 200px;
+  }
+
   .intro{
     position: fixed;
     top: 0;
@@ -141,7 +235,7 @@ export default {
       width: 100%;
       display: flex;
       flex-flow: column nowrap;
-      background: rgba($color: $background, $alpha: .8);
+      background: rgba($color: $background, $alpha: 1);
       backdrop-filter: blur(24px);
       box-shadow: 4px 4px 12px rgba($color: $secondary, $alpha: 1.0);
     }
@@ -176,7 +270,7 @@ export default {
           position: fixed;
           width: 600px;
           height: 600px;
-          opacity: .96;
+          opacity: .94;
           background: $primary;
           box-shadow: 6px 6px 12px rgba($color: #000000, $alpha: .4);
           text-align: center;
