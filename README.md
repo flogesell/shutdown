@@ -1,21 +1,24 @@
-# Shutdown project
+# frontend
 
-
-## Installation
-
-Build the frontend container
-
-```bash
-docker-compose build frontend
+## Project setup
+```
+yarn install
 ```
 
-Start the docker container from project folder
-
-```bash
-docker compose up
+### Compiles and hot-reloads for development
+```
+yarn serve
 ```
 
-After that feel free to code
+### Compiles and minifies for production
+```
+yarn build
+```
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+### Lints and fixes files
+```
+yarn lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
