@@ -11,9 +11,6 @@ on:
 
 jobs:
   build:
-    env:
-      GITHUB_TOKEN: ${{ secrets.github_token }}
-      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -29,12 +26,6 @@ jobs:
           cache: "npm"
       - run: npm i
       - run: npm run build
-      - uses: peaceiris/actions-gh-pages@v3
-
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: peaceiris/actions-gh-pages@v3
       - name: deploy
         uses: eaceiris/actions-gh-pages@v3
         with:
