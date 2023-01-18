@@ -26,15 +26,12 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run build
-      - run: mv public public-vue
-      - run: mv dist public
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: |
-            public
+          path: dist
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: dist
